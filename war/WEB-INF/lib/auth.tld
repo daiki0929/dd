@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+            web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.0</jsp-version>
+  <short-name>authTag</short-name>
+  <tag>
+    <name>isAdm</name>
+    <tag-class>taglib.jackpot.auth.IsAdmAuth</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isBcc</name>
+    <tag-class>taglib.jackpot.auth.IsBccAuth</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isEc</name>
+    <tag-class>taglib.jackpot.auth.IsEcAuth</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isSagawa</name>
+    <tag-class>taglib.jackpot.auth.IsSagawaAuth</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isNone</name>
+    <tag-class>taglib.jackpot.auth.IsNoneAuth</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isAdmSupportInqView</name>
+    <tag-class>taglib.jackpot.detail.IsAdmSupportInqView</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isAdmSupportInqAll</name>
+    <tag-class>taglib.jackpot.detail.IsAdmSupportInqAll</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isAdmView</name>
+    <tag-class>taglib.jackpot.detail.IsAdmView</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+  <tag>
+    <name>isAdmAll</name>
+    <tag-class>taglib.jackpot.detail.IsAdmAll</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+
+  
+</taglib>

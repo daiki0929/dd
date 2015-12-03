@@ -1,0 +1,243 @@
+@charset "utf-8";
+
+/*---------------------------初期化--------------------------*/
+
+img{
+	border: 0;
+}
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.clearfix {
+	display:inline-block;
+	min-height:1%;  /* for IE 7*/
+}
+/* Hides from IE-mac */
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+
+.clear { clear:both;}
+
+/* 共通 */
+body {
+	background:url(/img/front/body_bk.gif) center repeat-y;
+	text-align:center;
+	margin: 0px;
+	padding:0px;
+	font-size:10pt;
+	/*font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;*/
+	line-height:150%;
+}
+
+h1 {
+	height: 62px;
+	font-size: 100%;
+	font-weight: normal;
+	line-height:1em;
+	margin: 0;
+	padding:0;
+}
+
+h2,h3,h4 {margin:0;padding:0;}
+
+
+#outline {
+	width: 940px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align: left;
+}
+
+#outline p {
+	margin:0px 0px 10px 0px;
+}
+
+.contents {
+	width: 900px;
+	min-height:100%;
+	margin:20px 20px;
+	text-align: left;
+	color: #333333;
+}
+
+.contents_about {
+	width: 900px;
+	height:700px;
+	margin:20px 20px;
+	text-align: left;
+	color: #333333;
+}
+
+a:link { color:#333; text-decoration:underline;}
+a:visited { color:#333; text-decoration:underline;}
+a:hover {color:#333; text-decoration:underline;}
+
+.sp15 { margin:15px 0 0 0;}
+
+
+/* 全体 */
+#headsub { height:25px; padding-top:5px; background-color:#4c1c10; font-size:9px; color:#FFFFFF;}
+#wrapper940 { no-repeat top; margin:0; padding:0;}
+#header {width: 940px; margin:0 auto;}
+
+#toptitle{height:142px;}
+
+#main {position:relative; width:940px; margin:0 auto; padding:15px 0; background:url(/img/front/top_bk.jpg) no-repeat;}
+.topimage { position:relative; width:910px; margin:0 auto; }
+.contents { position:relative; width:910px; margin:0 auto; padding:15px 0 0 0;}
+.toptext_l{ width:270px; float:left; padding:5px 15px; font-size:14px; font-weight:bold; text-align:center;}
+.toptext_r{ width:270px; float:right; padding:5px 15px;  font-size:14px; font-weight:bold; text-align:center;}
+.topbutton { width:910px; padding:20px 0;}
+.topbtn01 { float:left; width:455px;}
+.topbtn02 { float:right; width:455px;}
+.kaitori { padding:20px 0 20px 0; }
+.kaitori p { padding:10px 35px; font-size:16px; line-height:1.5em;}
+
+
+/* 見積もり */
+.text01 {font-size:13px; line-height:1.5em; padding:15px 0 25px 0;}
+.text01b {font-size:13px; line-height:1.5em; padding:15px 0 25px 0; font-weight:bold;}
+.text02 {font-size:13px; line-height:1.5em; padding:15px 0 10px 0;}
+.textred { color:#CC0000;}
+#mitsumori { height:400px;}
+
+
+/* 買取り */
+#kaitori { height:740px; margin:0 0 20px 0}
+#kaitoribtn {padding:0 0 30px 10px;}
+#mitsumoribtn {padding:0 0 30px 10px;}
+
+/* topメニュー */
+#menu {
+	width: 940px;
+	height: 39px;
+	padding: 0px 0px 0px 0px;
+	background:url(/img/front/menu_bk.jpg) no-repeat;
+}
+
+#menu ul{
+	padding:0;
+	margin:0 0 0 15px;
+}
+
+#menu li{
+	list-style-type:none;
+	float:left;
+	height: 39px;
+	margin : 0;
+	padding: 0;
+}
+
+#menu li img{
+	border: 0;
+}
+
+
+#menu li a{
+	display:block;
+	height: 39px;
+	float: left;
+}
+
+#menu li a:hover {
+	background-color:transparent;
+}
+
+
+/* 第2階層メニュー */
+#menu02 {
+	width: 940px;
+	height: 39px;
+	padding: 0px 0px 0px 0px;
+	background:url(/img/front/menu02_bk.jpg) no-repeat;
+}
+
+#menu02 ul{
+	padding:0;
+	margin:0 0 0 15px;
+}
+
+#menu02 li{
+	list-style-type:none;
+	float:left;
+	height: 39px;
+	margin : 0;
+	padding: 0;
+}
+
+#menu02 li img{
+	border: 0;
+}
+
+
+#menu02 li a{
+	display:block;
+	height: 39px;
+	float: left;
+}
+
+#menu02 li a:hover {
+	background-color:transparent;
+}
+
+
+
+/*---------------------------------------------
+フッター
+---------------------------------------------*/
+
+#footer:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+footer{
+	text-align:center; background-color:#4c1c10;
+	height:90px;
+}
+#footerNavi{
+	width: 940px;
+	margin:10px 0 0 0;
+	text-align:center;
+	line-height: 40px;
+}
+#footlogo{
+	text-align:left;
+	padding:15px 0 0 20px;
+	float:left;
+	width:400px;
+}
+
+.foottel {line-height:1.2em; font-size:13px;}
+
+#footlogo p{
+	margin:0;
+	padding:0;
+	color:#fff;
+	font-size:11px;}
+
+#footlogo a:link { color:#fff; text-decoration:none;}
+#footlogo a:hover { color:#fff; text-decoration:underline;}
+#footlogo a:visited { color:#fff; text-decoration:none;}
+
+#copy { float:right; text-align:right; width:400px; color:#fff;font-size:12px;padding:30px 10px; 0 0;}
+
+
+#footerNavi:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+

@@ -1,0 +1,131 @@
+/* ページ全体 */
+* {
+    font-size : 100% ;
+    margin : 0 ;
+    padding : 0 ;
+}
+
+/* body全体 */
+/*
+body {
+    font-family:"ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3";
+    text-align : left ;
+    font-size : 12px ;
+}*/
+
+
+/* メールフォーム全体を囲うidタグ */
+#contents_wrapper {
+    width : 680px ;
+    margin : 15px 0 ;
+    padding : 10px ;
+}
+
+/* 入力フォームを囲うclassタグ */
+.setting_section {
+    margin-bottom : 25px ;
+}
+
+/* ボタンを囲うclassタグ */
+.button_box {
+    clear : both ;
+	width:670px;
+	margin:10px;
+    padding : 8px ;
+    text-align : center ;
+}
+
+.btn1 {
+	float:left;
+	width:310px;
+	text-align:right;
+}
+
+.btn2 {
+	float:right;
+	width:310px;
+	text-align:left;
+}
+	
+
+/* 赤文字を表示するためのclassタグ */
+.red_txt {
+    color: #ff3333;
+	height:10px;
+}
+.red {
+    color: #ff3333;
+}
+
+/* 左詰の文字を表示するためのclassタグ */
+.left_txt {
+    text-align : left;
+}
+
+/* 説明文を表示するためのidタグ */
+#txt_explain {
+    color: #000000;
+}
+
+/* コンテンツ内の[p]タグ */
+#contents p {
+    margin-bottom : 1em ;
+    text-align : left ;
+}
+
+/* コンテンツ内の[h3]タグ */
+#contents h3 {
+    border-left : 10px solid #000000;
+    border-bottom : 1px solid #000000;
+    color: #000000;
+    padding : 5px 10px 5px 6px ;
+    text-align : left ;
+    font-size : 120% ;
+    margin-bottom : 10px ;
+}
+
+/* コンテンツ内の内部タグ */
+#contents .inner {
+    padding : 0 15px ;
+}
+
+/* コンテンツ内のフォームに使用する[table]タグ */
+#contents table {
+    width : 650px ;
+    border-collapse : collapse ;
+    border-left : 1px solid #b3b3b3 ;
+    border-top : 1px solid #b3b3b3 ;
+    border-right : none ; 
+    border-bottom : none ;
+}
+
+/* コンテンツ内のフォームに使用する[th]タグ */
+#contents table th {
+    border-right : 1px solid #b3b3b3 ;
+    border-bottom : 1px solid #b3b3b3 ;
+    border-top : none ; 
+    border-left : none ;
+    background : #f1f1f1;
+    color: #572c01;
+    padding : 3px 5px ;
+}
+
+/* コンテンツ内のフォームに使用する[td]タグ */
+#contents table td {
+    border-right : 1px solid #b3b3b3 ;
+    border-bottom : 1px solid #b3b3b3 ;
+    border-top : none ; 
+    border-left : none ;
+    padding : 3px 5px ;
+    text-align : left ;
+}
+
+/* フォーム内の入力欄 */
+#main_table input {
+    width : 340px ;
+}
+
+/* フォーム内の入力欄 */
+#main_table textarea {
+    width : 370px ;
+}

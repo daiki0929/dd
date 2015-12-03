@@ -1,0 +1,41 @@
+/* バナーの定義 */
+/*.bccRandomBanner {
+	display: inline-block;
+	background-color: #fff;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 5px;
+	border: 1px solid #ccc;
+	background-size: contain;
+    width:580px;
+    height:150px;
+	padding: 15px;
+}
+*/
+.bccRandomBanner {
+  	    margin-bottom:10px;
+	}
+@media (max-width: 480px) {
+	.bccRandomBanner {
+  	    width:95%;
+	}
+}
+
+/*
+.bccRandomBanner h1 {
+	-webkit-text-stroke-color: #FFF;
+    -webkit-text-stroke-width: 1px;	
+}
+.bccRandomBanner h2 {
+	-webkit-text-stroke-color: #FFF;
+    -webkit-text-stroke-width: 1px;	
+}
+*/
+/* バナーページの削除バナーの背景 */
+tr.deleted td {
+  background-color:#aaa !important;
+}
+/* バナーページの削除バナーの背景 */
+tr.notValid td {
+  background-color:#ccc !important;
+}
