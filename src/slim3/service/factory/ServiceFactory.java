@@ -4,7 +4,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * 毎回newしないように、サービスをインスタンス化して使いまわします。
+ * @author uedadaiki
+ *
+ */
 public class ServiceFactory {
     private static final Logger logger = Logger.getLogger(ServiceFactory.class.getName());
     @SuppressWarnings("rawtypes")

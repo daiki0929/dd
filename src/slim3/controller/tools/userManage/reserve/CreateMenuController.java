@@ -2,14 +2,24 @@ package slim3.controller.tools.userManage.reserve;
 
 import org.slim3.controller.Navigation;
 
-import slim3.controller.AbstractController;
+import com.google.appengine.api.datastore.Key;
 
+import slim3.controller.AbstractController;
+/**
+ * メニュー作成画面を表示します。
+ * @author uedadaiki
+ *
+ */
 public class CreateMenuController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
-        String msUserRefStr = asString("id");
-        request.setAttribute("id", msUserRefStr);
+        
+        //idはメニューページのkey
+        Key menuPageKey = asKey("id");
+        log.info("menuPageKey：" + menuPageKey);
+        
+        request.setAttribute("menuPageKey", menuPageKey);
         
         return forward("createMenu.jsp");
     }

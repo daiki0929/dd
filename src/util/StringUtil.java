@@ -4,7 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
-
+/**
+ * 文字列を扱うユーティリティクラスです。
+ * @author uedadaiki
+ *
+ */
 public class StringUtil {
     @SuppressWarnings("unused")
     private final static Logger log = Logger.getLogger(StringUtil.class.getName());

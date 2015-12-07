@@ -11,12 +11,12 @@
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-	
+
 			<!-- メイン -->
 			<div class="span12">
-				<c:if test="${not empty errors}" >
+				<c:if test="${not empty errors}">
 					<p class="errorTitle">エラーが発生しました。</p>
-					<div class="error" >
+					<div class="error">
 						<div class="errorTitle">
 							<div class="errorHonbun">
 								<c:forEach var="e" items="${errors}">

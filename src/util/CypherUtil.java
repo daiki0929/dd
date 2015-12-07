@@ -4,18 +4,16 @@ import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.Cookie;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Hex;
 
 import slim3.controller.Const;
 
-
-
-
+/**
+ * CypherUtilを使用するユーティリティクラスです。
+ * @author uedadaiki
+ *
+ */
 public class CypherUtil {
     private final static Logger log = Logger.getLogger(CypherUtil.class.getName());
 

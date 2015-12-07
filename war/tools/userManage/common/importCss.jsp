@@ -20,7 +20,7 @@
 	}
 	@media only screen and (min-width : 781px) {
 		body {
-			margin-top: 40px;
+			margin-top: 60px;
 		}
 	}
 	.sidebar-nav {

@@ -1,4 +1,4 @@
-package slim3.controller.tools.userManage.entry;
+package slim3.controller.tools.userManage;
 
 import java.io.UnsupportedEncodingException;
 
@@ -7,21 +7,18 @@ import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 import slim3.controller.AbstractController;
 import slim3.controller.Const;
 import slim3.controller.Const.RegexType;
 import slim3.exception.MyException;
 import slim3.model.MsUser;
-import slim3.service.datastore.MsUserService;
 import util.Base64Util;
 import util.CookieUtil;
-import util.CypherUtil;
 import util.DateUtil;
 
 /**
- * 会員登録完了のコントローラ
+ * 会員登録完了のコントローラです。
  * @author uedadaiki
  *
  */
@@ -88,10 +85,13 @@ public class DoneEntryController extends AbstractController {
         
         //クッキーをuserIdに保存
         msUser.setUserId(encrypt);
-        //保存
+        //ユーザー情報保存
         Datastore.put(msUser);
         
-        return redirect("/tools/userManage/CustomerList");
+        //店舗情報のデフォルト値を保存
+        setShopDefaultService.setShopDefault(msUser);
+        
+        return redirect("/tools/userManage/customerList");
 //        log.info("会員登録完了しました");
     }
 }

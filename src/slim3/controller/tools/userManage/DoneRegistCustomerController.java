@@ -11,19 +11,15 @@ import slim3.controller.Const.RegexType;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.ManageUser;
-import slim3.service.datastore.ManageUserService;
-import slim3.service.datastore.MsUserService;
-import slim3.service.factory.ServiceFactory;
 import util.CookieUtil;
-import util.CypherUtil;
 import util.StackTraceUtil;
 
 /**
- * 顧客登録完了のコントローラ
+ * 顧客登録完了後のコントローラです。
  * @author uedadaiki
  *
  */
-public class RegistDoneCustomerController extends AbstractController {
+public class DoneRegistCustomerController extends AbstractController {
     
     protected static MsUserMeta MS_USER_META = MsUserMeta.get();
     

@@ -41,6 +41,7 @@ public class MenuPage implements Serializable {
 
     @Attribute(version = true)
     private Long version;
+    
 
     //メニューコンテンツ情報
     private String pageTitle;
@@ -179,4 +180,5 @@ public class MenuPage implements Serializable {
         }
         return true;
     }
+
 }

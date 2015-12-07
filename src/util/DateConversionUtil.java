@@ -1,14 +1,16 @@
 package util;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import slim3.exception.MyException;
-
+/**
+ * Date型をコンバートするユーティリティクラスです。
+ * @author uedadaiki
+ *
+ */
 public class DateConversionUtil {
     @SuppressWarnings("unused")
     private final static Logger log = Logger.getLogger(DateConversionUtil.class.getName());

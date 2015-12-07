@@ -5,6 +5,7 @@ public class Const {
     // ================================
     // 環境系
     public final static String DEFAULT_CONTENT_TYPE = "UTF-8";
+    public final static String JSON_CONTENT_TYPE = "text/html; charset=UTF-8;";
     
     // ================================
     // クッキー
@@ -19,6 +20,32 @@ public class Const {
     public final static String[] ADM_ACOUNTS = {
                 "test@example.com"
                 };
+    // ================================
+    // GoogleCloudStorage
+    public static final String BUCKETNAME = "/user-manage_img";
+    public static final String MENU_PAGE_IMG = "/menuPageImg";
+    
+    // ================================
+    // Ajax系
+    public final static String JSON_STATUS_SUCSESS = "success";
+    public final static String JSON_STATUS_WARN = "warn";
+    public final static String JSON_STATUS_ERROR = "error";
+    public final static String JSON_ERROR_FORMAT = "エラーが発生しました。[%s]";
+    
+    // ================================
+    // お店の情報
+    //営業日 or 非営業日
+    public static final String OPEN = "open";
+    public static final String NOT_OPEN = "notOpen";
+    //曜日
+    public static final String SUNDAY = "sunday";
+    public static final String MONDAY = "monday";
+    public static final String TUESDAY = "tuesday";
+    public static final String WEDNESDAY = "wednesday";
+    public static final String THURSDAY = "thursday";
+    public static final String FRIDAY = "friday";
+    public static final String SATURDAY = "saturday";
+    
     
     // ================================
     // 入力チェック正規表現

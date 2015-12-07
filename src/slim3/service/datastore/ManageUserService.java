@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.slim3.datastore.Datastore;
 
-import slim3.controller.dto.ManageUserDto;
+import slim3.dto.ManageUserDto;
 import slim3.meta.reserve.ManageUserMeta;
 import slim3.model.reserve.ManageUser;
-
+/**
+ * ユーザーが所持するカスタマーを取得するサービスです。
+ * @author uedadaiki
+ *
+ */
 public class ManageUserService {
     
     private final static ManageUserMeta MANAGE_USER_META = ManageUserMeta.get();

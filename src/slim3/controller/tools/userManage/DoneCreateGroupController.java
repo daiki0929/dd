@@ -8,7 +8,7 @@ import slim3.controller.AbstractController;
 import slim3.model.reserve.GroupManageUser;
 
 /**
- * グループ作成完了のコントローラ
+ * グループ作成完了後のコントローラです。※グループ機能が必要無いため、削除する可能性あり。
  * @author uedadaiki
  *
  */

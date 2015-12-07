@@ -1,17 +1,17 @@
 package slim3.controller.tools;
 
-import java.util.Locale;
+import java.text.SimpleDateFormat;
 
-import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
-import util.DateConversionUtil;
+import slim3.controller.AbstractController;
 
-public class IndexController extends Controller {
+public class IndexController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
         
-        return forward("/dd01/war/tools/userManage/index.jsp");
+        
+        return null;
     }
 }

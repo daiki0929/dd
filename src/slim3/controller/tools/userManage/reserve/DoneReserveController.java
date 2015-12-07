@@ -3,7 +3,12 @@ package slim3.controller.tools.userManage.reserve;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 
-public class TimescheduleListController extends Controller {
+/**
+ * メニュー予約完了後のコントローラです。
+ * @author uedadaiki
+ *
+ */
+public class DoneReserveController extends Controller {
 
     @Override
     public Navigation run() throws Exception {

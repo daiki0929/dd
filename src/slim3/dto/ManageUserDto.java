@@ -1,4 +1,4 @@
-package slim3.controller.dto;
+package slim3.dto;
 
 import java.io.Serializable;
 

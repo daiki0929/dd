@@ -6,7 +6,11 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * クッキーのユーティリティクラスです。
+ * @author uedadaiki
+ *
+ */
 public class CookieUtil {
     @SuppressWarnings("unused")
     private final static Logger log = Logger.getLogger(CookieUtil.class.getName());

@@ -8,15 +8,16 @@ import org.slim3.util.StringUtil;
 
 import slim3.controller.AbstractController;
 import slim3.controller.Const;
-import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.ManageUserMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.ManageUser;
-import slim3.service.datastore.MsUserService;
-import slim3.service.factory.ServiceFactory;
 import util.CookieUtil;
 import util.StackTraceUtil;
-
+/**
+ * カスタマーの一覧を表示します。
+ * @author uedadaiki
+ *
+ */
 public class CustomerListController extends AbstractController {
     
     @Override

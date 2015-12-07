@@ -10,14 +10,16 @@ import org.slim3.util.StringUtil;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.Const;
-import slim3.controller.dto.MsUserDto;
+import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
-import slim3.meta.reserve.ManageUserMeta;
 import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
 import util.CookieUtil;
 import util.StackTraceUtil;
-
+/**
+ * ユーザーを取得するサービスです。
+ * @author uedadaiki
+ *
+ */
 public class MsUserService extends AbstractDatastoreService{
     
     private final static MsUserMeta MS_USER_META = MsUserMeta.get();
@@ -52,8 +54,8 @@ public class MsUserService extends AbstractDatastoreService{
     }
     
     //データベースからクッキー情報(userId)でデータを1つ取得。
+    //TODO クッキーのサービスとMsUserのサービスが混ざったメソッドは良くない？
     public MsUser getSingleByCookie(HttpServletRequest request, String cookieName, MsUserMeta msUserMeta){
-        //TODO クッキーとMsUserのサービスが混ざったメソッドは良くない？
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
 //        log.info("クッキーを取り出しました：" + cookie);
         if (StringUtil.isEmpty(cookie)) {

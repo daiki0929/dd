@@ -14,15 +14,18 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import slim3.controller.Const;
-import slim3.controller.dto.MsUserDto;
+import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import slim3.service.datastore.MsUserService;
 import slim3.service.factory.ServiceFactory;
 import util.CookieUtil;
-import util.CypherUtil;
 import util.StackTraceUtil;
-
+/**
+ * ユーザーの認証機能です。
+ * @author uedadaiki
+ *
+ */
 public class AuthService {
     
     public final static Logger log = Logger.getLogger(AuthService.class.getName());
@@ -65,7 +68,7 @@ public class AuthService {
             User user = userService.getCurrentUser();
             String email = user.getEmail();
             MsUser userEmail = msUserService.getSingleByEmail(email);
-            log.info("ログイン情報：" + user.getNickname());
+//            log.info("ログイン情報：" + user.getNickname());
             if (userEmail == null) {
                 return false;
             }else if(isAdmAcount(email)){
@@ -88,7 +91,7 @@ public class AuthService {
         
         //クッキー取得
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
-        log.info("クッキーを取り出しました：" + cookie);
+//        log.info("クッキーを取り出しました：" + cookie);
         //TODO デコードが上手くいかない。webのプロジェクトとライブラリが違う？
 //        String decodeCookie = CypherUtil.decodeBrowfish(cookie);
 //        log.info("クッキーをデコードしました：" + decodeCookie);
@@ -112,7 +115,7 @@ public class AuthService {
                 return false;
             }
             
-            log.info("ログイン情報：" + msUser.getName());
+//            log.info("ログイン情報：" + msUser.getName());
             request.setAttribute("msUser", msUser);
             
         } catch (Exception e) {

@@ -1,23 +1,34 @@
 package slim3.controller;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.slim3.controller.Controller;
+import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.AbstractValidator;
 import org.slim3.controller.validator.Errors;
 import org.slim3.controller.validator.Validators;
 import org.slim3.util.ApplicationMessage;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import slim3.controller.Const.RegexType;
-import slim3.controller.dto.ManageUserDto;
-import slim3.controller.dto.MsUserDto;
+import slim3.dto.JsonDto;
+import slim3.dto.ManageUserDto;
+import slim3.dto.MsUserDto;
+import slim3.exception.MyException;
 import slim3.meta.MsUserMeta;
 import slim3.service.AuthService;
 import slim3.service.datastore.ManageUserService;
+import slim3.service.datastore.MenuPageService;
+import slim3.service.datastore.MenuService;
+import slim3.service.datastore.MsShopService;
 import slim3.service.datastore.MsUserService;
 import slim3.service.factory.ServiceFactory;
+import slim3.service.tools.userManage.SetShopDefaultService;
 import util.StackTraceUtil;
 import util.StringUtil;
 
@@ -35,12 +46,18 @@ public abstract class AbstractController extends Controller {
     // ================================================================
     // Service
     /** Datastoreサービス */
-    //--会員用
     protected ManageUserDto manageUserDto = new ManageUserDto();
     protected ManageUserService manageUserService = new ManageUserService();
-    //--運営用
     protected MsUserDto msUserDto = new MsUserDto();
+    protected JsonDto jsonDto = new JsonDto();
+    
     protected MsUserService msUserService = new MsUserService();
+    protected MenuPageService menuPageService = new MenuPageService();
+    protected MenuService menuService = new MenuService();
+    protected MsShopService msShopService = new MsShopService();
+    
+    protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
+    
     
     /** 認証サービス */
     protected AuthService authService = ServiceFactory.getService(AuthService.class);
@@ -263,8 +280,84 @@ public abstract class AbstractController extends Controller {
 //    }
 //   }
     
-    
-    
+   
+   
+   /**
+    * 返却用のJSONオブジェクトを生成します。
+    *
+    * @param status
+    * @param msg
+    * @param obj
+    * @return JsonDto
+    */
+   protected JsonDto createJsonDto(String status, String msg, String obj){
+       jsonDto.setStatus(status);
+       if(StringUtil.isNotEmpty(msg)) {
+           jsonDto.setMsg(msg);
+       }
+       if(obj != null) {
+           jsonDto.setObj(obj);
+       }
+
+       return jsonDto;
+       
+   }
+
+   
+   /**
+    * 文字列をそのままレスポンスとして返却します。
+    *
+    * @param str
+    * @return
+    */
+   protected String toJson(Object obj) {
+       ObjectMapper mapper = new ObjectMapper();
+
+       try {
+//           return mapper.writeValueAsString(obj);
+           //インデントありで出力
+           return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+           
+       } catch (JsonProcessingException e) {
+           e.printStackTrace();
+           log.warning(StackTraceUtil.toString(e));
+           throw new MyException("シリアライズ中にエラーが発生しました。");
+       }
+   }
+       
+   /**
+    * レスポンスのセッティングを行います。
+    * @param bytes
+    * @return
+    */
+   private Navigation write(byte[] bytes) {
+       try {
+           response.setCharacterEncoding(Const.DEFAULT_CONTENT_TYPE);
+           response.setContentType(Const.JSON_CONTENT_TYPE);
+           response.setContentLength(bytes.length);
+           //バイナリデータを出力するためのストリームを取得する
+           response.getOutputStream().write(bytes);
+       } catch (IOException e) {
+           throw new MyException(e);
+       }
+       try {
+           response.flushBuffer();
+       } catch (IOException e) {
+           throw new MyException(e);
+       }
+       return null;
+   }
+   
+   /**
+    * JSON形式でレスポンスを返却します。
+    *
+    * @param errors
+    * @return
+    */
+   protected Navigation returnResponse(JsonDto jsonDto) {
+       byte[] bytes = toJson(jsonDto).getBytes(Charset.forName(Const.DEFAULT_CONTENT_TYPE));
+       return write(bytes);
+   }
     
 }
 

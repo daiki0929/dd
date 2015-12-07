@@ -2,46 +2,39 @@ package slim3.controller.tools.userManage.reserve;
 
 import java.util.List;
 
-import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
-import org.slim3.util.StringUtil;
+
+import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.AbstractController;
-import slim3.controller.Const;
-import slim3.meta.reserve.ManageUserMeta;
-import slim3.meta.reserve.MenuPageMeta;
-import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
+import slim3.meta.reserve.MenuMeta;
+import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
-import util.CookieUtil;
-import util.StackTraceUtil;
-
+/**
+ * メニューの一覧を表示します。
+ * @author uedadaiki
+ *
+ */
 public class MenuListController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
         
-        if (!authService.isMsAuth(request, msUserDto, errors)) {
-            //TODO リクエストに応じたログイン画面を返す。AbstractController showLoginPage()
-            return forward("/tools/userManage/login");
-        }
+        Key menuPageKey = asKey("id");
+        MenuPage menuPage = menuPageService.get(menuPageKey);
         
-      //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, MS_USER_META);
-        if (msUser == null) {
-            return forward("/tools/userManage/login");
-        }
-        
-        //ユーザーが所持するメニューページを取り出す
-        MenuPageMeta menuPageMeta = MenuPageMeta.get();
-        List<MenuPage> menuPageList = Datastore
-                .query(menuPageMeta)
-                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
+        //ユーザーが所持するメニューを取り出す
+        MenuMeta menuMeta = MenuMeta.get();
+        List<Menu> menuList = Datastore
+                .query(menuMeta)
+                .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
                 .asList();
-        //TODO menuPageListを暗号化して渡す。
-        request.setAttribute("menuPageList", menuPageList);
         
+        log.info("menuListをセット：" + menuList.toString());
+        request.setAttribute("menuList", menuList);
+        
+        request.setAttribute("menuPageKey", menuPageKey);
         
         return forward("menuList.jsp");
     }

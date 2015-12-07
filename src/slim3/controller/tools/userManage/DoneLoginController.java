@@ -13,20 +13,17 @@ import slim3.controller.Const;
 import slim3.controller.Const.RegexType;
 import slim3.exception.MyException;
 import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
-import slim3.service.datastore.ManageUserService;
 import util.Base64Util;
 import util.CookieUtil;
 import util.DateUtil;
 
 /**
- * ログイン完了のコントローラ
+ * ログイン完了後のコントローラです。
  * @author uedadaiki
  *
  */
 public class DoneLoginController extends AbstractController {
     
-    @SuppressWarnings("unused")
     @Override
     public Navigation run() throws Exception {
         
