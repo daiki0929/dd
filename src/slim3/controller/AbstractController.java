@@ -27,8 +27,10 @@ import slim3.service.datastore.MenuPageService;
 import slim3.service.datastore.MenuService;
 import slim3.service.datastore.MsShopService;
 import slim3.service.datastore.MsUserService;
+import slim3.service.datastore.ReserveService;
 import slim3.service.factory.ServiceFactory;
 import slim3.service.tools.userManage.SetShopDefaultService;
+import util.CookieUtil;
 import util.StackTraceUtil;
 import util.StringUtil;
 
@@ -55,6 +57,7 @@ public abstract class AbstractController extends Controller {
     protected MenuPageService menuPageService = new MenuPageService();
     protected MenuService menuService = new MenuService();
     protected MsShopService msShopService = new MsShopService();
+    protected ReserveService msReserveService = new ReserveService();
     
     protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
     
@@ -270,15 +273,16 @@ public abstract class AbstractController extends Controller {
    }
    
    /**
-    * リクエストしたURLに応じて、ログイン画面を返却します。
-    *
-    * @return
+    * リクエストしたURLを保持して、ログイン画面を返却します。
+    * @return 
     */
-//   protected Navigation showLoginPage(){
-//       if (condition) {
-//        
-//    }
-//   }
+   protected Navigation showLoginPage() {
+       String requestURI = request.getRequestURI();
+       //セッションにリクエストURLを保存します。
+       CookieUtil.setCookie(response, Const.MS_REQUEST_URL, requestURI, 3600);
+       log.info("リクエストURL保存：" + requestURI);
+       return redirect("/tools/userManage/login");
+   }
     
    
    
@@ -290,7 +294,7 @@ public abstract class AbstractController extends Controller {
     * @param obj
     * @return JsonDto
     */
-   protected JsonDto createJsonDto(String status, String msg, String obj){
+   protected JsonDto createJsonDto(String status, String msg, Object obj){
        jsonDto.setStatus(status);
        if(StringUtil.isNotEmpty(msg)) {
            jsonDto.setMsg(msg);

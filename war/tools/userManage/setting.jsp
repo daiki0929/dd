@@ -23,7 +23,7 @@
 		<div class="span12">
 			<h2>管理者ページ</h2>
 			<p>
-				<a href="">アカウントの設定</a>
+				<a href="/tools/userManage/editAcount">アカウントの設定</a>
 			</p>
 			<p>
 				<a href="/tools/userManage/editOperationHours">営業日時の設定</a>

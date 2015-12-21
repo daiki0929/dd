@@ -16,26 +16,6 @@ public class ManageUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // ------------------------------------------------------
-    // GroupManageUserへの多対1の宣言(子)
-    
-    private ModelRef<GroupManageUser> GroupManageUserRef = new ModelRef<GroupManageUser>(GroupManageUser.class);
-    
-    public ModelRef<GroupManageUser> getGroupManageUserRef() {
-        return GroupManageUserRef;
-    }
-    
-    public GroupManageUser getGroupManageUser() {
-        return groupManageUser;
-    }
-    public void  setGroupManageUser(GroupManageUser groupManageUser) {
-        this.groupManageUser = groupManageUser;
-    }
-    @Attribute(persistent = false)
-    private GroupManageUser groupManageUser;    
-    
-    // ------------------------------------------------------
-    
-    // ------------------------------------------------------
     // MsUserへの多対1の宣言(子)
     
     private ModelRef<MsUser> MsUserRef = new ModelRef<MsUser>(MsUser.class);
@@ -64,6 +44,7 @@ public class ManageUser implements Serializable {
 
     //お客様情報
     private String name;
+    private String kanaName;
     private int age;
     private String address;
     private String phone;
@@ -176,6 +157,14 @@ public class ManageUser implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getKanaName() {
+        return kanaName;
+    }
+
+    public void setKanaName(String kanaName) {
+        this.kanaName = kanaName;
     }
 
 }

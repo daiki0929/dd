@@ -62,11 +62,18 @@ public class DoneLoginController extends AbstractController {
             writeErrorLog(e);
             throw new MyException(e);
         }
-        CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, encrypt, 3600);
+        //３時間有効
+        CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, encrypt, 10800);
         msUser.setUserId(encrypt);
         Datastore.put(msUser);
         log.info("クッキーを保存しました：" + encrypt);
         
-        return redirect("/tools/userManage/CustomerList");
+        //リクエストURL
+        String requestURL = CookieUtil.getCookie(request, Const.MS_REQUEST_URL);
+        if (!requestURL.isEmpty()) {
+            return redirect(requestURL);
+        }
+        CookieUtil.deleteCookie(response, Const.MS_REQUEST_URL);
+        return redirect("/tools/userManage/customerList");
     }
 }

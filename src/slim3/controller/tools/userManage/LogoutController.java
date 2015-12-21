@@ -14,7 +14,6 @@ public class LogoutController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        //TODO エラーになる。
         CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
         
         return forward("login.jsp");

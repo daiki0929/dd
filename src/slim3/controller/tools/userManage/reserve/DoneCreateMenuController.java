@@ -1,5 +1,7 @@
 package slim3.controller.tools.userManage.reserve;
 
+import java.util.HashMap;
+
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
@@ -7,6 +9,7 @@ import org.slim3.datastore.Datastore;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.AbstractController;
+import slim3.controller.Const;
 import slim3.controller.Const.RegexType;
 import slim3.model.reserve.Menu;
 /**
@@ -20,11 +23,11 @@ public class DoneCreateMenuController extends AbstractController {
     public Navigation run() throws Exception {
         
         Validators v = new Validators(request);
-        validate(v, "menuTitle", 1, 50, true, null, null);
+        validate(v, "title", 1, 50, true, null, null);
         validate(v, "time", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "price", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "content", 1, 600, false, null, null);
-        validate(v, "menuImg", 1, 400, false, null, null);
+        validate(v, "img", 1, 400, false, null, null);
 
         if (errors.size() != 0) {
             log.info("記入エラー");
@@ -32,19 +35,28 @@ public class DoneCreateMenuController extends AbstractController {
         }
         
         Menu menu = new Menu();
-        menu.setMenuTitle(asString("menuTitle"));
-        menu.setMenuImg(asString("menuImg"));
+        menu.setTitle(asString("title"));
+        menu.setImg(asString("img"));
         if (asInteger("price") != null) {
         menu.setPrice(asInteger("price"));
         }
         menu.setContent(asString("content"));
         menu.setTime(asString("time"));
+        menu.setStatus(Const.MENU_PUBLIC);
         Key menuPageKey = asKey("menuPageKey");
-        log.info("menuPageKey：" + menuPageKey.toString());
+//        log.info("menuPageKey：" + menuPageKey.toString());
         menu.getMenuPageRef().setKey(menuPageKey);
         Datastore.put(menu);
+        log.info("保存しました");
         
-        //TODO 完成したメニューページのURLを指定する。今は顧客情報のページに。
-        return forward("/tools/userManage/customerList");
+        HashMap<String, String> menuMap = new HashMap<String, String>();
+        menuMap.put("title", asString("title"));
+        menuMap.put("img", asString("img"));
+        menuMap.put("price", asString("price"));
+        menuMap.put("content", asString("content"));
+        menuMap.put("time", asString("time"));
+        
+        
+        return returnResponse(createJsonDto(Const.JSON_STATUS_SUCSESS, null, menuMap));
     }
 }

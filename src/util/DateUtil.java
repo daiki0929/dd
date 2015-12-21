@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 /**
  * Dateを扱うユーティリティクラスです。
  * @author uedadaiki
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class DateUtil {
     
-    private final static Logger log = Logger.getLogger(CookieUtil.class.getName());
+//    private final static Logger log = Logger.getLogger(CookieUtil.class.getName());
     
     /**
      * 現在時刻を返します。
@@ -50,6 +49,20 @@ public class DateUtil {
         formatter.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
         return formatter.format(date);
     }
+    /**
+     * カレンダーの日付けをString型で返します。
+     * TODO JodaTime使ってるから必要無しっぽい。
+     * @param cal
+     * @return
+     */
+//    public static String getCalendarStr(Calendar cal){
+//        String year = Integer.toString(cal.get(cal.YEAR));
+//        String month = Integer.toString(cal.get(cal.MONTH) + 1);
+//        String date = Integer.toString(cal.get(cal.DATE));
+//        String hour = Integer.toString(cal.get(cal.HOUR_OF_DAY));
+//        String minute = Integer.toString(cal.get(cal.MINUTE));
+//        return String.format("%s/%s/%s %s:%s", year, month, date, hour, minute);
+//    }
     
 //    /**
 //     * String型からDate型に変換します

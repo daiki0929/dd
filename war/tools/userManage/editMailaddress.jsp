@@ -7,34 +7,27 @@
 <head>
 <%-- META情報 --%>
 <%@ include file="/tools/userManage/common/meta.jsp"%>
-<title>メニューページ一覧</title>
+<title>アカウントページ</title>
 <!-- css -->
 <%@ include file="/tools/userManage/common/importCss.jsp"%>
 
 <%-- JSインポート --%>
 <%@ include file="/tools/userManage/common/importJs.jsp"%>
+<script type="text/javascript">
+	
+</script>
 </head>
 <body>
 	<%@ include file="/tools/userManage/common/topBar.jsp"%>
 	<div class="container">
 		<div class="span12">
-			<h2>予約ページ</h2>
-			<p>${menuPage.pageTitle}</p>
-			<img src="${menuPage.topImg}" />
-			<p>${menuPage.time}分</p>
-			<p>${menuPage.price}円</p>
-			<p>${menuPage.content}</p>
-			<hr />
-			<h3>メニュー</h3>
-			<c:forEach var="menu" items="${menuList}">
-				<a href="/tools/userManage/reserve/Timeschedule?id=${f:h(menu.key)}">
-					<div class="span3" style="background-color: #f2f2f2;">
-						<p>タイトル：${menu.menuTitle}</p>
-						<p>時間：${menu.time}</p>
-						<p>料金：${menu.price}</p>
-					</div>
-				</a>
-			</c:forEach>
+			<form action="/tools/userManage/doneEditAcount">
+				<p>メールアドレス</p>
+				<p>変更後のメールアドレスに確認メールが届きます。</p>
+				<p>メールに記載されている認証リンクをクリックし、変更を完了してください。</p>
+				<input type="text" name="name" value="${msUser.mailaddress}">
+				<input type="submit" class="btn btn-info" value="変更する">
+			</form>
 		</div>
 	</div>
 </body>

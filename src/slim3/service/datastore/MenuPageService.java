@@ -11,6 +11,7 @@ import slim3.model.reserve.MenuPage;
  */
 public class MenuPageService extends AbstractDatastoreService{
     
+//    private final static MenuPageMeta MENUPAGE_META = MenuPageMeta.get();
     
     /**
      * メニューページをkeyで1つ取得する。

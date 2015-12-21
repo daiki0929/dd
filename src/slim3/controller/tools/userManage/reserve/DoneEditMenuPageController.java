@@ -20,10 +20,9 @@ public class DoneEditMenuPageController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
-
+        //認証機能
         if (!authService.isMsAuth(request, msUserDto, errors)) {
-            //TODO リクエストに応じたログイン画面を返す。AbstractController showLoginPage()
-            return forward("/tools/userManage/login");
+            return super.showLoginPage();
         }
         
         //データベースからクッキー情報(userId)でデータを1つ取得。
@@ -40,9 +39,11 @@ public class DoneEditMenuPageController extends AbstractController {
         validate(v, "reserveSystem", 1, 20, false, null, null);
         //公開 or 非公開
         validate(v, "status", 1, 20, false, null, null);
+        //予約受付け間隔
+        validate(v, "reserveInterval", 1, 4, false, null, null);
         //予約受け付け期間
-        validate(v, "reserveStartDay", 1, 10, false, null, null);
-        validate(v, "reserveStopDay", 1, 10, false, null, null);
+        validate(v, "reserveStartTime", 1, 10, false, null, null);
+        validate(v, "reserveEndTime", 1, 10, false, null, null);
         //キャンセル受付
         validate(v, "cancelTime", 1, 10, false, null, null);
         //予約不可の日程(定休日以外)
@@ -63,10 +64,11 @@ public class DoneEditMenuPageController extends AbstractController {
         menuPage.setDescription(asString("description"));
         menuPage.setTopImg(asString("topImg"));
         menuPage.setReserveSystem(asString("reserveSystem"));
+        menuPage.setInterval(asInteger("reserveInterval"));
         menuPage.setStatus(asString("status"));
-        menuPage.setReserveStartDay(asString("reserveStartDay"));
-        menuPage.setReserveStopDay(asString("reserveStopDay"));
-        menuPage.setCancelTime(asString("cancelTime"));
+        menuPage.setReserveStartTime(asInteger("reserveStartTime"));
+        menuPage.setReserveEndTime(asInteger("reserveEndTime"));
+        menuPage.setCancelTime(asInteger("cancelTime"));
         menuPage.setNoReserveDate(asString("noReserveDate"));
         Datastore.put(menuPage);
 

@@ -22,10 +22,9 @@ public class CustomerListController extends AbstractController {
     
     @Override
     public Navigation run() throws Exception {
-        
+        //認証機能
         if (!authService.isMsAuth(request, msUserDto, errors)) {
-            //TODO リクエストに応じたログイン画面を返す。AbstractController showLoginPage()
-            return forward("/tools/userManage/login");
+            return super.showLoginPage();
         }
         
         //クッキー取得
@@ -57,10 +56,6 @@ public class CustomerListController extends AbstractController {
                     .asList();
             request.setAttribute("customerList", manageUser);
             
-            //TODO グループ機能は必要ないかも
-//            GroupManageUserMeta groupManageUserMeta = GroupManageUserMeta.get();
-//            List<GroupManageUser> groupManageUserList = Datastore.query(groupManageUserMeta).asList();
-//            request.setAttribute("groupList", groupManageUserList);
             
         } catch (Exception e) {
             StackTraceUtil.toString(e);

@@ -31,8 +31,6 @@ public class AuthService {
     public final static Logger log = Logger.getLogger(AuthService.class.getName());
     protected static MsUserMeta MS_USER_META = MsUserMeta.get();
     private MsUserService msUserService = ServiceFactory.getService(MsUserService.class);
-    //TODO なぜ出来ない？
-//    new MsUser();
     
     /**
      * 管理者のメールアドレスか認証します。

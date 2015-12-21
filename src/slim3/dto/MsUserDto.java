@@ -6,7 +6,6 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.Const.Role;
 import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
 
 public class MsUserDto implements Serializable {
 

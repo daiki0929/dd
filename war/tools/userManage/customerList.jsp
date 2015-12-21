@@ -32,6 +32,7 @@
 	<div id="container">
 		<div id="content">
 			<div class="span12">
+			<a href="/tools/userManage/logout">ログアウトする</a>
 				<h3>お客様一覧</h3>
 				<c:forEach var="customer" items="${customerList}">
 					<a href="/tools/userManage/userDetail">
@@ -53,16 +54,24 @@
 		<%@ include file="/tools/userManage/common/error.jsp"%>
 		<div class="span12">
 			<h3>新規追加</h3>
-			<form action="/tools/userManage/RegistDoneCustomer" method="post">
+			<form action="/tools/userManage/doneRegistCustomer" method="post">
 				<p>名前</p>
+				<p>(例)田中太郎</p>
 				<input type="text" name="name">
+				<p>ふりがな</p>
+				<p>(例)たなかたろう</p>
+				<input type="text" name="kanaName">
 				<p>年齢</p>
-				<input type="text" name="age">
+				<p>(例)20</p>
+				<input type="text" name="age">歳
 				<p>住所</p>
+				<p>(例)大阪府大阪市中央区◯町目◯-◯</p>
 				<input type="text" name="address">
 				<p>電話番号</p>
+				<p>(例)000-0000-0000</p>
 				<input type="text" name="phone">
 				<p>メールアドレス</p>
+				<p>(例)example@sample.com</p>
 				<input type="text" name="mailaddress">
 				<br />
 				<input type="submit" value="追加">

@@ -4,8 +4,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 
-import com.google.appengine.api.datastore.Key;
-
 import slim3.controller.AbstractController;
 import slim3.controller.Const;
 import slim3.model.MsUser;
@@ -19,10 +17,9 @@ public class DoneCreateMenuPageController extends AbstractController {
     
     @Override
     public Navigation run() throws Exception {
-        
+        //認証機能
         if (!authService.isMsAuth(request, msUserDto, errors)) {
-            //TODO リクエストに応じたログイン画面を返す。AbstractController showLoginPage()
-            return forward("/tools/userManage/login");
+            return super.showLoginPage();
         }
         
         //データベースからクッキー情報(userId)でデータを1つ取得。
@@ -52,24 +49,31 @@ public class DoneCreateMenuPageController extends AbstractController {
             return forward("/tools/userManage/reserve/createMenuPage");
         }
         
-        Key key = Datastore.allocateId(MenuPage.class);
         MenuPage menuPage = new MenuPage();
-        menuPage.setKey(key);
         menuPage.getMsUserRef().setKey(msUser.getKey());
-        log.info("key：" + key.toString());
         menuPage.setPageTitle(asString("pageTitle"));
         menuPage.setDescription(asString("description"));
         menuPage.setTopImg(asString("topImg"));
         menuPage.setReserveSystem(asString("reserveSystem"));
         menuPage.setStatus(asString("status"));
-        menuPage.setReserveStartDay(asString("reserveStartDay"));
-        menuPage.setReserveStopDay(asString("reserveStopDay"));
-        menuPage.setCancelTime(asString("cancelTime"));
+        //asIntegerがnullだとエラーが表示されるので、エラーページへ飛ばします。
+        try {
+            menuPage.setReserveStartTime(asInteger("reserveStartTime"));
+            menuPage.setReserveEndTime(asInteger("reserveEndTime"));
+            menuPage.setCancelTime(asInteger("cancelTime"));
+        } catch (Exception e) {
+            log.info("エラーが発生しました。");
+            e.printStackTrace();
+            return forward("/tools/userManage/common/errorPage.jsp");
+        }
         menuPage.setNoReserveDate(asString("noReserveDate"));
         Datastore.put(menuPage);
-        request.setAttribute("menuPageKey", key);
-        
-        
-        return forward("/tools/userManage/reserve/createMenu.jsp");
+        //TODO getで渡せないので、メニューページ一覧に飛ばします。
+//        Key menuPageKey = menuPage.getKey();
+//        String keyToString = Datastore.keyToString(menuPageKey);
+//        log.info("menuPageKey" + menuPageKey);
+//
+//        return forward(String.format("%s%s", "/tools/userManage/reserve/menuList?id=", keyToString));
+        return forward("/tools/userManage/reserve/menuPageList");
     }
 }

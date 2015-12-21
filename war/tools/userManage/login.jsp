@@ -22,7 +22,7 @@
 			<!-- エラーメッセージ -->
 			<%@ include file="/tools/userManage/common/error.jsp"%>
 			<div class="span12">
-				<a href="/tools/userManage/entry/Entry"><button class="btn btn-warning">会員登録</button></a>
+				<a href="/tools/userManage/entry"><button class="btn btn-warning">会員登録</button></a>
 				<h3>ログイン</h3>
 				<form action="/tools/userManage/doneLogin" method="post">
 					<p>メールアドレス</p>

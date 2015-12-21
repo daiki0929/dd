@@ -12,6 +12,10 @@ public class SettingController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
+        //認証機能
+        if (!authService.isMsAuth(request, msUserDto, errors)) {
+            return super.showLoginPage();
+        }
         
         return forward("setting.jsp");
     }

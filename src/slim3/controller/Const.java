@@ -14,6 +14,7 @@ public class Const {
 //    public final static String COKKIE_CIPHER = "s8j34kd7";
     public final static String MS_AUTH_COOKIE_DISP_TIME = "1sjr74mv";
 //    public final static String MEGAPON_AUTH_COOKIE_DISP_TIME = "sg39d9nl";
+    public final static String MS_REQUEST_URL = "euhxdgtp";
     
     // ================================
     // 管理者
@@ -33,7 +34,7 @@ public class Const {
     public final static String JSON_ERROR_FORMAT = "エラーが発生しました。[%s]";
     
     // ================================
-    // お店の情報
+    // 店舗の情報
     //営業日 or 非営業日
     public static final String OPEN = "open";
     public static final String NOT_OPEN = "notOpen";
@@ -45,6 +46,12 @@ public class Const {
     public static final String THURSDAY = "thursday";
     public static final String FRIDAY = "friday";
     public static final String SATURDAY = "saturday";
+    public static final String[] DAYS_OF_THE_WEEK = {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
+    
+    // ================================
+    // お店の情報
+    public static final String MENU_PUBLIC = "public";
+    public static final String MENU_CLOSED = "closed";
     
     
     // ================================
@@ -71,9 +78,11 @@ public class Const {
     /** (プラス、マイナス可、少数不可) */
     public final static String REGEX_NUMBER_ALL = "^[-]?[0-9]+(¥.[0-9]+)?$";
 
+    public final static String REGEX_YEAR_DATE = "([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})";
     public final static String REGEX_YEAR = "^(19|20)[\\d]{2}+$";
     public final static String REGEX_MONTH = "^(0[1-9]|1[0-2])|[1-9]";
     public final static String REGEX_DAY = "^(0[1-3]|1[0-9]|2[0-9]|3[0-1])|[1-9]";
+    public final static String REGEX_MOMENTS = "^([01]?[0-9]|2[0-3]):([0-5][0-9])$";
 //    public final static String REGEX_PHONE = "^[0-9]+$|^[0-9]+-+[0-9]+-+[0-9]+$";
     public final static String REGEX_PHONE = "^[0-9]+-[0-9]+-[0-9]+$";
     public final static String REGEX_MAIL_ADDRESS = "[\\w\\.\\-]+@(?:[\\w\\-]+\\.)+[\\w\\-]+";
@@ -94,9 +103,11 @@ public class Const {
         NUMBER_DECIMAL(new String[] { REGEX_NUMBER_DECIMAL }),
         NUMBER(new String[] { REGEX_NUMBER }),
         NUMBER_ALL(new String[] { REGEX_NUMBER_ALL }),
+        YEAR_DATE(new String[] { REGEX_YEAR_DATE }),
         YEAR(new String[] { REGEX_YEAR }),
         MONTH(new String[] { REGEX_MONTH }),
         DAY(new String[] { REGEX_DAY }),
+        MOMENTS(new String[] { REGEX_MOMENTS }),
         PHONE(new String[] { REGEX_PHONE }),
         MAIL_ADDRESS(new String[] { REGEX_MAIL_ADDRESS }),
         PASSWORD(new String[] { REGEX_PASSWORD }),

@@ -34,8 +34,8 @@ public class DoneEditMenuController extends AbstractController {
         //該当するメニューを編集する。
         Key menuKey = asKey("menuKey");
         Menu menu = menuService.get(menuKey);
-        menu.setMenuTitle(asString("menuTitle"));
-        menu.setMenuImg(asString("menuImg"));
+        menu.setTitle(asString("menuTitle"));
+        menu.setImg(asString("menuImg"));
         if (asInteger("price") != null) {
         menu.setPrice(asInteger("price"));
         }
@@ -43,7 +43,8 @@ public class DoneEditMenuController extends AbstractController {
         menu.setTime(asString("time"));
         Datastore.put(menu);
         
-        //TODO 完成したメニューページのURLを指定する。今は顧客情報のページに。
-        return forward("/tools/userManage/customerList");
+        Key menuPageKey = menu.getMenuPageRef().getKey();
+        
+        return forward(String.format("%s%s", "/tools/userManage/reserve/menuList?id=", menuPageKey.toString()));
     }
 }

@@ -1,9 +1,8 @@
 package util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * 文字列を扱うユーティリティクラスです。
  * @author uedadaiki
@@ -72,13 +71,17 @@ public class StringUtil {
     }
     
     /**
-     * String型をDate型に変換します。
-     * @throws ParseException 
+     * 文字列を正規表現でパースします。
+     * @param str
+     * @param regex
+     * @param replaceStr
+     * @return
      */
-    public static Date strToDate(String dateStr) throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm");
-        Date strToDate = sdf.parse(dateStr);
-        return strToDate;
+    public static String parseRegex(String str, String regex, String replaceStr){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(str);
+        String parsedStr = m.replaceFirst(replaceStr);
+        return parsedStr;
     }
     
     /**

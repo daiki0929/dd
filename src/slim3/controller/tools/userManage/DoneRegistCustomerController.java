@@ -28,6 +28,7 @@ public class DoneRegistCustomerController extends AbstractController {
         
         Validators v = new Validators(request);
         validate(v, "name", 1, 20, true, null, null);
+        validate(v, "kanaName", 1, 20, false, RegexType.KANA_HIRA, null);
         validate(v, "age", 1, 3, false, null, null);
         validate(v, "address", 1, 40, false, null, null);
         validate(v, "phone", 1, 50, false, RegexType.PHONE, null);
@@ -49,19 +50,20 @@ public class DoneRegistCustomerController extends AbstractController {
         }
         
         String name = asString("name");
+        String kanaName = asString("kanaName");
         String address = asString("address");
         String phone = asString("phone");
         String mailaddress = asString("mailaddress");
         
         ManageUser manageUserData = new ManageUser();
         
-        //TODO nullだとエラーになる。オーバーライドすべき？
         if (asInteger("age") != null) {
             int age = asInteger("age");
             manageUserData.setAge(age);
         }
         
         manageUserData.setName(name);
+        manageUserData.setKanaName(kanaName);
         manageUserData.setAddress(address);
         manageUserData.setPhone(phone);
         manageUserData.setMailaddress(mailaddress);
@@ -90,12 +92,10 @@ public class DoneRegistCustomerController extends AbstractController {
             manageUserData.getMsUserRef().setKey(msUser.getKey());
             
             //保存
-            //TODO キャッシュを削除する？
-            ///web17/src/slim3/jackpot/controller/adm/delivery/check/DoneController.java　L232
             Datastore.put(manageUserData);
             log.info("保存しました。");
             
-            return redirect("/tools/userManage/CustomerList");
+            return redirect("/tools/userManage/customerList");
             
         } catch (Exception e) {
             log.info("保存に失敗しました。");

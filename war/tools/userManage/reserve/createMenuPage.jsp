@@ -35,8 +35,8 @@
 			</label> <label class="radio"> <input type="radio" name="status" value="not_open"> 非公開
 			</label>
 			<p>予約受け付け期間</p>
-			<select name="reserveStartDay">
-				<option value="">設定しない</option>
+			<select name="reserveStartTime">
+				<option value="0">設定しない</option>
 				<option value="604800">7日前から</option>
 				<option value="1209600">14日前から</option>
 				<option value="1814400">21日前から</option>
@@ -44,9 +44,32 @@
 				<option value="5184000">60日前から</option>
 				<option value="7776000">90日前から</option>
 			</select>
+			<p>予約締め切り期間</p>
+			<select name="reserveEndTime">
+				<option value="0">設定しない</option>
+				<option value="3600">1時間前まで</option>
+				<option value="7200">2時間前まで</option>
+				<option value="10800">3時間前まで</option>
+				<option value="14400">4時間前まで</option>
+				<option value="18000">5時間前まで</option>
+				<option value="21600">6時間前まで</option>
+				<option value="25200">7時間前まで</option>
+				<option value="28800">8時間前まで</option>
+				<option value="32400">9時間前まで</option>
+				<option value="36000">10時間前まで</option>
+				<option value="39600">11時間前まで</option>
+				<option value="43200">12時間前まで</option>
+				<option value="86400">1日前まで</option>
+				<option value="172800">2日前まで</option>
+				<option value="259200">3日前まで</option>
+				<option value="345600">4日前まで</option>
+				<option value="432000">5日前まで</option>
+				<option value="518400">6日前まで</option>
+				<option value="604800">7日前まで</option>
+			</select>
 			<p>キャンセル期間</p>
-			<select name="reserveStopDay">
-				<option value="">設定しない</option>
+			<select name="cancelTime">
+				<option value="0">設定しない</option>
 				<option value="3600">1時間前まで</option>
 				<option value="7200">2時間前まで</option>
 				<option value="10800">3時間前まで</option>

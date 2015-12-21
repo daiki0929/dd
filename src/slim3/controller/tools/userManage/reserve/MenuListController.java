@@ -8,11 +8,12 @@ import org.slim3.datastore.Datastore;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.AbstractController;
+import slim3.controller.Const;
 import slim3.meta.reserve.MenuMeta;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
 /**
- * メニューの一覧を表示します。
+ * メニューの一覧・追加画面を表示します。
  * @author uedadaiki
  *
  */
@@ -21,20 +22,52 @@ public class MenuListController extends AbstractController {
     @Override
     public Navigation run() throws Exception {
         
-        Key menuPageKey = asKey("id");
-        MenuPage menuPage = menuPageService.get(menuPageKey);
+        //認証機能
+        if (!authService.isMsAuth(request, msUserDto, errors)) {
+            return super.showLoginPage();
+        }
         
-        //ユーザーが所持するメニューを取り出す
-        MenuMeta menuMeta = MenuMeta.get();
-        List<Menu> menuList = Datastore
-                .query(menuMeta)
-                .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
-                .asList();
         
-        log.info("menuListをセット：" + menuList.toString());
-        request.setAttribute("menuList", menuList);
-        
-        request.setAttribute("menuPageKey", menuPageKey);
+        try {
+            Key menuPageKey = asKey("id");
+            MenuPage menuPage = menuPageService.get(menuPageKey);
+            
+            if (menuPage != null) {
+                String closedParam = asString("s");
+                if (closedParam == null) {
+                    //公開メニューを取り出す
+                    MenuMeta menuMeta = MenuMeta.get();
+                    List<Menu> publicMenuList = Datastore
+                            .query(menuMeta)
+                            .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
+                            .filter(menuMeta.status.equal(Const.MENU_PUBLIC))
+                            .asList();
+                    log.info("公開しているメニュー：" + publicMenuList.toString());
+                    request.setAttribute("publicMenuList", publicMenuList);
+                }else if(closedParam != null) {
+                    //非公開メニューを取り出す
+                    MenuMeta menuMeta = MenuMeta.get();
+                    List<Menu> closedMenuList = Datastore
+                            .query(menuMeta)
+                            .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
+                            .filter(menuMeta.status.equal(Const.MENU_CLOSED))
+                            .asList();
+                    log.info("非公開のメニュー：" + closedMenuList.toString());
+                    
+                    request.setAttribute("closedMenuList", closedMenuList);
+                }
+                
+            }else {
+                log.info("メニューはありませんでした。");
+            }
+            
+            request.setAttribute("menuPageKey", menuPageKey);
+            
+        } catch (Exception e) {
+            log.info("エラーが発生しました。");
+            e.printStackTrace();
+            return forward("/tools/userManage/common/errorPage.jsp");
+        }
         
         return forward("menuList.jsp");
     }

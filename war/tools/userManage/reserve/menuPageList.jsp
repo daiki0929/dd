@@ -24,7 +24,7 @@
 				<p style="margin-top: 20px; background-color: #f2f2f2;">${menuPage.pageTitle}</p>
 				<a href="/tools/userManage/reserve/editMenuPage?id=${f:h(menuPage.key)}"><p class="btn">メニューページ編集</p></a>
 				<a href="/tools/userManage/reserve/menuList?id=${f:h(menuPage.key)}"><p class="btn">メニュー管理</p></a>
-				<a href="/tools/userManage/reserve/reserve?id=${f:h(menuPage.key)}"><p class="btn btn-info">メニューページ確認</p></a>
+				<a href="/tools/userManage/reserve/selectMenu?id=${f:h(menuPage.key)}" target="_blank"><p class="btn btn-info">メニューページ確認</p></a>
 			</c:forEach>
 		</div>
 	</div>

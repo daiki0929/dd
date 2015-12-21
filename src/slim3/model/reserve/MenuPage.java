@@ -1,7 +1,6 @@
 package slim3.model.reserve;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -51,11 +50,14 @@ public class MenuPage implements Serializable {
     private String reserveSystem;
     //公開 or 非公開
     private String status;
-    //予約受け付け期間
-    private String reserveStartDay;
-    private String reserveStopDay;
+    //予約受け付け間隔
+    private int interval;
+    //予約受け付け開始
+    private int reserveStartTime;
+    //予約受け付け終了
+    private int reserveEndTime;
     //キャンセル期間
-    private String cancelTime;
+    private int cancelTime;
     //予約不可の日程(定休日以外)
     private String noReserveDate;
     
@@ -103,28 +105,20 @@ public class MenuPage implements Serializable {
         this.status = status;
     }
 
-    public String getReserveStartDay() {
-        return reserveStartDay;
+    public int getReserveStartTime() {
+        return reserveStartTime;
     }
 
-    public void setReserveStartDay(String reserveStartDay) {
-        this.reserveStartDay = reserveStartDay;
+    public void setReserveStartTime(int reserveStartTime) {
+        this.reserveStartTime = reserveStartTime;
     }
 
-    public String getReserveStopDay() {
-        return reserveStopDay;
+    public int getReserveEndTime() {
+        return reserveEndTime;
     }
 
-    public void setReserveStopDay(String reserveStopDay) {
-        this.reserveStopDay = reserveStopDay;
-    }
-
-    public String getCancelTime() {
-        return cancelTime;
-    }
-
-    public void setCancelTime(String cancelTime) {
-        this.cancelTime = cancelTime;
+    public void setReserveEndTime(int reserveEndTime) {
+        this.reserveEndTime = reserveEndTime;
     }
 
     public String getNoReserveDate() {
@@ -180,5 +174,24 @@ public class MenuPage implements Serializable {
         }
         return true;
     }
+
+
+    public int getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(int cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+
 
 }

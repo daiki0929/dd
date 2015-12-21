@@ -19,10 +19,9 @@ public class MenuPageListController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
-        
+        //認証機能
         if (!authService.isMsAuth(request, msUserDto, errors)) {
-            //TODO リクエストに応じたログイン画面を返す。AbstractController showLoginPage()
-            return forward("/tools/userManage/login");
+            return super.showLoginPage();
         }
         
       //データベースからクッキー情報(userId)でデータを1つ取得。

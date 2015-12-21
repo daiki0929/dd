@@ -13,6 +13,7 @@
 
 <%-- JSインポート --%>
 <%@ include file="/tools/userManage/common/importJs.jsp"%>
+<%@ include file="/tools/userManage/common/actionMenuJs.jsp"%>
 </head>
 <body>
 	<%@ include file="/tools/userManage/common/topBar.jsp"%>
@@ -21,9 +22,9 @@
 		<%@ include file="/tools/userManage/common/error.jsp"%>
 		<div class="span12">
 			<h3>メニューの新規作成</h3>
-			<form action="/tools/userManage/reserve/doneCreateMenu" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+			<form>
 				<p>メニューの名前</p>
-				<input type="text" name="menuTitle">
+				<input type="text" name="title">
 				<p>時間</p>
 				<select name="time">
 					<option value="1800">30 分</option>
@@ -45,10 +46,27 @@
 				<p>メニューの内容(600字以内)</p>
 				<input type="text" name="content">
 				<p>画像</p>
-				<input type="file" name="phone"> <input type="hidden"
-					name="menuPageKey" value="${f:h(menuPageKey)}"> <br /> <input
-					type="submit" value="完了">
+				<input type="file" name="img"> <input type="hidden" name="menuPageKey" value="${f:h(menuPageKey)}">
+				<br />
+				<p class="btn btn-info" onclick="createMenu();">完了</p>
 			</form>
+			<a href="/tools/userManage/reserve/selectMenu?id=${f:h(menuPageKey)}">完成したメニューページを見る</a>
+			
+			<div class="span12 menuList">
+				<c:forEach var="menu" items="${menuList}">
+					<div id="${f:h(menu.key)}" class="span8" style="border: 1px solid #dedede; margin-bottom: 20px;">
+						<p style="background-color: #f3f3f3;">メニュー名：${menu.title}</p>
+						<div class="span8">
+							<p>時間：<span class="menuTime">${menu.time/60}</span>分</p>
+							<p>料金：${menu.price}円</p>
+							<a href="/tools/userManage/reserve/EditMenu?id=${f:h(menu.key)}">編集する</a>
+							<br />
+							<p onclick="deleteMenu(${f:h(menu.key)})" class="btn btn-info">非公開にする</p>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+			
 		</div>
 	</div>
 </body>

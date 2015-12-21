@@ -1,11 +1,9 @@
 package slim3.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
-import org.slim3.datastore.ModelRef;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -27,15 +25,11 @@ public class MsUser implements Serializable {
     private String userId;
     //権限
     private Role role;
-    //名前
+    //名前(個人名 or 店舗名)
     private String name;
     //ふりがな
     @Attribute(unindexed = true)
     private String kanaName;
-    //性別
-    private String sex;
-    //年齢
-    private int age;
     //住所
     private String address;
     //電話番号
@@ -77,20 +71,6 @@ public class MsUser implements Serializable {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-    public String getSex() {
-        return sex;
-    }
-    
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 
     public String getAddress() {
         return address;

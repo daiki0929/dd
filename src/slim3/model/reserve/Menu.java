@@ -1,7 +1,6 @@
 package slim3.model.reserve;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -43,27 +42,38 @@ public class Menu implements Serializable {
     private Long version;
 
     //メニュー情報
-    private String menuTitle;
-    private String menuImg;
+    private String title;
+    private String img;
     private int price;
     private String content;
     private String time;
+    //公開 or 非公開 
+    private String status;
     
 
-    public String getMenuTitle() {
-        return menuTitle;
+
+    public String getStatus() {
+        return status;
     }
 
-    public void setMenuTitle(String menuTitle) {
-        this.menuTitle = menuTitle;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getMenuImg() {
-        return menuImg;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMenuImg(String menuImg) {
-        this.menuImg = menuImg;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public int getPrice() {

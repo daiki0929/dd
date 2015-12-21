@@ -1,30 +1,55 @@
 package slim3.controller.tools.userManage.reserve;
 
-import org.slim3.controller.Controller;
+import java.util.HashMap;
+import java.util.List;
+
 import org.slim3.controller.Navigation;
 
 import com.google.appengine.api.datastore.Key;
+
+import slim3.controller.AbstractController;
+import slim3.model.MsShop;
+import slim3.model.reserve.Menu;
+import slim3.model.reserve.MenuPage;
 /**
  * カスタマーに予約できる日時を表示します。
  * @author uedadaiki
  *
  */
-public class TimescheduleController extends Controller {
+public class TimescheduleController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
         
-        //メニューのkey
-        Key key = asKey("id");
+        Key selectedMeuKey = asKey("menuId");
+        Key userKey = asKey("userId");
         
-        //TODO メニューの時間、最初に設定した営業時間を計算。予約可能な日時をスケジュールで表示する。
+        //メニューの時間
+        Menu orderMenu = menuService.get(selectedMeuKey);
+        
+        //メニューのkeyでメニューページにある受付開始・終了を取得します。
+        Key MenuPageRefKey = orderMenu.getMenuPageRef().getKey();
+        MenuPage menuPage = menuPageService.get(MenuPageRefKey);
+        //受付開始(日)
+        int reserveStartTime = menuPage.getReserveStartTime();
+        //受付開始(秒)
+        int reserveEndTime = menuPage.getReserveEndTime();
+        
+        //メニューのリスト
+        List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
+        
+        //最初に設定している予約可能時間
+        MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
+        HashMap<String, HashMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
+        
+        request.setAttribute("orderMenu", orderMenu);
+        request.setAttribute("statusByDays", statusByDays);
+        request.setAttribute("reserveStartTime", Integer.toString(reserveStartTime));
+        request.setAttribute("reserveEndTime", Integer.toString(reserveEndTime));
+        request.setAttribute("selectedMeuKey", selectedMeuKey);
+        request.setAttribute("menuList", menuList);
         
         
-        
-        //TODO 予約完了後、カスタマーとユーザーにメールで通知。
-        
-        
-        
-        return forward("index.jsp");
+        return forward("timeschedule.jsp");
     }
 }
