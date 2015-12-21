@@ -12,6 +12,7 @@ import com.google.appengine.api.datastore.Key;
 import slim3.model.MsUser;
 
 @Model(schemaVersion = 1)
+//TODO kitazawa Javadoc
 public class Reserve implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -149,6 +150,7 @@ public class Reserve implements Serializable {
         return result;
     }
 
+    //TODO kitazawa 継承する必要ある？
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

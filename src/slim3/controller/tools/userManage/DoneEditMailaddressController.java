@@ -10,6 +10,7 @@ import slim3.controller.Const.RegexType;
  * @author uedadaiki
  *
  */
+//TODO kitazawa Mailaddress は mailAdressじゃない？
 public class DoneEditMailaddressController extends AbstractController {
 
     @Override

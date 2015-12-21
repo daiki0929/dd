@@ -23,6 +23,7 @@ public class EditAcountController extends AbstractController {
         }
 
         //クッキー取得
+        //TODO kitazawa 上長に変えてるけど必要？共通化したほうがいい。＋認証の意味があるのかよくわからない。 
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
         log.info("クッキーを取り出しました：" + cookie);
         if (StringUtil.isEmpty(cookie)) {

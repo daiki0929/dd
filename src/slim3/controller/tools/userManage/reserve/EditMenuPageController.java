@@ -15,6 +15,7 @@ public class EditMenuPageController extends AbstractController {
     @Override
     public Navigation run() throws Exception {
         
+        //TODO kitazawa asKey()でいいんじゃない？ 
         String menuPageIdStr = asString("id");
         MenuPage menuPage = menuPageService.get(Datastore.stringToKey(menuPageIdStr));
         

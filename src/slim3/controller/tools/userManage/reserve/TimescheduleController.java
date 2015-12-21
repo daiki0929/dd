@@ -16,6 +16,7 @@ import slim3.model.reserve.MenuPage;
  * @author uedadaiki
  *
  */
+//TODO kitazawa ひとつのユースケースに対して、1パッケージにしたほうが見やすくない？
 public class TimescheduleController extends AbstractController {
 
     @Override

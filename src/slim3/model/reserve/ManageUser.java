@@ -42,6 +42,7 @@ public class ManageUser implements Serializable {
     @Attribute(version = true)
     private Long version;
 
+    //TODO kitazawa @Attribute(unindexed = true)をつかって検索しないキーはIndex作らないほうが安くなる
     //お客様情報
     private String name;
     private String kanaName;

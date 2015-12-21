@@ -43,11 +43,13 @@ public class Menu implements Serializable {
 
     //メニュー情報
     private String title;
+    //TODO kitazawa 画像そのものではないなら、imgPathとかimgUrlとかにするべき 
     private String img;
     private int price;
     private String content;
     private String time;
     //公開 or 非公開 
+    //TODO kitazawa ステータスはEnumにすべき
     private String status;
     
 

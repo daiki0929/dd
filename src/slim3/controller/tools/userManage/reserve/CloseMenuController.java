@@ -13,6 +13,7 @@ import slim3.model.reserve.Menu;
  * @author uedadaiki
  *
  */
+//TODO kitazawa 例外吐いたら、JSP返却するよね？正常系だとJSON返すから、Javascript側が複雑にならない？どちらもJSON返す形にした方がいい。
 public class CloseMenuController extends AbstractController {
 
     @Override

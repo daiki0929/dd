@@ -29,6 +29,8 @@ public class EditMailaddressController extends AbstractController {
             log.info("クッキーがありませんでした。");
             return null;
         }
+        
+        //TODO kitazawa ココで取り出したものと、 msUserDto.getMsUser()って一緒じゃない？
         try {
             MsUser msUser = Datastore
                     .query(MS_USER_META)

@@ -35,11 +35,15 @@ public class EditOperationHoursController extends AbstractController {
         //お店の情報を取得
         Key msUserKey = msUser.getKey();
         MsShopMeta msShopMeta = MsShopMeta.get();
+      
+        //TODO kitazawa .queryのところはインデントひとつさげる
         MsShop msShop = Datastore
-        .query(msShopMeta)
-        .filter(msShopMeta.msUserRef.equal(msUserKey))
-        .asSingle();
+            .query(msShopMeta)
+            .filter(msShopMeta.msUserRef.equal(msUserKey))
+            .asSingle();
+        
         //ユーザーが所持するお店の情報
+        //TODO kitazawa HashMapだと順序性保証されないけどだいじょうぶ？問題ないならOK 
         HashMap<String, HashMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         if (shopStatusByDays == null) {
             //店舗情報のデフォルト値を保存

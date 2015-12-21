@@ -22,6 +22,7 @@ import util.DateUtil;
  * @author uedadaiki
  *
  */
+//TODO kitazawa ログイン系の処理よね。userManageのパッケージではない気がする。
 public class DoneLoginController extends AbstractController {
     
     @Override

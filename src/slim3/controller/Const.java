@@ -1,5 +1,5 @@
 package slim3.controller;
-
+//TODO kitazawa ConstはControllerではないのでパッケージはslim3の下
 public class Const {    
     
     // ================================

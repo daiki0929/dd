@@ -58,6 +58,7 @@ public class MenuPage implements Serializable {
     private int reserveEndTime;
     //キャンセル期間
     private int cancelTime;
+    //TODO kitazawa 複数日はNG?
     //予約不可の日程(定休日以外)
     private String noReserveDate;
     
