@@ -1,12 +1,13 @@
 package slim3.service.tools.userManage;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import org.slim3.datastore.Datastore;
 
+import slim3.Const;
 import slim3.controller.AbstractController;
-import slim3.controller.Const;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 /**
@@ -27,8 +28,8 @@ public class SetShopDefaultService {
         msShop.getMsUserRef().setKey(msUser.getKey());
         log.info("店舗情報のデフォルト値を登録します。");
         
-        HashMap<String, HashMap<String, Object>> shopStatusByDays = new HashMap<String, HashMap<String,Object>>();
-        //曜日別のデータを取得
+        HashMap<String, HashMap<String, Object>> shopStatusByDays = new LinkedHashMap<String, HashMap<String,Object>>();
+        //曜日別のデータ
         HashMap<String, Object> weekMap = new HashMap<String, Object>();
         //データをMapに詰める
         weekMap.put("shopStatus", Const.OPEN);
@@ -40,6 +41,7 @@ public class SetShopDefaultService {
 //        log.info("情報：" + weekMap);
             shopStatusByDays.put(daysOfTheWeek, weekMap);
         }
+        log.info(shopStatusByDays.toString());
         //デフォルトの営業日時を保存
         msShop.setStatusByDays(shopStatusByDays);
         Datastore.put(msShop);

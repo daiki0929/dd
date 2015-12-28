@@ -7,7 +7,9 @@ import org.slim3.datastore.Model;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.controller.Const.Role;
+import slim3.Const.Role;
+
+
 
 @Model(schemaVersion = 1)
 public class MsUser implements Serializable {

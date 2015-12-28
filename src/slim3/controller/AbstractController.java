@@ -15,7 +15,8 @@ import org.slim3.util.ApplicationMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import slim3.controller.Const.RegexType;
+import slim3.Const;
+import slim3.Const.RegexType;
 import slim3.dto.JsonDto;
 import slim3.dto.ManageUserDto;
 import slim3.dto.MsUserDto;
@@ -281,7 +282,7 @@ public abstract class AbstractController extends Controller {
        //セッションにリクエストURLを保存します。
        CookieUtil.setCookie(response, Const.MS_REQUEST_URL, requestURI, 3600);
        log.info("リクエストURL保存：" + requestURI);
-       return redirect("/tools/userManage/login");
+       return redirect("/tools/rese/comeAndGo/login");
    }
     
    

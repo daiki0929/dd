@@ -6,7 +6,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.logging.Logger;
 
-import slim3.controller.Const;
+import slim3.Const;
 import slim3.exception.MyException;
 
 /*

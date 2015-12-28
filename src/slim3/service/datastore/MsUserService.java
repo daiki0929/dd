@@ -9,7 +9,7 @@ import org.slim3.util.StringUtil;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.controller.Const;
+import slim3.Const;
 import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;

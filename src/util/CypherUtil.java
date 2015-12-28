@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
 
-import slim3.controller.Const;
+import slim3.Const;
 
 /**
  * CypherUtilを使用するユーティリティクラスです。

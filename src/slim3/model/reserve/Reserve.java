@@ -12,7 +12,11 @@ import com.google.appengine.api.datastore.Key;
 import slim3.model.MsUser;
 
 @Model(schemaVersion = 1)
-//TODO kitazawa Javadoc
+/**
+ * 予約情報
+ * @author uedadaiki
+ *
+ */
 public class Reserve implements Serializable {
 
     private static final long serialVersionUID = 1L;

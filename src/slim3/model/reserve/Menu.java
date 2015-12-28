@@ -49,18 +49,25 @@ public class Menu implements Serializable {
     private String content;
     private String time;
     //公開 or 非公開 
-    //TODO kitazawa ステータスはEnumにすべき
     private String status;
+    public enum Status{
+        PUBLIC("public"),   
+        CLOSED("closed");
+        
+        private final String value;
+        
+        //コンストラクタ
+        private Status(String value) {
+            this.value = value;
+        }
+        
+        public String getStatus(){
+            return value;
+        }
+     
+        
+    }
     
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getTitle() {
         return title;
@@ -147,5 +154,13 @@ public class Menu implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

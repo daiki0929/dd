@@ -13,7 +13,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import slim3.controller.Const;
+import slim3.Const;
 import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
@@ -55,8 +55,8 @@ public class AuthService {
      */
     public boolean isAdm(HttpServletRequest request, MsUserDto msUserDto, Errors errors){
         UserService userService = UserServiceFactory.getUserService();
-        request.setAttribute("loginURL", userService.createLoginURL("/tools/userManage/login"));
-        request.setAttribute("logoutURL",userService.createLogoutURL("/tools/userManage/login"));
+        request.setAttribute("loginURL", userService.createLoginURL("/tools/rese/comeAndGo/login"));
+        request.setAttribute("logoutURL",userService.createLogoutURL("/tools/rese/comeAndGo/login"));
         //リクエストのユーザが認証されている場合は、java.security.Principalオブジェクトを返します。認証されていない場合はnullを返します。
         Principal principal = request.getUserPrincipal();
         if (principal == null) {
@@ -70,7 +70,7 @@ public class AuthService {
             if (userEmail == null) {
                 return false;
             }else if(isAdmAcount(email)){
-                msUserDto.setRole(slim3.controller.Const.Role.ALL_ADM);
+                msUserDto.setRole(Const.Role.ALL_ADM);
                 msUserDto.setName(user.getNickname());
             }else{
                 return true;

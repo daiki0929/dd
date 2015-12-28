@@ -1,0 +1,16 @@
+/* ナビバー */
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+.navbar-inner {
+	background-color: #16a085;
+	background-image: none;
+	background-repeat: none;
+	border-color: #03876D;
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff222222',endColorstr='#ff111111', GradientType=0);
+}
+
+.navbar-nav li a{
+	text-shadow: none;
+}
