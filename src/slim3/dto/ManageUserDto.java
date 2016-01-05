@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.model.reserve.ManageUser;
+import slim3.model.customerManage.Customer;
 
 public class ManageUserDto implements Serializable {
 
@@ -18,18 +18,18 @@ public class ManageUserDto implements Serializable {
     // メールアドレス
     public String email;
     //ManageUserData
-    public ManageUser manageUser;
+    public Customer customer;
     public Key manageUserId;
     
     
     
     
     
-    public ManageUser getManageUser() {
-        return manageUser;
+    public Customer getManageUser() {
+        return customer;
     }
-    public void setManageUser(ManageUser manageUser) {
-        this.manageUser = manageUser;
+    public void setManageUser(Customer customer) {
+        this.customer = customer;
     }
     public Key getManageUserId() {
         return manageUserId;
@@ -50,11 +50,11 @@ public class ManageUserDto implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    public ManageUser getManageUserData() {
-        return manageUser;
+    public Customer getManageUserData() {
+        return customer;
     }
-    public void setManageUserData(ManageUser manageUser) {
-        this.manageUser = manageUser;
+    public void setManageUserData(Customer customer) {
+        this.customer = customer;
     }
     
     

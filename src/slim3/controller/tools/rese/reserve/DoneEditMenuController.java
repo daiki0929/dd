@@ -45,6 +45,6 @@ public class DoneEditMenuController extends AbstractController {
         
         Key menuPageKey = menu.getMenuPageRef().getKey();
         
-        return forward(String.format("%s%s", "/tools/rese/reserve/menuList?id=", menuPageKey.toString()));
+        return redirect(String.format("%s%s", "/tools/rese/reserve/menuList?id=", Datastore.keyToString(menuPageKey)));
     }
 }

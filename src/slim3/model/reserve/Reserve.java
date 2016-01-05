@@ -10,6 +10,7 @@ import org.slim3.datastore.ModelRef;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.model.MsUser;
+import slim3.model.customerManage.Customer;
 
 @Model(schemaVersion = 1)
 /**
@@ -40,6 +41,26 @@ public class Reserve implements Serializable {
     private MsUser msUser;    
     
     // ------------------------------------------------------
+    
+    // ------------------------------------------------------
+    // Customerへの多対1の宣言(子)
+    private ModelRef<Customer> customerRef = new ModelRef<Customer>(Customer.class);
+
+    public ModelRef<Customer> getCustomerRef() {
+        return customerRef;
+    }
+    
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
+    @Attribute(persistent = false)
+    private Customer customer;    
+    
+    // ------------------------------------------------------
 
 
     @Attribute(primaryKey = true)
@@ -56,13 +77,27 @@ public class Reserve implements Serializable {
     private Date startTime;
     //終了日時
     private Date endTime;
-
-    //予約者情報
+    //TODO Customerに紐付けたので必要無し。
     private String customerName;
-    private String customerMailadress;
+    private String customerMailaddress;
     private String customerPhone;
-    
-    
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
     public Date getStartTime() {
         return startTime;
     }
@@ -79,31 +114,6 @@ public class Reserve implements Serializable {
         this.endTime = endTime;
     }
 
-    
-
-    public String getCustomerName() {
-        return customerName;
-    }
-    
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-    
-    public String getCustomerMailadress() {
-        return customerMailadress;
-    }
-
-    public void setCustomerMailadress(String customerMailadress) {
-        this.customerMailadress = customerMailadress;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-    
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
-    }
 
     public String getMenuTitle() {
         return menuTitle;
@@ -175,5 +185,13 @@ public class Reserve implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getCustomerMailaddress() {
+        return customerMailaddress;
+    }
+
+    public void setCustomerMailaddress(String customerMailaddress) {
+        this.customerMailaddress = customerMailaddress;
     }
 }

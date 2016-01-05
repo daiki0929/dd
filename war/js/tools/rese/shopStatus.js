@@ -1,4 +1,6 @@
+<%@ page pageEncoding="utf-8" %>
 $(document).ready(function() {
+	console.log('${statusByDays}');
 	var checkLength = parseInt(document.getElementsByTagName("label").length);
 
 	var daysOfTheWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -9,11 +11,14 @@ $(document).ready(function() {
 	var daysOfTheWeekEndTime = ["${statusByDays.sunday.endTime}", "${statusByDays.monday.endTime}", "${statusByDays.tuesday.endTime}", "${statusByDays.wednesday.endTime}", "${statusByDays.thursday.endTime}", "${statusByDays.friday.endTime}", "${statusByDays.saturday.endTime}"];
 
 	$.each(daysOfTheWeek,function(index,val){
+		console.log(val);
 		number++
 		/* 営業の有無を表示します */
 		for (var count = 0; count < 2; count++){
 			if($('form[name='+ val +'] input[name='+ val +'ShopStatus]')[count].value == daysOfTheWeekStatus[number]){
 				var selectedItem = $('form[name='+ val +'] input[name='+ val +'ShopStatus]')[count];
+				console.log($('form[name='+ val +'] input[name='+ val +'ShopStatus]')[count]);
+				console.log(daysOfTheWeekStatus[number]);
 				selectedItem.setAttribute("checked", "true");
 				break;
 			}
@@ -42,11 +47,10 @@ $(document).ready(function() {
 var postUrl = "/tools/rese/doneEditOperationHours";
 /* 営業日時を保存します */
 function postOperationHours(daysOfTheWeek){
+	$('.saveMsg').remove();
 	var shopStatus = $('form[name='+ daysOfTheWeek +'] input[name='+ daysOfTheWeek +'ShopStatus]').val();
 	var startTime = $("[name="+ daysOfTheWeek +"] [name=startTime]").val();
 	var endTime = $("[name="+ daysOfTheWeek +"] [name=endTime]").val();
-
-
 	$.post(postUrl, {
 		'daysOfTheWeek' : daysOfTheWeek,
 		'shopStatus' : shopStatus,
@@ -60,14 +64,22 @@ function postOperationHours(daysOfTheWeek){
 			break;
 
 		default:
-			$('form[name=' + data.obj + ']').append("<p style='color:red;'>保存しました</p>");
-		break;
+			$('form[name=' + data.obj + ']').append("<p style='color:red;' class='saveMsg'>保存しました</p>");
+			break;
+			
+		case 'error':
+//			$('form[name=' + data.obj + ']').append("<p style='color:red;' class='saveMsg'>" + data.msg + "</p>");
+			alert(data.msg);
+			break;
+			
+			
 		}
 	}, 'json');
 }
 
 /* 営業の有無を設定します */
 function postShopStatus(daysOfTheWeek, shopStatus){
+	$('.saveMsg').remove();
 	var startTime = $("[name="+ daysOfTheWeek +"] [name=startTime]").val();
 	var endTime = $("[name="+ daysOfTheWeek +"] [name=endTime]").val();
 	$.post(postUrl, {
@@ -83,7 +95,7 @@ function postShopStatus(daysOfTheWeek, shopStatus){
 			break;
 
 		default:
-			$('form[name=' + data.obj + ']').append("<p style='color:red;'>保存しました</p>");
+			$('form[name=' + data.obj + ']').append("<p style='color:red;' class='saveMsg'>保存しました</p>");
 		break;
 		}
 	}, 'json');

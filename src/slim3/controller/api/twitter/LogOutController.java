@@ -16,6 +16,6 @@ public class LogOutController extends AbstractController {
         TwitterService twitterService = new TwitterService();
         twitterService.logOut(request, response);
         
-        return forward("/api/index");
+        return forward("/api/Twitter/index");
     }
 }

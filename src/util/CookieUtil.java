@@ -1,11 +1,16 @@
 package util;
 
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.datastore.Key;
+
+import slim3.exception.MyException;
 /**
  * クッキーのユーティリティクラスです。
  * @author uedadaiki
@@ -65,8 +70,6 @@ public class CookieUtil {
         cookie.setPath("/");
         res.addCookie(cookie);
     }
-    
-    
     
     
 }

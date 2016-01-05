@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
-import org.slim3.util.StringUtil;
+
+import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
-import slim3.meta.reserve.ManageUserMeta;
+import slim3.meta.MsUserMeta;
+import slim3.meta.customerManage.CustomerMeta;
+import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
-import util.CookieUtil;
-import util.StackTraceUtil;
+import slim3.model.customerManage.Customer;
+import slim3.model.reserve.MenuPage;
 /**
  * カスタマーの一覧を表示します。
  * @author uedadaiki
@@ -27,42 +29,45 @@ public class CustomerListController extends AbstractController {
             return super.showLoginPage();
         }
         
-        //クッキー取得
-        String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
-        log.info("クッキーを取り出しました：" + cookie);
-        if (StringUtil.isEmpty(cookie)) {
-            log.info("クッキーがありませんでした。");
-            return null;
+        MsUserMeta msUserMeta = MsUserMeta.get();
+        //データベースからクッキー情報(userId)でデータを1つ取得。
+        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
+        if (msUser == null) {
+            return forward("/tools/rese/comeAndGo/login");
         }
         
-        try {
-            MsUser msUser = Datastore
-                    .query(MS_USER_META)
-                    .filter(MS_USER_META.userId.equal(cookie))
-                    .asSingle();
-            if (msUser == null) {
-                log.info("MsUserに存在しません。");
-                return null;
-            }
-            
-            //ユーザー情報
-            request.setAttribute("msUser", msUser);
-            
-            //ユーザーが所持する顧客情報を取り出す
-            ManageUserMeta manageUserDataMeta = ManageUserMeta.get();
-            List<ManageUser> manageUser = Datastore
-                    .query(manageUserDataMeta)
-                    .filter(manageUserDataMeta.MsUserRef.equal(msUser.getKey()))
+        //ユーザー情報
+        request.setAttribute("msUser", msUser);
+        
+        MenuPageMeta menuPageMeta = MenuPageMeta.get();
+        List<MenuPage> menuPageList = Datastore
+                .query(menuPageMeta)
+                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
+                .asList();
+        
+        request.setAttribute("menuPageList", menuPageList);
+        
+        //ユーザーが所持する顧客情報を取り出す
+        CustomerMeta customerMeta = CustomerMeta.get();
+        if (asKey("id") != null) {
+            log.info("予約ページで絞り込みます。");
+            Key menuPageKey = asKey("id");
+            List<Customer> customerList = Datastore
+                    .query(customerMeta)
+                    .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
+                    .filter(customerMeta.MenuPageRef.equal(menuPageKey))
                     .asList();
-            request.setAttribute("customerList", manageUser);
+            request.setAttribute("customerList", customerList);
+            request.setAttribute("menuPageKey", menuPageKey);
             
-            
-        } catch (Exception e) {
-            StackTraceUtil.toString(e);
-            return null;
+            return forward("customerList.jsp");
+        }else {
+            List<Customer> customerList = Datastore
+                    .query(customerMeta)
+                    .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
+                    .asList();
+            request.setAttribute("customerList", customerList);
         }
-        
-        
         return forward("customerList.jsp");
     }
 }

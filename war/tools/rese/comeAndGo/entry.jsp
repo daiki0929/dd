@@ -26,8 +26,6 @@
 				<form action="/tools/rese/comeAndGo/doneEntry" method="post">
 					<p>名前</p>
 					<input type="text" name="name" value="${name}">
-					<p>ふりがな</p>
-					<input type="text" name="kanaName" value="${kanaName}">
 					<p>メールアドレス</p>
 					<input type="text" name="mailaddress" value="${mailaddress}">
 					<p>パスワード</p>
@@ -37,6 +35,9 @@
 					<br />
 					<input type="submit" value="登録">
 				</form>
+				<h3>SNSで会員登録する</h3>
+				<a href="/api/twitter/SignIn?s=Rese"><p class="btn btn-info">Twitterでログイン</p></a>
+				<a href="/api/twitter/logOut">logout</a>
 			</div>
 		</div>
 	</div>

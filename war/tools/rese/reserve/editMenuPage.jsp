@@ -65,7 +65,6 @@
 					<small>例えば、10時から営業開始で、15分毎の場合、お客様が予約できる時間は10:00、10:15、10:30、10:45 ... となります。30分毎の場合は、10:00、10:30、11:00、11:30 ... となります。</small>
 					<br/>
 					<select name="reserveInterval">
-						<option value="0">設定しない</option>
 						<option value="900">15分ごと</option>
 						<option value="1800">30分ごと</option>
 						<option value="3600">60分ごと</option>

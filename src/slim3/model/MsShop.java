@@ -8,6 +8,7 @@ import javax.jdo.annotations.Persistent;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 import org.slim3.datastore.ModelRef;
+import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 /**
@@ -62,15 +63,15 @@ public class MsShop implements Serializable {
     //曜日ごとの営業の有無、営業開始・終了時間
     @Attribute(lob = true)
     @Persistent(serialized = "true", defaultFetchGroup = "true")
-    private HashMap<String, HashMap<String, Object>> statusByDays;
+    private ArrayMap<String, ArrayMap<String, Object>> statusByDays;
 
     
-    public HashMap<String, HashMap<String, Object>> getStatusByDays() {
+    public ArrayMap<String, ArrayMap<String, Object>> getStatusByDays() {
         return statusByDays;
     }
 
     public void setStatusByDays(
-            HashMap<String, HashMap<String, Object>> statusByDays) {
+            ArrayMap<String, ArrayMap<String, Object>> statusByDays) {
         this.statusByDays = statusByDays;
     }
 

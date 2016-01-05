@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>TwitterAPIエラー</title>
+<title>TwitterAPI</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -14,7 +14,7 @@
 			<!-- メイン -->
 			<div class="span12">
 				<tag:notloggedin>
-					<a href="/api/signIn"><img src="http://akahoshitakuya.com/wp-content/uploads/2012/03/redirect-1.jpeg" /></a>
+					<a href="/api/twitter/SignIn"><img src="http://akahoshitakuya.com/wp-content/uploads/2012/03/redirect-1.jpeg" /></a>
 				</tag:notloggedin>
 				<tag:loggedin>
 					<h1>Welcome ${twitter.screenName} (${twitter.id})</h1>
@@ -23,7 +23,7 @@
 						<textarea cols="80" rows="2" name="text"></textarea>
 						<input type="submit" name="post" value="update" />
 					</form>
-					<a href="/api/logOut">logout</a>
+					<a href="/api/twitter/logOut">logout</a>
 				</tag:loggedin>
 			</div>
 		</div>

@@ -33,5 +33,4 @@ public class DsService {
     }
     
     
-    //TODO ユーザーが顧客にメールを送信出来るようにする。
 }

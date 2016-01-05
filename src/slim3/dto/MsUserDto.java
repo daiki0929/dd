@@ -19,7 +19,7 @@ public class MsUserDto implements Serializable {
     public String name;
     // メールアドレス
     public String email;
-    //ManageUserData
+    //MsUserData
     public MsUser msUser;
     public Role role; 
     

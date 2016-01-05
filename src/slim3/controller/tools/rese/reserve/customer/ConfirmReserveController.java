@@ -28,7 +28,8 @@ public class ConfirmReserveController extends AbstractController {
         validate(v, "reserveDate", 1, 10, false, RegexType.YEAR_DATE, null);
         validate(v, "reserveMoments", 1, 10, false, RegexType.MOMENTS, null);
         validate(v, "customerName", 1, 20, false, null, null);
-        validate(v, "customerMailadress", 1, 30, false, RegexType.MAIL_ADDRESS, null);
+        //TODO スペースのトリムは大丈夫か確認する
+        validate(v, "customerMailaddress", 1, 30, false, RegexType.MAIL_ADDRESS, null);
         validate(v, "customerPhone", 1, 15, false, RegexType.PHONE, null);
 
         if (errors.size() != 0) {
@@ -60,7 +61,8 @@ public class ConfirmReserveController extends AbstractController {
         String customerName = asString("customerName");
         //苗字と名前の間にあるスペースを取り除きます。
         String tirmCustomerName = customerName.replaceAll(" ", "").replaceAll("　", "");
-        String customerMailadress = asString("customerMailadress");
+        String customerMailaddress = asString("customerMailaddress");
+        log.info(customerMailaddress);
         String customerPhone = asString("customerPhone");
         
         request.setAttribute("menu", orderMenu);
@@ -68,7 +70,7 @@ public class ConfirmReserveController extends AbstractController {
         request.setAttribute("menuEndTime", parseMenuEndTime);
         
         request.setAttribute("customerName", tirmCustomerName);
-        request.setAttribute("customerMailadress", customerMailadress);
+        request.setAttribute("customerMailaddress", customerMailaddress);
         request.setAttribute("customerPhone", customerPhone);
         
         return forward("confirmReserve.jsp");

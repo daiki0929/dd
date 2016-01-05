@@ -7,6 +7,7 @@ import org.slim3.datastore.Datastore;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
+import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.MenuPage;
@@ -24,8 +25,9 @@ public class MenuPageListController extends AbstractController {
             return super.showLoginPage();
         }
         
+        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, MS_USER_META);
+        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
         if (msUser == null) {
             return forward("/tools/rese/comeAndGo/login");
         }

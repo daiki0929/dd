@@ -50,6 +50,23 @@ public class MenuPage implements Serializable {
     private String reserveSystem;
     //公開 or 非公開
     private String status;
+    public enum Status{
+        PUBLIC("public"),   
+        CLOSED("closed");
+        
+        private final String value;
+        
+        //コンストラクタ
+        private Status(String value) {
+            this.value = value;
+        }
+        
+        public String getStatus(){
+            return value;
+        }
+     
+        
+    }
     //予約受け付け間隔
     private int interval;
     //予約受け付け開始

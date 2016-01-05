@@ -23,7 +23,6 @@ public class DoneEditAcountController extends AbstractController {
         
         Validators v = new Validators(request);
         validate(v, "name", 1, 20, true, null, null);
-        validate(v, "kanaName", 1, 20, true, RegexType.HIRAGANA, null);
         validate(v, "phone", 1, 50, false, null, null);
         validate(v, "address", 1, 50, false, null, null);
 
@@ -33,14 +32,12 @@ public class DoneEditAcountController extends AbstractController {
         }
         
         String name = asString("name");
-        String kanaName = asString("kanaName");
         String mailaddress = asString("mailaddress");
         String phone = asString("phone");
         String address = asString("address");
         
         MsUser msUser = new MsUser();
         msUser.setName(name);
-        msUser.setKanaName(kanaName);
         msUser.setMailaddress(mailaddress);
         msUser.setPhone(phone);
         msUser.setAddress(address);

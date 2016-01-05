@@ -1,11 +1,13 @@
 package slim3.controller.api.twitter;
 
+import javax.servlet.http.HttpSession;
+
 import org.slim3.controller.Navigation;
 
 import slim3.controller.AbstractController;
-import slim3.service.sns.TwitterService;
+import twitter4j.auth.RequestToken;
 /**
- * Twitterアカウントでログアウトします。
+ * TwitterAPIのコールバックコントローラ
  * @author uedadaiki
  *
  */
@@ -13,9 +15,12 @@ public class CallBackController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
-        TwitterService twitterService = new TwitterService();
-        twitterService.logOut(request, response);
+        log.info("コールバックを呼ぶコントローラ");
+        HttpSession session = request.getSession();
+        RequestToken reqToken = (RequestToken) session.getAttribute("RequestToken");
+        log.info("reqToken：" + reqToken.toString());
         
-        return null;
+        twitterService.callback(request, response, reqToken);
+        return forward("/sns/index.jsp");
     }
 }

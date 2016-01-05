@@ -4,35 +4,47 @@ import java.util.List;
 
 import org.slim3.datastore.Datastore;
 
+import com.google.appengine.api.datastore.Key;
+
 import slim3.dto.ManageUserDto;
-import slim3.meta.reserve.ManageUserMeta;
-import slim3.model.reserve.ManageUser;
+import slim3.meta.customerManage.CustomerMeta;
+import slim3.model.customerManage.Customer;
 /**
  * ユーザーが所持するカスタマーを取得するサービスです。
  * @author uedadaiki
  *
  */
-public class ManageUserService {
+public class CustomerService extends AbstractDatastoreService{
     
-    private final static ManageUserMeta MANAGE_USER_META = ManageUserMeta.get();
+    private final static CustomerMeta MANAGE_USER_META = CustomerMeta.get();
     
     /**
      * 重複しているかをチェックします。
      * @param mailaddress 登録するメールアドレス
-     * @param manageUser 
+     * @param customer 
      * @return
      */
     public boolean duplicateMailAddress(String mailaddress, ManageUserDto manageUserDto){
         //登録済みチェック
-        List<ManageUser> dupulicateUserList = Datastore
+        List<Customer> dupulicateUserList = Datastore
             .query(MANAGE_USER_META)
             .filter(MANAGE_USER_META.mailaddress.equal(mailaddress))
             .asList();
-        for (ManageUser t : dupulicateUserList) {
+        for (Customer t : dupulicateUserList) {
             if (!t.getKey().equals(manageUserDto.getManageUserId())) {
                 return true;
             }
         }
         return false;
     }
+    
+    /**
+     * カスタマー情報をkeyで1つ取得する。
+     * @param id
+     * @return
+     */
+    public Customer get(Key id){
+        return dsService.getSingle(Customer.class, CustomerMeta.get(),id);
+    }
+    
 }

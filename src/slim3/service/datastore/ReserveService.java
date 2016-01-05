@@ -46,11 +46,12 @@ public class ReserveService extends AbstractDatastoreService{
      * @param endDateTime
      * @return
      */
-    ArrayList<HashMap<String, String>> eventList = new ArrayList<HashMap<String, String>>();
     public ArrayList<HashMap<String, String>> getReserveByRange(List<Reserve> reserveList, DateTime startDateTime, DateTime endDateTime){
+        ArrayList<HashMap<String, String>> eventList = new ArrayList<HashMap<String, String>>();
         //ひと月の予約情報に絞る。
         for (Reserve reserve : reserveList) {
             HashMap<String, String> menuDetail = new HashMap<String, String>();
+            //(例)Wed Dec 30 09:00:00 JST 2015
             DateTime reserveStartDateTime = new DateTime(reserve.getStartTime());
             DateTime reserveEndDateTime = new DateTime(reserve.getEndTime());
             
@@ -76,6 +77,10 @@ public class ReserveService extends AbstractDatastoreService{
                     menuDetail.put("title", reserve.getMenuTitle());
                     menuDetail.put("start", startDateTime.toString());
                     menuDetail.put("end", reserve.getEndTime().toString());
+                    menuDetail.put("customerName", reserve.getCustomerName().toString());
+                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
+                    menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                    menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                     eventList.add(menuDetail);
                     continue;
                 }
@@ -86,6 +91,10 @@ public class ReserveService extends AbstractDatastoreService{
                     menuDetail.put("title", reserve.getMenuTitle());
                     menuDetail.put("start", reserve.getStartTime().toString());
                     menuDetail.put("end", endDateTime.toString());
+                    menuDetail.put("customerName", reserve.getCustomerName().toString());
+                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
+                    menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                    menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                     eventList.add(menuDetail);
                     continue;
                 }
@@ -98,6 +107,14 @@ public class ReserveService extends AbstractDatastoreService{
                 menuDetail.put("title", reserve.getMenuTitle());
                 menuDetail.put("start", reserveStartDateTime.toString());
                 menuDetail.put("end", reserveEndDateTime.toString());
+                menuDetail.put("customerName", reserve.getCustomerName().toString());
+                log.info(reserve.getCustomerName().toString());
+                menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
+                log.info(reserve.getCustomerMailaddress().toString());
+                menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
+                log.info(reserve.getCustomerPhone().toString());
+                
                 eventList.add(menuDetail);
                 log.info("menuDetail.toString()：" + menuDetail.toString());
             }else if (reserveEndDateTime.isBefore(endDateTime) || reserveEndDateTime.isEqual(endDateTime)) {
@@ -105,11 +122,14 @@ public class ReserveService extends AbstractDatastoreService{
                 menuDetail.put("title", reserve.getMenuTitle());
                 menuDetail.put("start", reserve.getStartTime().toString());
                 menuDetail.put("end", reserve.getEndTime().toString());
+                menuDetail.put("customerName", reserve.getCustomerName().toString());
+                menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
+                menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                 eventList.add(menuDetail);
             }
             
         }
-        
         return eventList;
         
     }

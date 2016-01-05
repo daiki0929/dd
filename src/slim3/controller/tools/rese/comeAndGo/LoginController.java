@@ -12,6 +12,7 @@ public class LoginController extends AbstractController {
     
     @Override
     public Navigation run() throws Exception {
+        
         return forward("login.jsp");
     }
     

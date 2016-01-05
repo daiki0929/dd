@@ -1,15 +1,17 @@
 package slim3.controller.tools.rese;
 
-import java.util.HashMap;
-
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
+import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 /**
@@ -47,18 +49,25 @@ public class DoneEditOperationHoursController extends AbstractController {
                 shopStatus = Const.OPEN;
             }else if (shopStatus.equals("notOpen")) {
                 shopStatus = Const.NOT_OPEN;
-            }else {
-                log.info("不正なデータが記入されました。");
-                return forward("/tools/rese/reserve/editOperationHours");
             }
         }
             
 
         String startTime = asString("startTime");
         String endTime = asString("endTime");
+        DateTime startDateTime = DateTimeFormat.forPattern("HH:mm").parseDateTime(startTime);
+        DateTime endDateTime = DateTimeFormat.forPattern("HH:mm").parseDateTime(endTime);
+        
+//        DateTime startDateTime = new DateTime(startTime);
+//        DateTime endDateTime = new DateTime(endTime);
+        if (startDateTime.isAfter(endDateTime)) {
+            log.info("開始時刻が終了時刻より後に設定されています。");
+            return returnResponse(createJsonDto(Const.JSON_STATUS_ERROR, "開始時刻は終了時刻より前に設定してください。", "error"));
+        }
 
+        MsUserMeta msUserMeta = MsUserMeta.get();
         //クッキー情報(userId)でユーザーを取得
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, MS_USER_META);
+        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
         if (msUser == null) {
             return forward("/tools/rese/comeAndGo/login");
         }
@@ -66,16 +75,17 @@ public class DoneEditOperationHoursController extends AbstractController {
         Key msUserKey = msUser.getKey();
         //ユーザーが所持するお店の情報を取り出す。
         MsShop msShop = msShopService.getByMsUserKey(msUserKey);
-        HashMap<String, HashMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
+        ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         //曜日別のデータを取得
-        HashMap<String, Object> weekMap = shopStatusByDays.get(daysOfTheWeek);
+//        HashMap<String, Object> weekMap = shopStatusByDays.get(daysOfTheWeek);
+        ArrayMap<String, Object> weekMap = new ArrayMap<String, Object>();
+        
         //データをMapに詰める
         weekMap.put("shopStatus", shopStatus);
         weekMap.put("startTime", startTime);
         weekMap.put("endTime", endTime);
         log.info("曜日：" + daysOfTheWeek + weekMap.toString());
         shopStatusByDays.put(daysOfTheWeek, weekMap);
-        //TODO 全ての曜日を変更してしまう。
         msShop.setStatusByDays(shopStatusByDays);
 
         Datastore.put(msShop);

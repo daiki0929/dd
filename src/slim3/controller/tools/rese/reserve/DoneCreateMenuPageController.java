@@ -6,8 +6,10 @@ import org.slim3.datastore.Datastore;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.MenuPage;
+import slim3.model.reserve.Menu.Status;
 /**
  * メニューページ作成完了後のコントローラです。
  * @author uedadaiki
@@ -22,8 +24,9 @@ public class DoneCreateMenuPageController extends AbstractController {
             return super.showLoginPage();
         }
         
+        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, MS_USER_META);
+        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
         if (msUser == null) {
             return forward("/tools/rese/comeAndGo/login");
         }
@@ -36,6 +39,8 @@ public class DoneCreateMenuPageController extends AbstractController {
         validate(v, "reserveSystem", 1, 20, true, null, null);
         //公開 or 非公開
         validate(v, "status", 1, 20, true, null, null);
+        //予約受付け間隔
+        validate(v, "reserveInterval", 1, 4, false, null, null);
         //予約受け付け期間
         validate(v, "reserveStartDay", 1, 10, false, null, null);
         validate(v, "reserveStopDay", 1, 10, false, null, null);
@@ -55,7 +60,12 @@ public class DoneCreateMenuPageController extends AbstractController {
         menuPage.setDescription(asString("description"));
         menuPage.setTopImg(asString("topImg"));
         menuPage.setReserveSystem(asString("reserveSystem"));
-        menuPage.setStatus(asString("status"));
+        menuPage.setInterval(asInteger("reserveInterval"));
+        if (asString("status").equals("closed")) {
+            menuPage.setStatus(Status.CLOSED.getStatus());
+        }else if(asString("status").equals("public")){
+            menuPage.setStatus(Status.PUBLIC.getStatus());
+        }
         //asIntegerがnullだとエラーが表示されるので、エラーページへ飛ばします。
         try {
             menuPage.setReserveStartTime(asInteger("reserveStartTime"));

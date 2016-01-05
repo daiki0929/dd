@@ -1,4 +1,6 @@
 package slim3;
+
+
 public class Const {    
     
     // ================================
@@ -45,7 +47,7 @@ public class Const {
     public static final String THURSDAY = "thursday";
     public static final String FRIDAY = "friday";
     public static final String SATURDAY = "saturday";
-    public static final String[] DAYS_OF_THE_WEEK = {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
+    public static final String[] DAYS_OF_THE_WEEK = {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
     
     
     // ================================
@@ -180,6 +182,55 @@ public class Const {
             this.role = role;
         }
     }
+    
+    /**
+     * ユーザーエージェント
+     * @author ueda.daiki
+     *
+     */
+    public static enum UA{
+        A20("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"),
+        A21("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; Sleipnir/2.9.8)"),
+        A22("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)"),
+        A23("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)"),
+        A24("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)"),
+        A25("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)"),
+        A26("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)"),
+        A27("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)"),
+        A28("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0)"),
+        A29("Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko"),
+        A30("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.52 Safari/537.36"),
+        A31("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36"),
+        A32("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; ja-jp) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16"),
+        A33("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7"),
+        A34("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"),
+        A35("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8) AppleWebKit/536.25 (KHTML, like Gecko) Version/6.0 Safari/536.25"),
+        ;
+
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        private UA(String name){
+            this.name = name;
+        }
+
+        //ランダムで取得します。
+        public static UA getRandom(){
+            UA[] uas = UA.values();
+            int size = uas.length;
+            int ran =  (int)(Math.random() * (size));
+
+            return uas[ran];
+        }
+    }
+
     
     
 }

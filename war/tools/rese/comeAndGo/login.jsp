@@ -31,6 +31,9 @@
 					<input type="text" name="password" value=${password}> <br />
 					<input type="submit" value="ログイン">
 				</form>
+				<h3>SNSでログインする</h3>
+				<a href="/api/twitter/SignIn?s=Rese"><p class="btn btn-info">Twitterでログイン</p></a>
+				<a href="/api/twitter/logOut">logout</a>
 			</div>
 		</div>
 	</div>

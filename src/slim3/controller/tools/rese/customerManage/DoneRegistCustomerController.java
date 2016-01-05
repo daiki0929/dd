@@ -10,7 +10,7 @@ import slim3.Const.RegexType;
 import slim3.controller.AbstractController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
-import slim3.model.reserve.ManageUser;
+import slim3.model.customerManage.Customer;
 import util.CookieUtil;
 import util.StackTraceUtil;
 
@@ -42,31 +42,31 @@ public class DoneRegistCustomerController extends AbstractController {
         if (asString("mailaddress") != null) {
 //            log.info("メールアドレス重複確認");
             String mailaddress = asString("mailaddress");
-            boolean duplicate = manageUserService.duplicateMailAddress(mailaddress, manageUserDto);
+            boolean duplicate = customerService.duplicateMailAddress(mailaddress, manageUserDto);
             if (duplicate) {
                 errors.put("duplicate", "すでに登録されているメールアドレスです。");
                 return forward("customerList.jsp");
             }
         }
         
-        String name = asString("name");
-        String kanaName = asString("kanaName");
-        String address = asString("address");
-        String phone = asString("phone");
-        String mailaddress = asString("mailaddress");
+        String customerName = asString("customerName");
+        String customerKanaName = asString("customerKanaName");
+        String customerAddress = asString("customerAddress");
+        String customerPhone = asString("customerPhone");
+        String customerMailaddress = asString("customerMailaddress");
         
-        ManageUser manageUserData = new ManageUser();
+        Customer manageUserData = new Customer();
         
         if (asInteger("age") != null) {
             int age = asInteger("age");
             manageUserData.setAge(age);
         }
         
-        manageUserData.setName(name);
-        manageUserData.setKanaName(kanaName);
-        manageUserData.setAddress(address);
-        manageUserData.setPhone(phone);
-        manageUserData.setMailaddress(mailaddress);
+        manageUserData.setName(customerName);
+        manageUserData.setKanaName(customerKanaName);
+        manageUserData.setAddress(customerAddress);
+        manageUserData.setPhone(customerPhone);
+        manageUserData.setMailaddress(customerMailaddress);
         
         //クッキー取得
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);

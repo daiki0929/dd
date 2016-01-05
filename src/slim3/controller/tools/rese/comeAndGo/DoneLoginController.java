@@ -12,6 +12,7 @@ import slim3.Const;
 import slim3.Const.RegexType;
 import slim3.controller.AbstractController;
 import slim3.exception.MyException;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import util.Base64Util;
 import util.CookieUtil;
@@ -22,7 +23,6 @@ import util.DateUtil;
  * @author uedadaiki
  *
  */
-//TODO kitazawa ログイン系の処理よね。userManageのパッケージではない気がする。
 public class DoneLoginController extends AbstractController {
     
     @Override
@@ -69,12 +69,16 @@ public class DoneLoginController extends AbstractController {
         Datastore.put(msUser);
         log.info("クッキーを保存しました：" + encrypt);
         
+        //クッキーの変更後に処理を進めるため、getSingle(getOrNull)を実行しています。
+        MsUserMeta msUserMeta = MsUserMeta.get();
+        dsService.getSingle(MsUser.class, msUserMeta, msUser.getKey());
+        
         //リクエストURL
         String requestURL = CookieUtil.getCookie(request, Const.MS_REQUEST_URL);
         if (!requestURL.isEmpty()) {
             return redirect(requestURL);
         }
         CookieUtil.deleteCookie(response, Const.MS_REQUEST_URL);
-        return redirect("/tools/rese/customerManage/customerList");
+        return redirect("/tools/rese/reserve/reserveList.jsp");
     }
 }

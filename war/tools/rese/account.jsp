@@ -25,8 +25,6 @@
 				<h2>アカウント情報</h2>
 				<p>名前</p>
 				<input type="text" name="name" value="${msUser.name}">
-				<p>ふりがな</p>
-				<input type="text" name="kanaName" value="${msUser.kanaName}">
 				<p>メールアドレス</p>
 				<p>${msUser.mailaddress}</p>
 				<a href="/tools/rese/editMailaddress">変更する</a>

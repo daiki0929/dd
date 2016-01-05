@@ -20,26 +20,49 @@
 	    	  extensions: ["effect-menu-slide", "effect-listitems-slide"]
 	      });
 	   
-	   $(".displayCheck").click(function () {
-		   $(".userCheck").removeClass("hidden");
-		 });	
-	   
+		   $(".displayCheck").click(function () {
+			   $(".userCheck").removeClass("hidden");
+			 });	
+		   
+		   $('select[name=rebuildSelect] option').each(function(index, elem){
+			   if($(elem).val() == '${f:h(menuPageKey)}'){
+				   $(elem).attr("selected", "true");
+				   return false;
+			   }
+		   })
 	   });
+	   
+	   function filterCustomer(){
+		   var menuPageKey = $('select[name=rebuildSelect]').val();
+		   window.location.href = "/tools/rese/customerManage/customerList?id=" + menuPageKey;
+	   }
 	</script>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div id="container">
-		<div id="content">
-			<div class="span12">
+	<div class="container">
+		<div id="content" class="span12">
+			<div class="span3" style="height: 500px; background-color: #f2f2f2;">
+				<p>顧客を検索する</p>
+				<form action="">
+					<input type="text" placeholder="名前/メールアドレス/電話番号">
+				</form>
+				<p>予約ページで絞り込む</p>
+				<select name="rebuildSelect" onchange="filterCustomer();">
+					<option value="">指定なし
+					<c:forEach var="menuPage" items="${menuPageList}">
+						<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
+					</c:forEach>
+				</select>
+			</div>
+			<div class="span8">
 			<a href="/tools/rese/comeAndGo/logout">ログアウトする</a>
+				<a href="#myModal" role="button" class="btn" data-toggle="modal">追加する</a>
 				<h3>お客様一覧</h3>
 				<c:forEach var="customer" items="${customerList}">
-					<a href="/tools/rese/userDetail">
+					<a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">
 						<div class="span2" style="background-color: #f2f2f2;">
 							<p>${customer.name}</p>
-							<p>${customer.age}</p>
-							<p>${customer.address}</p>
 							<p>${customer.phone}</p>
 							<p>${customer.mailaddress}</p>
 						</div>
@@ -50,31 +73,43 @@
 				</c:forEach>
 			</div>
 		</div>
-		<!-- エラーメッセージ -->
-		<%@ include file="/tools/rese/common/error.jsp"%>
+		
 		<div class="span12">
-			<h3>新規追加</h3>
 			<form action="/tools/rese/doneRegistCustomer" method="post">
-				<p>名前</p>
-				<p>(例)田中太郎</p>
-				<input type="text" name="name">
-				<p>ふりがな</p>
-				<p>(例)たなかたろう</p>
-				<input type="text" name="kanaName">
-				<p>年齢</p>
-				<p>(例)20</p>
-				<input type="text" name="age">歳
-				<p>住所</p>
-				<p>(例)大阪府大阪市中央区◯町目◯-◯</p>
-				<input type="text" name="address">
-				<p>電話番号</p>
-				<p>(例)000-0000-0000</p>
-				<input type="text" name="phone">
-				<p>メールアドレス</p>
-				<p>(例)example@sample.com</p>
-				<input type="text" name="mailaddress">
-				<br />
-				<input type="submit" value="追加">
+			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				    <h3 id="myModalLabel">新規追加</h3>
+				  </div>
+				  <div class="modal-body">
+				    <p>(例)田中太郎</p>
+					<input type="text" name="customerName">
+					<p>ふりがな</p>
+					<p>(例)たなかたろう</p>
+					<input type="text" name="customerKanaName">
+					<p>年齢</p>
+					<p>(例)20</p>
+					<input type="text" name="customerAge">歳
+					<p>性別</p>
+					<label class="radio">
+					  <input type="radio" name="sex" id="" value="male">男性
+					</label>
+					<label class="radio">
+					  <input type="radio" name="sex" id="" value="female">女性
+					</label>
+					<p>住所</p>
+					<p>(例)大阪府大阪市中央区◯町目◯-◯</p>
+					<input type="text" name="customerAddress">
+				    <p>メールアドレス</p>
+					<input type="text" name="customerMailaddress">
+				    <p>携帯番号</p>
+					<input type="text" name="customerPhone">
+				  </div>
+				  <div class="modal-footer">
+				    <a><p data-dismiss="modal" aria-hidden="true" class="closeButton" style="float: left; margin-top: 10px; cursor: pointer;">☓ 閉じる</p></a>
+				    <p class="btn btn-primary" onclick="registCustomer();">保存</p>
+			 	 </div>
+			  </div>
 			</form>
 		</div>
 	</div>

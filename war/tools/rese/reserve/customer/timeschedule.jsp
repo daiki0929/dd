@@ -47,14 +47,10 @@ $(function() {
     	format: 'yyyy/mm/dd',
      	min: [${reserveFrom}],
    	  	max: [${reserveTo}],
-    	/* disable: [
-    		1, 7
-    	] */
+    	disable: ${offDaysOfTheWeekNum}
     });
 });
 $(document).ready(function() {
-	
-	console.log('${f:h(selectedMeuKey)}');
 	var length = parseInt(document.getElementsByTagName("input").length);
 	/* 選択したメニューにチェックを入れる */
 	for (var count = 0; count < length; count++){
@@ -142,10 +138,16 @@ $(document).ready(function() {
 				<input type="text" name="customerName" class="validate[required]">
 				<h4>メールアドレス</h4>
 				<p>(例)sample@mail.com</p>
-				<input type="text" name="customerMailadress" class="validate[required[custom[email]]]">
+				<input type="text" name="customerMailaddress" class="validate[required[custom[email]]]">
 				<h4>電話番号</h4>
 				<p>(例)000-0000-0000 「-」の記入を忘れないようにして下さい。</p>
 				<input type="text" name="customerPhone" class="validate[custom[phoneHyphen]]">
+				<!-- <h4>パスワード</h4>
+				<p>パスワードを登録すると、次回から記入が簡単になります。(4文字以上8文字以内)</p>
+				<input class="validate[required, minSize[4], maxSize[8]] text-input" type="password" id="passwd" name="customerPassword"/>
+				<br/>
+				<p>確認</p>
+				<input class="validate[required,equals[passwd]] text-input" type="password" id="re_passwd" name="customerPasswordConfirm"/> -->
 				<br />
 				<input type="submit" value="次へ">
 			</div>

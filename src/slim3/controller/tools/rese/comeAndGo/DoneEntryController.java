@@ -29,7 +29,6 @@ public class DoneEntryController extends AbstractController {
         
         Validators v = new Validators(request);
         validate(v, "name", 1, 20, true, null, null);
-        validate(v, "kanaName", 1, 20, true, RegexType.HIRAGANA, null);
         validate(v, "mailaddress", 1, 100, true, RegexType.MAIL_ADDRESS, null);
         validate(v, "password", 8, 20, true, null, null);
         validate(v, "passwordConfirm", 8, 20, true, null, null);
@@ -40,14 +39,12 @@ public class DoneEntryController extends AbstractController {
         }
         
         String name = asString("name");
-        String kanaName = asString("kanaName");
         String mailaddress = asString("mailaddress");
         String password = asString("password");
         String passwordConfirm = asString("passwordConfirm");
         
         
         request.setAttribute("name", name);
-        request.setAttribute("kanaName", kanaName);
         request.setAttribute("mailaddress", mailaddress);
         request.setAttribute("password", password);
         
@@ -65,7 +62,6 @@ public class DoneEntryController extends AbstractController {
         
         MsUser msUser = new MsUser();
         msUser.setName(name);
-        msUser.setKanaName(kanaName);
         msUser.setMailaddress(mailaddress);
         msUser.setPassword(password);
         
@@ -74,7 +70,6 @@ public class DoneEntryController extends AbstractController {
         Key userKey = msUser.getKey();
         try {
             encrypt = Base64Util.encodeWebSafe(String.format("%s_%s", userKey, DateUtil.getDateString("yyyyMMddHHmm")).getBytes("UTF-8"), false);
-//            CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_DISP_TIME, CypherUtil.encodeBrowfish("" + DateUtil.getDate().getTime()));
             log.info("暗号化しました。 " + encrypt);
         } catch (UnsupportedEncodingException e) {
             writeErrorLog(e);

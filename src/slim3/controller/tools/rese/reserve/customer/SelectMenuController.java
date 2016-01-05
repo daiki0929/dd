@@ -22,10 +22,6 @@ public class SelectMenuController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
-        //認証機能
-        if (!authService.isMsAuth(request, msUserDto, errors)) {
-            return super.showLoginPage();
-        }
         
         Key menuPageKey = asKey("id");
         if (menuPageKey == null) {

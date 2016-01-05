@@ -21,15 +21,16 @@ import slim3.dto.JsonDto;
 import slim3.dto.ManageUserDto;
 import slim3.dto.MsUserDto;
 import slim3.exception.MyException;
-import slim3.meta.MsUserMeta;
 import slim3.service.AuthService;
-import slim3.service.datastore.ManageUserService;
+import slim3.service.datastore.CustomerService;
+import slim3.service.datastore.DsService;
 import slim3.service.datastore.MenuPageService;
 import slim3.service.datastore.MenuService;
 import slim3.service.datastore.MsShopService;
 import slim3.service.datastore.MsUserService;
 import slim3.service.datastore.ReserveService;
 import slim3.service.factory.ServiceFactory;
+import slim3.service.sns.TwitterService;
 import slim3.service.tools.userManage.SetShopDefaultService;
 import util.CookieUtil;
 import util.StackTraceUtil;
@@ -42,15 +43,13 @@ public abstract class AbstractController extends Controller {
     // Logger
     public final static Logger log = Logger.getLogger(AbstractController.class.getName());
     
-    // ================================================================
-    // Model
-    protected static MsUserMeta MS_USER_META = MsUserMeta.get();
     
     // ================================================================
     // Service
     /** Datastoreサービス */
+    protected DsService dsService = new DsService();
     protected ManageUserDto manageUserDto = new ManageUserDto();
-    protected ManageUserService manageUserService = new ManageUserService();
+    protected CustomerService customerService = new CustomerService();
     protected MsUserDto msUserDto = new MsUserDto();
     protected JsonDto jsonDto = new JsonDto();
     
@@ -63,8 +62,13 @@ public abstract class AbstractController extends Controller {
     protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
     
     
+    
     /** 認証サービス */
     protected AuthService authService = ServiceFactory.getService(AuthService.class);
+    //Twitter認証
+    protected TwitterService twitterService = new TwitterService();
+    
+    
     
     /**
      * パラメータをString型で受け取ります。

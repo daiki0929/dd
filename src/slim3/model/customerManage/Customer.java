@@ -1,4 +1,4 @@
-package slim3.model.reserve;
+package slim3.model.customerManage;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,9 +10,15 @@ import org.slim3.datastore.ModelRef;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.model.MsUser;
+import slim3.model.reserve.MenuPage;
 
+/**
+ * カスタマー(顧客)情報のモデル
+ * @author uedadaiki
+ *
+ */
 @Model(schemaVersion = 1)
-public class ManageUser implements Serializable {
+public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // ------------------------------------------------------
@@ -34,6 +40,26 @@ public class ManageUser implements Serializable {
     private MsUser msUser;    
     
     // ------------------------------------------------------
+    
+    // ------------------------------------------------------
+    // MenuPageへの多対1の宣言(子)
+    
+    private ModelRef<MenuPage> MenuPageRef = new ModelRef<MenuPage>(MenuPage.class);
+    
+    public ModelRef<MenuPage> getMenuPageRef() {
+        return MenuPageRef;
+    }
+    
+    public MenuPage getMenuPage() {
+        return menuPage;
+    }
+    public void  setMenuPage(MenuPage menuPage) {
+        this.menuPage = menuPage;
+    }
+    @Attribute(persistent = false)
+    private MenuPage menuPage;    
+    
+    // ------------------------------------------------------
 
 
     @Attribute(primaryKey = true)
@@ -42,8 +68,7 @@ public class ManageUser implements Serializable {
     @Attribute(version = true)
     private Long version;
 
-    //TODO kitazawa @Attribute(unindexed = true)をつかって検索しないキーはIndex作らないほうが安くなる
-    //お客様情報
+    //カスタマー情報
     private String name;
     @Attribute(unindexed = true)
     private String kanaName;
@@ -55,6 +80,7 @@ public class ManageUser implements Serializable {
     private String mailaddress;
     private Date visitDate;
     private String orderMenu;
+    private String sex;
     
     
     
@@ -152,7 +178,7 @@ public class ManageUser implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        ManageUser other = (ManageUser) obj;
+        Customer other = (Customer) obj;
         if (key == null) {
             if (other.key != null) {
                 return false;
@@ -170,5 +196,14 @@ public class ManageUser implements Serializable {
     public void setKanaName(String kanaName) {
         this.kanaName = kanaName;
     }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
 
 }

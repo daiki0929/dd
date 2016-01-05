@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 import org.joda.time.DateTime;
 import org.slim3.controller.Navigation;
+import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -48,8 +47,7 @@ public class TimescheduleController extends AbstractController {
         
         //最初に設定している予約可能時間
         MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
-        //TODO 日曜日始まりで、順番にリストに入れておく。foreachで取り出して、notOpenの曜日の番号をリストにしてjspに渡す。
-        HashMap<String, HashMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
+        ArrayMap<String, ArrayMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
         log.info("statusByDays："+statusByDays.toString());
         Iterator iterator = statusByDays.keySet().iterator();
         ArrayList<Integer> offDaysOfTheWeekNum = new ArrayList<Integer>();
@@ -57,7 +55,6 @@ public class TimescheduleController extends AbstractController {
         while(iterator.hasNext()) {
             n++;
             try {
-                System.out.println(iterator.next());
                 Object status = statusByDays.get(iterator.next()).get("shopStatus");
                 if (status.equals(Const.NOT_OPEN)) {
                     log.info("notOpenでした。追加します。");
@@ -75,8 +72,8 @@ public class TimescheduleController extends AbstractController {
         DateTime reserveToDateTime = today.plusDays(reserveTo).plusMonths(-1);
         DateTime reserveFromDateTime = today.plusSeconds(reserveFrom).plusMonths(-1);
         
-        log.info("from：" + reserveFromDateTime.toString("yyyy,M,d"));
-        log.info("to：" + reserveToDateTime.toString("yyyy,M,d"));
+        log.info("from：" + reserveFromDateTime.plusMonths(1).toString("yyyy,M,d"));
+        log.info("to：" + reserveToDateTime.plusMonths(1).toString("yyyy,M,d"));
         
         request.setAttribute("orderMenu", orderMenu);
         request.setAttribute("statusByDays", statusByDays);
@@ -84,7 +81,13 @@ public class TimescheduleController extends AbstractController {
         request.setAttribute("reserveFrom", reserveFromDateTime.toString("yyyy,M,d"));
         request.setAttribute("selectedMeuKey", selectedMeuKey);
         request.setAttribute("menuList", menuList);
+        request.setAttribute("offDaysOfTheWeekNum", offDaysOfTheWeekNum);
         
+        if (reserveTo == 0) {
+            //予約開始日を設定していない場合は、fullcalendarのmaxを3000年に設定して対応します。(minだけ設定するのは無理そう)
+            log.info("予約開始日が設定されていません。");
+            request.setAttribute("reserveTo", "3000,1,1");
+        }
         
         
         return forward("timeschedule.jsp");

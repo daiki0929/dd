@@ -27,7 +27,7 @@ public class MsUserService extends AbstractDatastoreService{
     /**
      * 重複しているかをチェックします。
      * @param mailaddress 登録するメールアドレス
-     * @param manageUser 
+     * @param customer 
      * @return
      */
     public boolean duplicateMailAddress(String mailaddress, MsUserDto msUserDto){
@@ -54,7 +54,6 @@ public class MsUserService extends AbstractDatastoreService{
     }
     
     //データベースからクッキー情報(userId)でデータを1つ取得。
-    //TODO クッキーのサービスとMsUserのサービスが混ざったメソッドは良くない？
     public MsUser getSingleByCookie(HttpServletRequest request, String cookieName, MsUserMeta msUserMeta){
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
 //        log.info("クッキーを取り出しました：" + cookie);

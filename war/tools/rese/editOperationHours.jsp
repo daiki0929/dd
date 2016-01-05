@@ -14,11 +14,11 @@
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 
-<script type="text/javascript">
-	
+
+<script type="text/javascript" charset="utf-8">
 <%@ include file="/js/tools/rese/shopStatus.js"%>
-	
 </script>
+
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
@@ -37,11 +37,11 @@
 					name="sundayShopStatus" value="notOpen"
 					onchange="postShopStatus('sunday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('sunday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('sunday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -57,11 +57,11 @@
 					name="mondayShopStatus" value="notOpen"
 					onchange="postShopStatus('monday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('monday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('monday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -77,11 +77,11 @@
 					name="tuesdayShopStatus" value="notOpen"
 					onchange="postShopStatus('tuesday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('tuesday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('tuesday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -97,11 +97,11 @@
 					name="wednesdayShopStatus" value="notOpen"
 					onchange="postShopStatus('wednesday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('wednesday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('wednesday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -117,11 +117,11 @@
 					name="thursdayShopStatus" value="notOpen"
 					onchange="postShopStatus('thursday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('thursday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('thursday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -137,11 +137,11 @@
 					name="fridayShopStatus" value="notOpen"
 					onchange="postShopStatus('friday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('friday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('friday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>
@@ -157,11 +157,11 @@
 					name="saturdayShopStatus" value="notOpen"
 					onchange="postShopStatus('saturday','notOpen')"> 非営業日
 				</label> <br />
-				<p>営業開始時間</p>
+				<p>営業開始時刻</p>
 				<select name="startTime" onchange="postOperationHours('saturday')">
 					<%@ include file="/tools/rese/common/operationStartTime.jsp"%>
 				</select>
-				<p>営業終了時間</p>
+				<p>営業終了時刻</p>
 				<select name="endTime" onchange="postOperationHours('saturday')">
 					<%@ include file="/tools/rese/common/operationEndTime.jsp"%>
 				</select>

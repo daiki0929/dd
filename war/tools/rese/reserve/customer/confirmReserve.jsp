@@ -19,17 +19,14 @@
  */
 var postUrl = "/tools/rese/reserve/customer/doneReserve";
 function CompleteReserve(daysOfTheWeek){
-	var name = $(".name").val();
-	var mailadress = $(".mailadress").val();
-	var phone = $(".phone").val();
 
 	$.post(postUrl, {
 		'menuKey' : '${f:h(menu.key)}',
 		'reserveTime' : '${reserveTime}',
 		'menuEndTime' : '${menuEndTime}',
-		'name' : name,
-		'mailadress' : mailadress,
-		'phone' : phone
+		'customerName' : '${customerName}',
+		'customerMailaddress' : '${customerMailaddress}',
+		'customerPhone' : '${customerPhone}'
 	}, function(data){
 		console.log(data.obj);
 		switch(data.obj){
@@ -56,9 +53,9 @@ function CompleteReserve(daysOfTheWeek){
 			<p>料金：${menu.price}円</p>
 
 			<h3>お客様情報</h3>
-			<p class="name">お名前：${customerName}様</p>
-			<p class="mailadress">メールアドレス：${customerMailadress}</p>
-			<p class="phone">携帯番号：${customerPhone}</p>
+			<p>お名前：${customerName}様</p>
+			<p>メールアドレス：${customerMailaddress}</p>
+			<p>携帯番号：${customerPhone}</p>
 
 			<p class="btn btn-info" onclick="CompleteReserve();">予約を完了する</p>
 		</div>

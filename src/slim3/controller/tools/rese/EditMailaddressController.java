@@ -6,6 +6,7 @@ import org.slim3.util.StringUtil;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import util.CookieUtil;
 /**
@@ -30,11 +31,13 @@ public class EditMailaddressController extends AbstractController {
             return null;
         }
         
+        
+        MsUserMeta msUserMeta = MsUserMeta.get();
         //TODO 質問：msUserDto.getMsUser()でフィルターをかけて取り出せる？kitazawa ココで取り出したものと、 msUserDto.getMsUser()って一緒じゃない？
         try {
             MsUser msUser = Datastore
-                    .query(MS_USER_META)
-                    .filter(MS_USER_META.userId.equal(cookie))
+                    .query(msUserMeta)
+                    .filter(msUserMeta.userId.equal(cookie))
                     .asSingle();
             if (msUser == null) {
                 log.info("MsUserに存在しません。");

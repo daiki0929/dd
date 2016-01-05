@@ -29,9 +29,6 @@ public class MsUser implements Serializable {
     private Role role;
     //名前(個人名 or 店舗名)
     private String name;
-    //ふりがな
-    @Attribute(unindexed = true)
-    private String kanaName;
     //住所
     private String address;
     //電話番号
@@ -40,6 +37,10 @@ public class MsUser implements Serializable {
     private String mailaddress;
     //パスワード
     private String password;
+    
+    //TwitterAPI
+    private String twAccessToken;
+    private String twAccessTokenSecret;
     
     
     public String getPassword() {
@@ -58,13 +59,6 @@ public class MsUser implements Serializable {
         this.role = role;
     }
     
-    public String getKanaName() {
-        return kanaName;
-    }
-    
-    public void setKanaName(String kanaName) {
-        this.kanaName = kanaName;
-    }
     public String getName() {
         return name;
     }
@@ -150,6 +144,22 @@ public class MsUser implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getTwAccessToken() {
+        return twAccessToken;
+    }
+
+    public void setTwAccessToken(String twAccessToken) {
+        this.twAccessToken = twAccessToken;
+    }
+
+    public String getTwAccessTokenSecret() {
+        return twAccessTokenSecret;
+    }
+
+    public void setTwAccessTokenSecret(String twAccessTokenSecret) {
+        this.twAccessTokenSecret = twAccessTokenSecret;
     }
 
 

@@ -1,10 +1,9 @@
 package slim3.service.tools.userManage;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import org.slim3.datastore.Datastore;
+import org.slim3.util.ArrayMap;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
@@ -28,9 +27,10 @@ public class SetShopDefaultService {
         msShop.getMsUserRef().setKey(msUser.getKey());
         log.info("店舗情報のデフォルト値を登録します。");
         
-        HashMap<String, HashMap<String, Object>> shopStatusByDays = new LinkedHashMap<String, HashMap<String,Object>>();
+        ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = new ArrayMap<String, ArrayMap<String,Object>>();
+//        HashMap<String, HashMap<String, Object>> shopStatusByDays = new LinkedHashMap<String, HashMap<String,Object>>();
         //曜日別のデータ
-        HashMap<String, Object> weekMap = new HashMap<String, Object>();
+        ArrayMap<String, Object> weekMap = new ArrayMap<String, Object>();
         //データをMapに詰める
         weekMap.put("shopStatus", Const.OPEN);
         weekMap.put("startTime", "0:00");

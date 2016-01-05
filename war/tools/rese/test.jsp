@@ -60,7 +60,7 @@
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div style="margin-top: 200px;">
 		<form id="entryForm">
-			<input name="uploadFile" type="file" enctype="multipart/form-data">
+			<input name="formFile" type="file" enctype="multipart/form-data">
 			<input id="uploadUrl" type="hidden" />
 			<button id="upload">Upload</button>
 		</form>

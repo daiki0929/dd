@@ -17,7 +17,7 @@
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div class="container">
-		<div class="span12">
+		<div class="span8">
 			<h3>メニューページの一覧</h3>
 			<a href="/tools/rese/reserve/createMenuPage"><button type="button" class="btn btn-warning navbar-btn">予約ページ作成</button></a>
 			<c:forEach var="menuPage" items="${menuPageList}">

@@ -80,44 +80,43 @@ public class AuthService {
     }
     
     /**
-     * userManageの認証機能
+     * Reseの認証機能
      * @param request
      * @param errors
      * @return
+     * @throws InterruptedException 
      */
-    public boolean isMsAuth(HttpServletRequest request, MsUserDto msUserDto, Errors errors){
+    public boolean isMsAuth(HttpServletRequest request, MsUserDto msUserDto, Errors errors) throws InterruptedException{
         
         //クッキー取得
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
-//        log.info("クッキーを取り出しました：" + cookie);
-        //TODO デコードが上手くいかない。webのプロジェクトとライブラリが違う？
-//        String decodeCookie = CypherUtil.decodeBrowfish(cookie);
-//        log.info("クッキーをデコードしました：" + decodeCookie);
         
         //クッキーが無かった場合
         if (StringUtil.isEmpty(cookie)) {
             log.info("クッキーがありませんでした。");
+            Thread.sleep(1000);
             return false;
         }
-        
+
         try {
             //データベースにあるか検索
             MsUser msUser = Datastore
                     .query(MS_USER_META)
                     .filter(MS_USER_META.userId.equal(cookie))
                     .asSingle();
-            
+
             //MsUserに存在しない場合
             if (msUser == null) {
                 log.info("MsUserに存在しません。");
-                return false;
+                Thread.sleep(1000);
+                    return false;
             }
-            
-//            log.info("ログイン情報：" + msUser.getName());
+
             request.setAttribute("msUser", msUser);
-            
+
         } catch (Exception e) {
             StackTraceUtil.toString(e);
+            log.info("エラー");
             return false;
         }
         return true;

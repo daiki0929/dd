@@ -2,13 +2,13 @@ package slim3.controller.tools.rese.reserve.customer;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.ModelRef;
+import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 
@@ -33,9 +33,10 @@ public class CalculateTimeController extends AbstractController {
         DateTime selectReserveDate = DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime(asString("reserveDate"));
         log.info("選択された日程" + selectReserveDate.toString());
         int dayOfWeek = selectReserveDate.getDayOfWeek();
+        log.info(Integer.toString(dayOfWeek));
         //曜日
-        String daysOfTheWeek = Const.DAYS_OF_THE_WEEK[dayOfWeek];
-//        log.info(daysOfTheWeek);
+        String daysOfTheWeek = Const.DAYS_OF_THE_WEEK[dayOfWeek-1];
+        log.info(daysOfTheWeek);
 
         //メニューの時間
         Key meuKey = asKey("menuKey");
@@ -57,9 +58,9 @@ public class CalculateTimeController extends AbstractController {
         ModelRef<MsUser> msUserRef = menuPage.getMsUserRef();
         Key userKey = msUserRef.getKey();
         MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
-        HashMap<String, HashMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
+        ArrayMap<String, ArrayMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
 
-        HashMap<String, Object> shopDataByDaysOfTheWeek = statusByDays.get(daysOfTheWeek);
+        ArrayMap<String, Object> shopDataByDaysOfTheWeek = statusByDays.get(daysOfTheWeek);
         if (shopDataByDaysOfTheWeek.get("shopStatus").equals("notOpen")) {
             log.info("閉店日が選択されました");
             return null;
@@ -126,7 +127,7 @@ public class CalculateTimeController extends AbstractController {
         intervalTimeLoop: for (int i = 0; i < 97; i++) {
             //予約間隔を加算
             intervalTime = shopStartTime.plusMinutes(interval/60*(i+1));
-//            log.info("予約間隔：" + intervalTime);
+            log.info("予約間隔：" + intervalTime);
 //            log.info("予約時間" + intervalTime.toString());
             //閉店を過ぎてたらストップ
             if (intervalTime.isAfter(shopEndTime)){

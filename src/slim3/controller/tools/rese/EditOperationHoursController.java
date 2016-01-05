@@ -1,15 +1,15 @@
 package slim3.controller.tools.rese;
 
-import java.util.HashMap;
-
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
+import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.controller.AbstractController;
 import slim3.meta.MsShopMeta;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 /**
@@ -26,8 +26,9 @@ public class EditOperationHoursController extends AbstractController {
             return super.showLoginPage();
         }
         
+        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, MS_USER_META);
+        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
         if (msUser == null) {
             return forward("/tools/rese/comeAndGo/login");
         }
@@ -42,8 +43,7 @@ public class EditOperationHoursController extends AbstractController {
             .asSingle();
         
         //ユーザーが所持するお店の情報
-        //TODO kitazawa HashMapだと順序性保証されないけどだいじょうぶ？問題ないならOK 
-        HashMap<String, HashMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
+        ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         if (shopStatusByDays == null) {
             //店舗情報のデフォルト値を保存
             log.info("店舗情報のデフォルト値を登録します。");
