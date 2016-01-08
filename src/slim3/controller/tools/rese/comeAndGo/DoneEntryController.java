@@ -12,6 +12,7 @@ import slim3.Const;
 import slim3.Const.RegexType;
 import slim3.controller.AbstractController;
 import slim3.exception.MyException;
+import slim3.model.MsShop;
 import slim3.model.MsUser;
 import util.Base64Util;
 import util.CookieUtil;
@@ -84,7 +85,8 @@ public class DoneEntryController extends AbstractController {
         Datastore.put(msUser);
         
         //店舗情報のデフォルト値を保存
-        setShopDefaultService.setShopDefault(msUser);
+        MsShop shopDefaultHour = setShopDefaultService.setShopDefault(msUser);
+        Datastore.put(shopDefaultHour);
         
         return redirect("/tools/rese/customerManage/customerList");
 //        log.info("会員登録完了しました");

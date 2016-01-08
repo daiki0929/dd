@@ -135,15 +135,95 @@ public class Const {
 
     }
     
+    
     // ================================
-    // メニューページ作成
-//    //承認制 or 先着順
-//    public final static String RECOGNITION_SYSTEM = "recognition";
-//    public final static String FIRST_ARRIVAL_SYSTEM = "firstArrival";
-//    
-//    //公開 or 非公開
-//    public final static String OPEN = "open";
-//    public final static String NOT_OPEN = "notOpen";
+    // FacebookAPI
+    /**
+     * FacebookAPIのID・PW
+     * @author uedadaiki
+     *
+     */
+    public static enum FbAPI{
+        Rese("439419456260791","0754033e8212cb8c18cf0bd1e9230e2d");
+        
+        private final String id;
+        private final String pass;
+        
+        private FbAPI(String id, String pass){
+            this.id = id;
+            this.pass = pass;
+        }
+        
+        public String getFbId() {
+            return id;
+        }
+        public String getFbPass() {
+            return pass;
+        }
+    }
+    
+    /**
+     * FacebookAPIのコールバックURL
+     * @author uedadaiki
+     *
+     */
+    public static enum FbCallbackEnum{
+        Rese("http://localhost:8888/tools/rese/comeAndGo/facebook/callBack");
+        
+        private final String callbackURL;
+        
+        private FbCallbackEnum(final String callbackURL){
+            this.callbackURL = callbackURL;
+        }
+        public String getCallbackURL() {
+            return callbackURL;
+        }
+    }
+    
+    
+    // ================================
+    // TwitterAPI
+    /**
+     * TwitterAPIのID・PW
+     * ID：ConsumerKey / PW：ConsumerSecretKey
+     * @author uedadaiki
+     *
+     */
+    public static enum TWAPI{
+        Rese("uVV6FY1v67LhMaTS4N3xRwbNT","j5SUMbIt4VvnEMuJRd0HY5XJNIq7k88pVxG7Gz657gqE7TTJvK");
+        
+        private final String id;
+        private final String pass;
+        
+        private TWAPI(String id, String pass){
+            this.id = id;
+            this.pass = pass;
+        }
+        
+        public String getTwId() {
+            return id;
+        }
+        public String getTwPass() {
+            return pass;
+        }
+    }
+    
+    /**
+     * TwitterAPIのコールバックURL
+     * @author uedadaiki
+     *
+     */
+    public static enum TwCallbackEnum{
+        Rese("http://127.0.0.1:8888/tools/rese/comeAndGo/twitter/CallBack");
+        
+        private final String callbackURL;
+        private TwCallbackEnum(final String callbackURL){
+            this.callbackURL = callbackURL;
+        }
+        public String getCallbackURL() {
+            return callbackURL;
+        }
+    }
     
     
     // ================================

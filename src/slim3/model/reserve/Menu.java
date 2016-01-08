@@ -43,8 +43,7 @@ public class Menu implements Serializable {
 
     //メニュー情報
     private String title;
-    //TODO kitazawa 画像そのものではないなら、imgPathとかimgUrlとかにするべき 
-    private String img;
+    private String imgPath;
     private int price;
     private String content;
     private String time;
@@ -77,13 +76,6 @@ public class Menu implements Serializable {
         this.title = title;
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
 
     public int getPrice() {
         return price;
@@ -162,5 +154,13 @@ public class Menu implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }

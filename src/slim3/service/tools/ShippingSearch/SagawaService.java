@@ -2,11 +2,18 @@ package slim3.service.tools.ShippingSearch;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import org.slim3.util.ArrayMap;
 
 import main.java.org.jsoup.Connection;
-import main.java.org.jsoup.Jsoup;
 import main.java.org.jsoup.Connection.Method;
+import main.java.org.jsoup.Jsoup;
+import main.java.org.jsoup.nodes.Document;
+import main.java.org.jsoup.nodes.Element;
+import main.java.org.jsoup.select.Elements;
 import slim3.Const;
+import util.StringUtil;
 
 /**
  * 佐川宅急便の配送状況を調べるサービスです。
@@ -14,6 +21,8 @@ import slim3.Const;
  *
  */
 public class SagawaService implements SearchService {
+    
+    public final static Logger log = Logger.getLogger(SagawaService.class.getName());
     
     public static final String SAGAWA_URL = "http://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do";
     public static final String SAGAWA_HOST_NAME = "www.sagawa-exp.co.jp";
@@ -56,6 +65,60 @@ public class SagawaService implements SearchService {
                 .cookies(cookies)
                 .method(Method.GET)
                 .timeout(10000);
+    }
+    
+    /**
+     * 必要なデータをパースしてマップに詰めます。
+     */
+    public ArrayMap<String, String> parseDocument(Document doc){
+        ArrayMap<String, String> goodsStatusMap = new ArrayMap<String, String>();
+        
+        String latestStatus = StringUtil.trim(doc.getElementsByClass("state2").text());
+        if (latestStatus.equals("該当なし")) {
+            log.info("佐川に該当商品はありませんでした。");
+            return null;
+        }
+        
+        Element goodsInfoElems = doc.getElementById("MainList");
+        String arriveDate = goodsInfoElems.select("tr:nth-child(4) td:nth-child(1)").text();
+        String ReDeliveryDate = goodsInfoElems.select("tr:nth-child(4) td:nth-child(2)").text();
+        goodsStatusMap.put("arriveDate", arriveDate);
+        goodsStatusMap.put("ReDeliveryDate", ReDeliveryDate);
+        
+        Elements goodsDetailElems = doc.select(".table_okurijo_detail");
+        for (Element elem : goodsDetailElems) {
+            String inquiryNo = elem.select("tr:nth-child(1) td").text();
+            String shippingDate = elem.select("tr:nth-child(2) td").text();
+            String pickupOffice = elem.select("tr:nth-child(3) td").text();
+            String shippingOffice = elem.select("tr:nth-child(4) td").text();
+            String amount = elem.select("tr:nth-child(5) td").text();
+            
+            goodsStatusMap.put("inquiryNo", inquiryNo);
+            goodsStatusMap.put("shippingDate", shippingDate);
+            goodsStatusMap.put("pickupOffice", pickupOffice);
+            goodsStatusMap.put("shippingOffice", shippingOffice);
+            goodsStatusMap.put("amount", amount);
+            break;
+        }
+        
+        Elements goodsStatusElems = doc.select(".table_okurijo_detail2");
+        for (Element elem : goodsStatusElems) {
+            String status = elem.select("tbody tr:last-child td:nth-child(1)").text().replace("⇒", "");
+//            String date = elem.select("tbody tr:last-child td:nth-child(2)").text();
+            String office = elem.select("tbody tr:last-child td:nth-child(3)").text();
+            
+            goodsStatusMap.put("status", status);
+//            goodsStatusMap.put("date", date);
+            goodsStatusMap.put("office", office);
+            goodsStatusMap.put("company", "佐川急便");
+            break;
+        }
+        
+        for(Map.Entry<String, String> e : goodsStatusMap.entrySet()) {
+            System.out.println(e.getKey() + " : " + e.getValue());
+        }
+        
+        return goodsStatusMap;
     }
     
     

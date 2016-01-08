@@ -22,18 +22,17 @@
 			<!-- エラーメッセージ -->
 			<%@ include file="/tools/rese/common/error.jsp"%>
 			<div class="span12">
-				<a href="/tools/rese/comeAndGo/entry"><button class="btn btn-warning">会員登録</button></a>
-				<h3>ログイン</h3>
-				<form action="/tools/rese/comeAndGo/doneLogin" method="post">
+				<h3>会員登録</h3>
+				<form action="/tools/rese/comeAndGo/twitter/doneEntry" method="post">
+					<p>名前</p>
+					<p>予約フォームに表示する名前を記入してください。(店舗名/個人名など)</p>
+					<input type="text" name="name">
 					<p>メールアドレス</p>
-					<input type="text" name="mailaddress" value=${mailaddress}>
-					<p>パスワード</p>
-					<input type="text" name="password" value=${password}> <br />
-					<input type="submit" value="ログイン">
+					<p>予約の通知を送信するメールアドレスを記入してください。</p>
+					<input type="text" name="mailaddress" placeholder="sample@example.com">
+					<br />
+					<input type="submit" value="登録">
 				</form>
-				<h3>SNSでログインする</h3>
-				<a href="/tools/rese/comeAndGo/twitter/signIn"><p class="btn btn-info">Twitterでログイン</p></a>
-				<a href="/api/twitter/logOut">logout</a>
 			</div>
 		</div>
 	</div>

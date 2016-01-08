@@ -1,5 +1,9 @@
 package slim3.controller.tools.rese.reserve;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
@@ -8,8 +12,8 @@ import slim3.Const;
 import slim3.controller.AbstractController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
-import slim3.model.reserve.MenuPage;
 import slim3.model.reserve.Menu.Status;
+import slim3.model.reserve.MenuPage;
 /**
  * メニューページ作成完了後のコントローラです。
  * @author uedadaiki
@@ -47,7 +51,7 @@ public class DoneCreateMenuPageController extends AbstractController {
         //キャンセル受付
         validate(v, "cancelTime", 1, 10, false, null, null);
         //予約不可の日程(定休日以外)
-        validate(v, "noReserveDate", 1, 1000, false, null, null);
+//        validate(v, "noReserveDate", 1, 1000, false, RegexType.YEAR_DATE, null);
         
         if (errors.size() != 0) {
             log.info("記入エラー");
@@ -76,14 +80,24 @@ public class DoneCreateMenuPageController extends AbstractController {
             e.printStackTrace();
             return forward("/tools/rese/common/errorPage.jsp");
         }
-        menuPage.setNoReserveDate(asString("noReserveDate"));
+        
+        ArrayList<Date> noReserveDateList = new ArrayList<Date>();
+        String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
+        
+        for (String noReserveDateStr : splitedNoReserveDateStr) {
+            Date noReserveDate = 
+                    DateTimeFormat
+                    .forPattern("yyyy/MM/dd")
+                    .parseDateTime(noReserveDateStr)
+                    .toDate();
+            noReserveDateList.add(noReserveDate);
+            log.info(noReserveDateStr);
+        }
+        log.info(noReserveDateList.toString());
+        
+        menuPage.setNoReserveDate(noReserveDateList);
+        
         Datastore.put(menuPage);
-        //TODO getで渡せないので、メニューページ一覧に飛ばします。
-//        Key menuPageKey = menuPage.getKey();
-//        String keyToString = Datastore.keyToString(menuPageKey);
-//        log.info("menuPageKey" + menuPageKey);
-//
-//        return forward(String.format("%s%s", "/tools/userManage/reserve/menuList?id=", keyToString));
         return forward("/tools/rese/reserve/menuPageList");
     }
 }

@@ -44,7 +44,6 @@ public class DoneEditReserveController extends AbstractController {
         String phone = asString("phone");
         String startTime = asString("startTime");
         String endTime = asString("endTime");
-        //TODO forPatternは修正必要かも
         Date reserveDateTime = 
                 DateTimeFormat
                 .forPattern("yyyy/MM/dd HH:mm")

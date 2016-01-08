@@ -4,7 +4,6 @@ import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 
-import slim3.Const.RegexType;
 import slim3.controller.AbstractController;
 import slim3.model.MsUser;
 /**

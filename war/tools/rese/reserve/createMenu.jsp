@@ -46,7 +46,7 @@
 				<p>メニューの内容(600字以内)</p>
 				<input type="text" name="content">
 				<p>画像</p>
-				<input type="file" name="img"> <input type="hidden" name="menuPageKey" value="${f:h(menuPageKey)}">
+				<input type="file" name="imgPath"> <input type="hidden" name="menuPageKey" value="${f:h(menuPageKey)}">
 				<br />
 				<p class="btn btn-info" onclick="createMenu();">完了</p>
 			</form>

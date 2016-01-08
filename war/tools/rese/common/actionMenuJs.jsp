@@ -15,14 +15,14 @@ function createMenu(){
 	var time = $("[name=time]").val();
 	var price = $("[name=price]").val();
 	var content = $("[name=content]").val();
-	var img = $("[name=img]").val();
+	var imgPath = $("[name=imgPath]").val();
 	var menuPageKey = $("[name=menuPageKey]").val();
 	$.post(createUrl, {
 		'title' : title,
 		'time' : time,
 		'price' : price,
 		'content' : content,
-		'img' : img,
+		'imgPath' : imgPath,
 		'menuPageKey' : menuPageKey
 	}, function(data){
 		switch(data.obj){

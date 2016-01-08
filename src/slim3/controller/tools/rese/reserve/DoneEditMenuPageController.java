@@ -1,5 +1,9 @@
 package slim3.controller.tools.rese.reserve;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
@@ -49,7 +53,7 @@ public class DoneEditMenuPageController extends AbstractController {
         //キャンセル受付
         validate(v, "cancelTime", 1, 10, false, null, null);
         //予約不可の日程(定休日以外)
-        validate(v, "noReserveDate", 1, 1000, false, null, null);
+//        validate(v, "noReserveDate", 1, 1000, false, null, null);
         
         if (errors.size() != 0) {
             log.info("記入エラー");
@@ -71,7 +75,24 @@ public class DoneEditMenuPageController extends AbstractController {
         menuPage.setReserveStartTime(asInteger("reserveStartTime"));
         menuPage.setReserveEndTime(asInteger("reserveEndTime"));
         menuPage.setCancelTime(asInteger("cancelTime"));
-        menuPage.setNoReserveDate(asString("noReserveDate"));
+        
+        ArrayList<Date> noReserveDateList = new ArrayList<Date>();
+        String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
+        
+        for (String noReserveDateStr : splitedNoReserveDateStr) {
+            Date noReserveDate = 
+                    DateTimeFormat
+                    .forPattern("yyyy/MM/dd")
+                    .parseDateTime(noReserveDateStr)
+                    .toDate();
+            noReserveDateList.add(noReserveDate);
+            log.info(noReserveDateStr);
+        }
+        log.info(noReserveDateList.toString());
+        
+        menuPage.setNoReserveDate(noReserveDateList);
+        
+        
         Datastore.put(menuPage);
 
         

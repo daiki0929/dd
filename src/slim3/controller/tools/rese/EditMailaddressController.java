@@ -33,7 +33,7 @@ public class EditMailaddressController extends AbstractController {
         
         
         MsUserMeta msUserMeta = MsUserMeta.get();
-        //TODO 質問：msUserDto.getMsUser()でフィルターをかけて取り出せる？kitazawa ココで取り出したものと、 msUserDto.getMsUser()って一緒じゃない？
+        //TODO 質問：msUserDto.getMsUser()でフィルターをかけて取り出せますか？kitazawa ココで取り出したものと、 msUserDto.getMsUser()って一緒じゃない？
         try {
             MsUser msUser = Datastore
                     .query(msUserMeta)

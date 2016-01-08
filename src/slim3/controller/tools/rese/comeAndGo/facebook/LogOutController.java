@@ -1,21 +1,21 @@
-package slim3.controller.api.twitter;
+package slim3.controller.tools.rese.comeAndGo.facebook;
 
 import org.slim3.controller.Navigation;
 
 import slim3.controller.AbstractController;
 import slim3.service.sns.TwitterService;
 /**
- * ツイートします。
+ * Facebookアカウントでログアウトします。
  * @author uedadaiki
  *
  */
-public class TweetController extends AbstractController {
+public class LogOutController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
         TwitterService twitterService = new TwitterService();
-        twitterService.tweet(request, response);
+        twitterService.logOut(request, response);
         
-        return null;
+        return forward("/api/Twitter/index");
     }
 }

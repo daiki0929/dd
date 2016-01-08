@@ -1,7 +1,6 @@
 package slim3.controller.tools.rese.reserve.customer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,7 +21,7 @@ import slim3.model.reserve.MenuPage;
  * @author uedadaiki
  *
  */
-//TODO kitazawa ひとつのユースケースに対して、1パッケージにしたほうが見やすくない？
+//TODO 質問：CalculateTimeControllerとまとめて１つにするってことですか？kitazawa ひとつのユースケースに対して、1パッケージにしたほうが見やすくない？
 public class TimescheduleController extends AbstractController {
 
     @Override
@@ -30,25 +29,23 @@ public class TimescheduleController extends AbstractController {
         
         Key selectedMeuKey = asKey("menuId");
         Key userKey = asKey("userId");
-        
-        //メニューの時間
         Menu orderMenu = menuService.get(selectedMeuKey);
         
-        //メニューのkeyでメニューページにある受付開始・終了を取得します。
         Key MenuPageRefKey = orderMenu.getMenuPageRef().getKey();
         MenuPage menuPage = menuPageService.get(MenuPageRefKey);
         //受付開始(日)
         int reserveTo = menuPage.getReserveStartTime();
         //締め切り時間(秒)
         int reserveFrom = menuPage.getReserveEndTime();
-        
-        //メニューのリスト
+
         List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
         
-        //最初に設定している予約可能時間
         MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
+        //予約可能時間
         ArrayMap<String, ArrayMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
         log.info("statusByDays："+statusByDays.toString());
+        
+        @SuppressWarnings("rawtypes")
         Iterator iterator = statusByDays.keySet().iterator();
         ArrayList<Integer> offDaysOfTheWeekNum = new ArrayList<Integer>();
         Integer n = -1;

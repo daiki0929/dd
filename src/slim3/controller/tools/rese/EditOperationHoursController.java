@@ -44,14 +44,7 @@ public class EditOperationHoursController extends AbstractController {
         
         //ユーザーが所持するお店の情報
         ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
-        if (shopStatusByDays == null) {
-            //店舗情報のデフォルト値を保存
-            log.info("店舗情報のデフォルト値を登録します。");
-            setShopDefaultService.setShopDefault(msUser);
-        }else {
-            request.setAttribute("statusByDays", shopStatusByDays);
-            
-        }
+        request.setAttribute("statusByDays", shopStatusByDays);
         
         return forward("editOperationHours.jsp");
     }

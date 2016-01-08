@@ -30,8 +30,9 @@ import slim3.service.datastore.MsShopService;
 import slim3.service.datastore.MsUserService;
 import slim3.service.datastore.ReserveService;
 import slim3.service.factory.ServiceFactory;
+import slim3.service.sns.FacebookService;
 import slim3.service.sns.TwitterService;
-import slim3.service.tools.userManage.SetShopDefaultService;
+import slim3.service.tools.rese.SetShopDefaultService;
 import util.CookieUtil;
 import util.StackTraceUtil;
 import util.StringUtil;
@@ -62,11 +63,12 @@ public abstract class AbstractController extends Controller {
     protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
     
     
-    
     /** 認証サービス */
     protected AuthService authService = ServiceFactory.getService(AuthService.class);
     //Twitter認証
     protected TwitterService twitterService = new TwitterService();
+    //Facebook認証
+    protected FacebookService facebookService = new FacebookService();
     
     
     
@@ -129,7 +131,6 @@ public abstract class AbstractController extends Controller {
                validators.add(name, validators.regexp(s));
                if(!validators.validate()) {
                    Errors errors = validators.getErrors();
-                   //TODO バリデートが上手くいかない。application_ja.properties
                    if(errors.containsValue("電話番号が不正です。")) {
                        if(s.equals(Const.REGEX_PHONE)) {
                            errors.put(name + "Sample", "左記のように入力してください。 例）090-1234-5678");

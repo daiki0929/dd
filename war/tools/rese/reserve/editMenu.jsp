@@ -60,7 +60,7 @@
 				<p>メニューの内容(600字以内)</p>
 				<input type="text" name="content" value="${menu.content}">
 				<p>画像</p>
-				<input type="file" name="phone"> <input type="hidden" name="menuKey" value="${f:h(menu.key)}">
+				<input type="file" name="imgPath"> <input type="hidden" name="menuKey" value="${f:h(menu.key)}">
 				<br />
 				<input type="submit" value="更新">
 			</form>

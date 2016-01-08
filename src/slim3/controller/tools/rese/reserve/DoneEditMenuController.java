@@ -24,7 +24,7 @@ public class DoneEditMenuController extends AbstractController {
         validate(v, "time", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "price", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "content", 1, 600, false, null, null);
-        validate(v, "menuImg", 1, 400, false, null, null);
+        validate(v, "imgPath", 1, 400, false, null, null);
 
         if (errors.size() != 0) {
             log.info("記入エラー");
@@ -35,7 +35,7 @@ public class DoneEditMenuController extends AbstractController {
         Key menuKey = asKey("menuKey");
         Menu menu = menuService.get(menuKey);
         menu.setTitle(asString("menuTitle"));
-        menu.setImg(asString("menuImg"));
+        menu.setImgPath(asString("imgPath"));
         if (asInteger("price") != null) {
         menu.setPrice(asInteger("price"));
         }

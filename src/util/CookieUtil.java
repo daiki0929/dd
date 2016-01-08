@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,6 +68,22 @@ public class CookieUtil {
         Cookie cookie = new Cookie(name, "");
         cookie.setPath("/");
         res.addCookie(cookie);
+    }
+    
+    /**
+     * クッキーを作成します。
+     * @param key
+     * @return
+     */
+    public static String createCookieStr(Key key){
+        String encrypt;
+        try {
+            encrypt = Base64Util.encodeWebSafe(String.format("%s_%s", key, DateUtil.getDateString("yyyyMMddHHmm")).getBytes("UTF-8"), false);
+//            log.info("暗号化しました。 " + encrypt);
+        } catch (UnsupportedEncodingException e) {
+            throw new MyException(e);
+        }
+        return encrypt;
     }
     
     

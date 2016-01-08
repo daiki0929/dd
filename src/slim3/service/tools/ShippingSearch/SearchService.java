@@ -1,7 +1,11 @@
 package slim3.service.tools.ShippingSearch;
 
 
+
+import org.slim3.util.ArrayMap;
+
 import main.java.org.jsoup.Connection;
+import main.java.org.jsoup.nodes.Document;
 
 public interface SearchService {
     
@@ -18,4 +22,11 @@ public interface SearchService {
      * @return
      */
     Connection createConnection(String inquiryNO);
+    
+    /**
+     * 必要なデータをパースします。
+     * @param document
+     * @return
+     */
+    ArrayMap<String, String> parseDocument(Document document);
 }

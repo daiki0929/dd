@@ -11,7 +11,12 @@
 <%@ include file="/tools/rese/common/importCss.jsp"%>
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
-
+<style type="text/css">
+.selected a {
+  background: green !important;
+}
+</style>
+<script type="text/javascript" src="/js/tools/rese/noReserveDate.js"></script>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
@@ -102,20 +107,15 @@
 				</select>
 				<p>休み設定</p>
 				<small>定休日以外に、メニューページごとで休みを設定出来ます。</small>
-				<input type="text" id="datepicker" name="noReserveDate">
+				<input type="hidden" name="noReserveDate" value="">
+				<a id="button" href="javascript:;">カレンダー</a>
+  				<div id="pochipochi"></div>
 				<br />
 				<input type="submit" value="完了" class="btn btn-warning">
 			</form>
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#datepicker").datepicker({
-				format : "yyyy/mm/dd",
-				multidate : true
-			});
-		});
-	</script>
+
 </body>
 </html>

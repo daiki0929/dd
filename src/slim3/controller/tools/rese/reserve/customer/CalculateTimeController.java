@@ -68,7 +68,6 @@ public class CalculateTimeController extends AbstractController {
 
         //開店・閉店時刻をセットします。(選択された日程から曜日を出し、その曜日の開店・閉店時刻をセットする)
         //開店時間
-        //TODO もっと良い方法がありそう。
         //開店時間をセットし、選択された日程に変更する
         String shopStartMomentsStr = shopDataByDaysOfTheWeek.get("startTime").toString();
         DateTime shopStartMoments = DateTimeFormat.forPattern("HH:mm").parseDateTime(shopStartMomentsStr);
@@ -76,7 +75,6 @@ public class CalculateTimeController extends AbstractController {
 //        log.info("開店時間" + shopStartTime.toString());
         
         //開店時間
-        //TODO もっと良い方法がありそう。
         //閉店時間をセットし、選択された日程に変更する
         String shopEndMomentsStr = shopDataByDaysOfTheWeek.get("endTime").toString();
         DateTime shopEndMoments = DateTimeFormat.forPattern("HH:mm").parseDateTime(shopEndMomentsStr);

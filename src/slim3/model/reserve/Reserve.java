@@ -77,7 +77,7 @@ public class Reserve implements Serializable {
     private Date startTime;
     //終了日時
     private Date endTime;
-    //TODO Customerに紐付けたので必要無し。
+    //TODO Customerに紐付けたので必要無し。ReserveServiceの修正必要
     private String customerName;
     private String customerMailaddress;
     private String customerPhone;
@@ -154,37 +154,6 @@ public class Reserve implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((key == null) ? 0 : key.hashCode());
-        return result;
-    }
-
-    //TODO kitazawa 継承する必要ある？
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Reserve other = (Reserve) obj;
-        if (key == null) {
-            if (other.key != null) {
-                return false;
-            }
-        } else if (!key.equals(other.key)) {
-            return false;
-        }
-        return true;
     }
 
     public String getCustomerMailaddress() {

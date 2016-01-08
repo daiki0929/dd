@@ -1,6 +1,8 @@
 package slim3.model.reserve;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -75,9 +77,8 @@ public class MenuPage implements Serializable {
     private int reserveEndTime;
     //キャンセル期間
     private int cancelTime;
-    //TODO kitazawa 複数日はNG?
     //予約不可の日程(定休日以外)
-    private String noReserveDate;
+    private List<Date> noReserveDate;
     
     
     
@@ -137,14 +138,6 @@ public class MenuPage implements Serializable {
 
     public void setReserveEndTime(int reserveEndTime) {
         this.reserveEndTime = reserveEndTime;
-    }
-
-    public String getNoReserveDate() {
-        return noReserveDate;
-    }
-
-    public void setNoReserveDate(String noReserveDate) {
-        this.noReserveDate = noReserveDate;
     }
 
     public Key getKey() {
@@ -209,6 +202,15 @@ public class MenuPage implements Serializable {
     public void setInterval(int interval) {
         this.interval = interval;
     }
+
+    public List<Date> getNoReserveDate() {
+        return noReserveDate;
+    }
+
+    public void setNoReserveDate(List<Date> noReserveDate) {
+        this.noReserveDate = noReserveDate;
+    }
+
 
 
 

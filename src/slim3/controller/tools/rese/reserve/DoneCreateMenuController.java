@@ -28,7 +28,7 @@ public class DoneCreateMenuController extends AbstractController {
         validate(v, "time", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "price", 1, 10, false, RegexType.NUMBER, null);
         validate(v, "content", 1, 600, false, null, null);
-        validate(v, "img", 1, 400, false, null, null);
+        validate(v, "imgPath", 1, 400, false, null, null);
 
         if (errors.size() != 0) {
             log.info("記入エラー");
@@ -37,7 +37,7 @@ public class DoneCreateMenuController extends AbstractController {
         
         Menu menu = new Menu();
         menu.setTitle(asString("title"));
-        menu.setImg(asString("img"));
+        menu.setImgPath(asString("imgPath"));
         if (asInteger("price") != null) {
         menu.setPrice(asInteger("price"));
         }
@@ -52,7 +52,7 @@ public class DoneCreateMenuController extends AbstractController {
         
         HashMap<String, String> menuMap = new HashMap<String, String>();
         menuMap.put("title", asString("title"));
-        menuMap.put("img", asString("img"));
+        menuMap.put("imgPath", asString("imgPath"));
         menuMap.put("price", asString("price"));
         menuMap.put("content", asString("content"));
         menuMap.put("time", asString("time"));

@@ -42,6 +42,30 @@ public class MsUser implements Serializable {
     private String twAccessToken;
     private String twAccessTokenSecret;
     
+    //FacebookAPI
+    private String fbAccessToken;
+    private String fbAccessTokenSecret;
+    
+    
+    
+    
+    
+    public String getFbAccessToken() {
+        return fbAccessToken;
+    }
+
+    public void setFbAccessToken(String fbAccessToken) {
+        this.fbAccessToken = fbAccessToken;
+    }
+
+    public String getFbAccessTokenSecret() {
+        return fbAccessTokenSecret;
+    }
+
+    public void setFbAccessTokenSecret(String fbAccessTokenSecret) {
+        this.fbAccessTokenSecret = fbAccessTokenSecret;
+    }
+
     
     public String getPassword() {
         return password;

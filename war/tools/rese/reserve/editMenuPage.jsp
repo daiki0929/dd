@@ -14,6 +14,7 @@
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 <%@ include file="/tools/rese/common/actionMenuPageJs.jsp"%>
+<script type="text/javascript" src="/js/tools/rese/noReserveDate.js"></script>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
@@ -81,13 +82,6 @@
 							<option value="30">30日前から</option>
 							<option value="60">60日前から</option>
 							<option value="90">90日前から</option>
- 							<!-- <option value="">設定しない</option>
-							<option value="604800">7日前から</option>
-							<option value="1209600">14日前から</option>
-							<option value="1814400">21日前から</option>
-							<option value="2592000">30日前から</option>
-							<option value="5184000">60日前から</option>
-							<option value="7776000">90日前から</option> -->
 						</select>
 						<p>受付終了</p>
 						<select name="reserveEndTime">
@@ -139,7 +133,12 @@
 
 					<p>休み設定</p>
 					<small>定休日以外に、メニューページごとで休みを設定出来ます。</small>
+					
+					<!-- 表示を直す -->
 					<input type="text" id="datepicker" name="noReserveDate" value="${menuPage.noReserveDate}">
+					<input type="hidden" name="noReserveDate" value="">
+					<a id="button" href="javascript:;">カレンダー</a>
+  					<div id="pochipochi"></div>
 					<input type="hidden" name="id" value="${f:h(menuPage.key)}">
 					<br />
 					<input type="submit" value="更新" class="btn btn-warning">
