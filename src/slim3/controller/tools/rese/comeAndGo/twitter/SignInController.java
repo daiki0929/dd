@@ -3,13 +3,13 @@ package slim3.controller.tools.rese.comeAndGo.twitter;
 import org.slim3.controller.Navigation;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 /**
  * Twitterアカウントでログインします。
  * @author uedadaiki
  *
  */
-public class SignInController extends AbstractController {
+public class SignInController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {

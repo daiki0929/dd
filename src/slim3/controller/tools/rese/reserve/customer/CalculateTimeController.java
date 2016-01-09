@@ -13,7 +13,7 @@ import org.slim3.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 import slim3.model.reserve.Menu;
@@ -25,7 +25,7 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
-public class CalculateTimeController extends AbstractController {
+public class CalculateTimeController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -57,7 +57,7 @@ public class CalculateTimeController extends AbstractController {
         //営業時間
         ModelRef<MsUser> msUserRef = menuPage.getMsUserRef();
         Key userKey = msUserRef.getKey();
-        MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
+        MsShop usersShopInfo = shopService.getByMsUserKey(userKey);
         ArrayMap<String, ArrayMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
 
         ArrayMap<String, Object> shopDataByDaysOfTheWeek = statusByDays.get(daysOfTheWeek);
@@ -86,7 +86,7 @@ public class CalculateTimeController extends AbstractController {
         //-----------------------------------------
         //既に入ってる予約
         int interval = menuPage.getInterval();
-        List<Reserve> reserveList = msReserveService.getListByMsUserKey(userKey);
+        List<Reserve> reserveList = reserveService.getListByMsUserKey(userKey);
         List<DateTime> reservedMenuStartList = new ArrayList<DateTime>();
         List<DateTime> reservedMenuEndList = new ArrayList<DateTime>();
         //既に入ってる予約の開始・終了時間をリストへ追加していきます。

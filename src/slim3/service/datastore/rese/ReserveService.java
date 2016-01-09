@@ -1,4 +1,4 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.meta.reserve.ReserveMeta;
 import slim3.model.reserve.Reserve;
+import slim3.service.datastore.AbstractDatastoreService;
 /**
  * 予約情報を取得するサービスです。
  * @author uedadaiki

@@ -10,7 +10,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.Const.RegexType;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.exception.MyException;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
@@ -23,7 +23,7 @@ import util.DateUtil;
  * @author uedadaiki
  *
  */
-public class DoneLoginController extends AbstractController {
+public class DoneLoginController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {
@@ -79,6 +79,7 @@ public class DoneLoginController extends AbstractController {
             return redirect(requestURL);
         }
         CookieUtil.deleteCookie(response, Const.MS_REQUEST_URL);
+        
         return redirect("/tools/rese/reserve/reserveList.jsp");
     }
 }

@@ -4,14 +4,14 @@ import org.slim3.controller.Navigation;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.reserve.MenuPage;
 /**
  * メニューページ編集画面を表示します。
  * @author uedadaiki
  *
  */
-public class EditMenuPageController extends AbstractController {
+public class EditMenuPageController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

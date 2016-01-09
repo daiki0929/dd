@@ -18,21 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import slim3.Const;
 import slim3.Const.RegexType;
 import slim3.dto.JsonDto;
-import slim3.dto.ManageUserDto;
-import slim3.dto.MsUserDto;
 import slim3.exception.MyException;
 import slim3.service.AuthService;
-import slim3.service.datastore.CustomerService;
 import slim3.service.datastore.DsService;
-import slim3.service.datastore.MenuPageService;
-import slim3.service.datastore.MenuService;
-import slim3.service.datastore.MsShopService;
-import slim3.service.datastore.MsUserService;
-import slim3.service.datastore.ReserveService;
 import slim3.service.factory.ServiceFactory;
 import slim3.service.sns.FacebookService;
 import slim3.service.sns.TwitterService;
-import slim3.service.tools.rese.SetShopDefaultService;
 import util.CookieUtil;
 import util.StackTraceUtil;
 import util.StringUtil;
@@ -49,18 +40,18 @@ public abstract class AbstractController extends Controller {
     // Service
     /** Datastoreサービス */
     protected DsService dsService = new DsService();
-    protected ManageUserDto manageUserDto = new ManageUserDto();
-    protected CustomerService customerService = new CustomerService();
-    protected MsUserDto msUserDto = new MsUserDto();
+//    protected ManageUserDto manageUserDto = new ManageUserDto();
+//    protected CustomerService customerService = new CustomerService();
+//    protected MsUserDto msUserDto = new MsUserDto();
     protected JsonDto jsonDto = new JsonDto();
-    
-    protected MsUserService msUserService = new MsUserService();
-    protected MenuPageService menuPageService = new MenuPageService();
-    protected MenuService menuService = new MenuService();
-    protected MsShopService msShopService = new MsShopService();
-    protected ReserveService msReserveService = new ReserveService();
-    
-    protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
+//    
+//    protected MsUserService userService = new MsUserService();
+//    protected MenuPageService menuPageService = new MenuPageService();
+//    protected MenuService menuService = new MenuService();
+//    protected MsShopService shopService = new MsShopService();
+//    protected ReserveService reserveService = new ReserveService();
+//    
+//    protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
     
     
     /** 認証サービス */

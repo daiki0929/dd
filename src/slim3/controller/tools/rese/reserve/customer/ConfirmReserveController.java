@@ -8,7 +8,7 @@ import org.slim3.controller.validator.Validators;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const.RegexType;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.reserve.Menu;
 import util.StringUtil;
 
@@ -17,7 +17,7 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
-public class ConfirmReserveController extends AbstractController {
+public class ConfirmReserveController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

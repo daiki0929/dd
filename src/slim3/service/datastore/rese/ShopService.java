@@ -1,4 +1,4 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import org.slim3.datastore.Datastore;
 
@@ -6,12 +6,13 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.meta.MsShopMeta;
 import slim3.model.MsShop;
+import slim3.service.datastore.AbstractDatastoreService;
 /**
  * 店舗情報を取得するサービスです。
  * @author uedadaiki
  *
  */
-public class MsShopService extends AbstractDatastoreService{
+public class ShopService extends AbstractDatastoreService{
     
     private final static MsShopMeta MS_SHOP_META = MsShopMeta.get();
     

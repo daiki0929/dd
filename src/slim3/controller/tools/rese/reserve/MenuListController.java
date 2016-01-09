@@ -7,7 +7,7 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.reserve.MenuMeta;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.Menu.Status;
@@ -17,7 +17,7 @@ import slim3.model.reserve.MenuPage;
  * @author uedadaiki
  *
  */
-public class MenuListController extends AbstractController {
+public class MenuListController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

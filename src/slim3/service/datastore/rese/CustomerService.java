@@ -1,4 +1,4 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import com.google.appengine.api.datastore.Key;
 import slim3.dto.ManageUserDto;
 import slim3.meta.customerManage.CustomerMeta;
 import slim3.model.customerManage.Customer;
+import slim3.service.datastore.AbstractDatastoreService;
 /**
  * ユーザーが所持するカスタマーを取得するサービスです。
  * @author uedadaiki

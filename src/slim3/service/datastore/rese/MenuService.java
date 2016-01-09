@@ -1,4 +1,4 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.meta.reserve.MenuMeta;
 import slim3.model.reserve.Menu;
+import slim3.service.datastore.AbstractDatastoreService;
 /**
  * メニューを取得するサービスです。
  * @author uedadaiki

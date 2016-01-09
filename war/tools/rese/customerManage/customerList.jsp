@@ -43,20 +43,21 @@
 	<div class="container">
 		<div id="content" class="span12">
 			<div class="span3" style="height: 500px; background-color: #f2f2f2;">
-				<p>顧客を検索する</p>
-				<form action="">
-					<input type="text" placeholder="名前/メールアドレス/電話番号">
-				</form>
-				<p>予約ページで絞り込む</p>
-				<select name="rebuildSelect" onchange="filterCustomer();">
-					<option value="">指定なし
-					<c:forEach var="menuPage" items="${menuPageList}">
-						<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
-					</c:forEach>
-				</select>
+				<div style="margin-left: 10px;">
+					<h5>顧客を検索する</h5>
+					<form action="">
+						<input type="text" placeholder="名前/メールアドレス/電話番号">
+					</form>
+					<h5>予約ページで絞り込む</h5>
+					<select name="rebuildSelect" onchange="filterCustomer();">
+						<option value="">指定なし
+						<c:forEach var="menuPage" items="${menuPageList}">
+							<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 			<div class="span8">
-			<a href="/tools/rese/comeAndGo/logout">ログアウトする</a>
 				<a href="#myModal" role="button" class="btn" data-toggle="modal">追加する</a>
 				<h3>お客様一覧</h3>
 				<c:forEach var="customer" items="${customerList}">
@@ -82,27 +83,28 @@
 				    <h3 id="myModalLabel">新規追加</h3>
 				  </div>
 				  <div class="modal-body">
+				    <h5>名前</h5>
 				    <p>(例)田中太郎</p>
 					<input type="text" name="customerName">
-					<p>ふりがな</p>
+					<h5>ふりがな</h5>
 					<p>(例)たなかたろう</p>
 					<input type="text" name="customerKanaName">
-					<p>年齢</p>
+					<h5>年齢</h5>
 					<p>(例)20</p>
 					<input type="text" name="customerAge">歳
-					<p>性別</p>
+					<h5>性別</h5>
 					<label class="radio">
 					  <input type="radio" name="sex" id="" value="male">男性
 					</label>
 					<label class="radio">
 					  <input type="radio" name="sex" id="" value="female">女性
 					</label>
-					<p>住所</p>
+					<h5>住所</h5>
 					<p>(例)大阪府大阪市中央区◯町目◯-◯</p>
 					<input type="text" name="customerAddress">
-				    <p>メールアドレス</p>
+				    <h5>メールアドレス</h5>
 					<input type="text" name="customerMailaddress">
-				    <p>携帯番号</p>
+				    <h5>携帯番号</h5>
 					<input type="text" name="customerPhone">
 				  </div>
 				  <div class="modal-footer">

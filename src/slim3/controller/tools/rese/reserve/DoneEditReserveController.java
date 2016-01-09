@@ -11,14 +11,14 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.Const.RegexType;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.reserve.Reserve;
 /**
  * 予約情報の編集終了後コントローラです。
  * @author uedadaiki
  *
  */
-public class DoneEditReserveController extends AbstractController {
+public class DoneEditReserveController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -56,7 +56,7 @@ public class DoneEditReserveController extends AbstractController {
                 .toDate();
         
         //予約情報を更新します。
-        Reserve reserve = msReserveService.get(reserveKey);
+        Reserve reserve = reserveService.get(reserveKey);
         reserve.setMenuTitle(menuTitle);
         reserve.setStartTime(reserveDateTime);
         reserve.setEndTime(menuEndDateTime);

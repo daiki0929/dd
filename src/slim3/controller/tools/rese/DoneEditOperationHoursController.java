@@ -10,7 +10,6 @@ import org.slim3.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
@@ -20,7 +19,7 @@ import slim3.model.MsUser;
  * @author uedadaiki
  *
  */
-public class DoneEditOperationHoursController extends AbstractController {
+public class DoneEditOperationHoursController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -74,7 +73,7 @@ public class DoneEditOperationHoursController extends AbstractController {
 
         Key msUserKey = msUser.getKey();
         //ユーザーが所持するお店の情報を取り出す。
-        MsShop msShop = msShopService.getByMsUserKey(msUserKey);
+        MsShop msShop = shopService.getByMsUserKey(msUserKey);
         ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         //曜日別のデータを取得
 //        HashMap<String, Object> weekMap = shopStatusByDays.get(daysOfTheWeek);

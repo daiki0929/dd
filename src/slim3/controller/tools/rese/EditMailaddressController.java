@@ -5,7 +5,6 @@ import org.slim3.datastore.Datastore;
 import org.slim3.util.StringUtil;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import util.CookieUtil;
@@ -14,7 +13,7 @@ import util.CookieUtil;
  * @author uedadaiki
  *
  */
-public class EditMailaddressController extends AbstractController {
+public class EditMailaddressController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

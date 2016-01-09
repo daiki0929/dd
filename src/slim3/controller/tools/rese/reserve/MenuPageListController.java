@@ -6,7 +6,7 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
@@ -16,7 +16,7 @@ import slim3.model.reserve.MenuPage;
  * @author uedadaiki
  *
  */
-public class MenuPageListController extends AbstractController {
+public class MenuPageListController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

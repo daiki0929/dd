@@ -4,13 +4,12 @@ import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 
 import slim3.Const.RegexType;
-import slim3.controller.AbstractController;
 /**
  * ユーザーのメールアドレス変更画面を表示します。
  * @author uedadaiki
  *
  */
-public class DoneEditmailaddressController extends AbstractController {
+public class DoneEditmailaddressController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

@@ -7,7 +7,7 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.reserve.ReserveMeta;
 import slim3.model.customerManage.Customer;
 import slim3.model.reserve.Reserve;
@@ -16,7 +16,7 @@ import slim3.model.reserve.Reserve;
  * @author uedadaiki
  *
  */
-public class CustomerDetailController extends AbstractController {
+public class CustomerDetailController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

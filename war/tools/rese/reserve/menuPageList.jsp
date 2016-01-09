@@ -17,9 +17,11 @@
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div class="container">
-		<div class="span8">
+		<div class="span12" style="margin-bottom: 20px;">
 			<h3>メニューページの一覧</h3>
 			<a href="/tools/rese/reserve/createMenuPage"><button type="button" class="btn btn-warning navbar-btn">予約ページ作成</button></a>
+		</div>
+		<div class="span8" style="border-bottom: 1px solid #dedede; padding: 10px 10px 20px 10px;">
 			<c:forEach var="menuPage" items="${menuPageList}">
 				<p style="margin-top: 20px; background-color: #f2f2f2;">${menuPage.pageTitle}</p>
 				<a href="/tools/rese/reserve/editMenuPage?id=${f:h(menuPage.key)}"><p class="btn">メニューページ編集</p></a>

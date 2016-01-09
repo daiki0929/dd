@@ -6,7 +6,7 @@ import org.slim3.datastore.Datastore;
 
 import slim3.Const;
 import slim3.Const.RegexType;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import util.CookieUtil;
@@ -16,7 +16,7 @@ import util.CookieUtil;
  * @author uedadaiki
  *
  */
-public class DoneEntryController extends AbstractController {
+public class DoneEntryController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {

@@ -11,7 +11,7 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.ReserveMeta;
 import slim3.model.MsUser;
@@ -21,7 +21,7 @@ import slim3.model.reserve.Reserve;
  * @author uedadaiki
  *
  */
-public class GetMonthReserveListController extends AbstractController {
+public class GetMonthReserveListController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -57,7 +57,7 @@ public class GetMonthReserveListController extends AbstractController {
         log.info("終了日時" + endDateTime.toString());
         
         //期間を絞り込った予約リスト
-        ArrayList<HashMap<String, String>> eventList = msReserveService.getReserveByRange(reserveList, startDateTime, endDateTime);
+        ArrayList<HashMap<String, String>> eventList = reserveService.getReserveByRange(reserveList, startDateTime, endDateTime);
         
         return returnResponse(createJsonDto(Const.JSON_STATUS_SUCSESS, null, eventList));
     }

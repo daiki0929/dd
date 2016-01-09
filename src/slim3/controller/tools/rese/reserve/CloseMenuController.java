@@ -6,7 +6,7 @@ import org.slim3.datastore.Datastore;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.Menu.Status;
 /**
@@ -14,7 +14,7 @@ import slim3.model.reserve.Menu.Status;
  * @author uedadaiki
  *
  */
-public class CloseMenuController extends AbstractController {
+public class CloseMenuController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {

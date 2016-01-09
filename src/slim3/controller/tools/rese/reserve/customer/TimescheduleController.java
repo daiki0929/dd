@@ -12,7 +12,7 @@ import org.slim3.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.controller.AbstractController;
+import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsShop;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
@@ -22,7 +22,7 @@ import slim3.model.reserve.MenuPage;
  *
  */
 //TODO 質問：CalculateTimeControllerとまとめて１つにするってことですか？kitazawa ひとつのユースケースに対して、1パッケージにしたほうが見やすくない？
-public class TimescheduleController extends AbstractController {
+public class TimescheduleController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -40,7 +40,7 @@ public class TimescheduleController extends AbstractController {
 
         List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
         
-        MsShop usersShopInfo = msShopService.getByMsUserKey(userKey);
+        MsShop usersShopInfo = shopService.getByMsUserKey(userKey);
         //予約可能時間
         ArrayMap<String, ArrayMap<String, Object>> statusByDays = usersShopInfo.getStatusByDays();
         log.info("statusByDays："+statusByDays.toString());

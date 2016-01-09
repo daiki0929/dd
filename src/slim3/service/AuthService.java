@@ -17,7 +17,7 @@ import slim3.Const;
 import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
-import slim3.service.datastore.MsUserService;
+import slim3.service.datastore.rese.MsUserService;
 import slim3.service.factory.ServiceFactory;
 import util.CookieUtil;
 import util.StackTraceUtil;

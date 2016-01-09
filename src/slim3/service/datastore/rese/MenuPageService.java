@@ -1,9 +1,10 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import com.google.appengine.api.datastore.Key;
 
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.reserve.MenuPage;
+import slim3.service.datastore.AbstractDatastoreService;
 /**
  * メニューページを取得するサービスです。
  * @author uedadaiki

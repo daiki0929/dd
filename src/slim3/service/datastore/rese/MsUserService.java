@@ -1,4 +1,4 @@
-package slim3.service.datastore;
+package slim3.service.datastore.rese;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import slim3.Const;
 import slim3.dto.MsUserDto;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
+import slim3.service.datastore.AbstractDatastoreService;
 import util.CookieUtil;
 import util.StackTraceUtil;
 /**
