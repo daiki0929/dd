@@ -20,7 +20,8 @@ public class SetShopDefaultService {
      * @param msUser
      * @return
      */
-    //TODO 質問：AbstractControllerを継承したRese用のコントローラを作成し、そこに書くべき？(AbstractControllerでインスタンス化してるサービスクラスも)
+    //TODO 質問：AbstractControllerを継承したRese用のReseAbstractControllerなどを作成し、そこに書くべき？(AbstractControllerでインスタンス化してるサービスクラスも)
+    //TODO 質問：１つのサービスにつき、ReseAbstractControllerのようなコントローラがあった方がいい？
     public MsShop setShopDefault(MsUser msUser){
         
         MsShop msShop = new MsShop();

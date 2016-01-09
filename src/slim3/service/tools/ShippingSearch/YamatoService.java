@@ -117,18 +117,18 @@ public class YamatoService {
         
         Elements goodsDetailRow = doc.select(".ichiran tr");
         
-        for (Element elem : goodsDetailRow) {
+        for (Element row : goodsDetailRow) {
             ArrayMap<String, String> goodsStatusMap = new ArrayMap<String, String>();
-            String shippingDate = elem.select(".hiduke font").text();
+            String shippingDate = row.select(".hiduke font").text();
             
             if (shippingDate.isEmpty()) {
                 log.info("ヤマトに該当商品はありませんでした。");
                 continue;
             }
 
-            String status = StringUtil.trim(elem.select(".ct font").text());
+            String status = StringUtil.trim(row.select(".ct font").text());
 
-            String inquiryNo = elem.select(".input input").val();
+            String inquiryNo = row.select(".input input").val();
             goodsStatusMap.put("status", status);
             goodsStatusMap.put("inquiryNo", inquiryNo);
             goodsStatusMap.put("shippingDate", shippingDate);

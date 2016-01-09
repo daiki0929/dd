@@ -11,7 +11,6 @@ import main.java.org.jsoup.Connection.Method;
 import main.java.org.jsoup.Jsoup;
 import main.java.org.jsoup.nodes.Document;
 import main.java.org.jsoup.nodes.Element;
-import main.java.org.jsoup.select.Elements;
 import slim3.Const;
 import util.StringUtil;
 
@@ -85,34 +84,27 @@ public class SagawaService implements SearchService {
         goodsStatusMap.put("arriveDate", arriveDate);
         goodsStatusMap.put("ReDeliveryDate", ReDeliveryDate);
         
-        Elements goodsDetailElems = doc.select(".table_okurijo_detail");
-        for (Element elem : goodsDetailElems) {
-            String inquiryNo = elem.select("tr:nth-child(1) td").text();
-            String shippingDate = elem.select("tr:nth-child(2) td").text();
-            String pickupOffice = elem.select("tr:nth-child(3) td").text();
-            String shippingOffice = elem.select("tr:nth-child(4) td").text();
-            String amount = elem.select("tr:nth-child(5) td").text();
-            
-            goodsStatusMap.put("inquiryNo", inquiryNo);
-            goodsStatusMap.put("shippingDate", shippingDate);
-            goodsStatusMap.put("pickupOffice", pickupOffice);
-            goodsStatusMap.put("shippingOffice", shippingOffice);
-            goodsStatusMap.put("amount", amount);
-            break;
-        }
+        //宅配物情報1
+        Element goodsDetail = doc.select(".table_okurijo_detail").get(0);
+        String inquiryNo = goodsDetail.select("tr:nth-child(1) td").text();
+        String shippingDate = goodsDetail.select("tr:nth-child(2) td").text();
+        String pickupOffice = goodsDetail.select("tr:nth-child(3) td").text();
+        String shippingOffice = goodsDetail.select("tr:nth-child(4) td").text();
+        String amount = goodsDetail.select("tr:nth-child(5) td").text();
         
-        Elements goodsStatusElems = doc.select(".table_okurijo_detail2");
-        for (Element elem : goodsStatusElems) {
-            String status = elem.select("tbody tr:last-child td:nth-child(1)").text().replace("⇒", "");
-//            String date = elem.select("tbody tr:last-child td:nth-child(2)").text();
-            String office = elem.select("tbody tr:last-child td:nth-child(3)").text();
-            
-            goodsStatusMap.put("status", status);
-//            goodsStatusMap.put("date", date);
-            goodsStatusMap.put("office", office);
-            goodsStatusMap.put("company", "佐川急便");
-            break;
-        }
+        //宅配物情報2
+        Element goodsStatus = doc.select(".table_okurijo_detail2").get(0);
+        String status = goodsStatus.select("tbody tr:last-child td:nth-child(1)").text().replace("⇒", "");
+        String office = goodsStatus.select("tbody tr:last-child td:nth-child(3)").text();
+        
+        goodsStatusMap.put("inquiryNo", inquiryNo);
+        goodsStatusMap.put("shippingDate", shippingDate);
+        goodsStatusMap.put("pickupOffice", pickupOffice);
+        goodsStatusMap.put("shippingOffice", shippingOffice);
+        goodsStatusMap.put("amount", amount);
+        goodsStatusMap.put("status", status);
+        goodsStatusMap.put("office", office);
+        goodsStatusMap.put("company", "佐川急便");
         
         for(Map.Entry<String, String> e : goodsStatusMap.entrySet()) {
             System.out.println(e.getKey() + " : " + e.getValue());

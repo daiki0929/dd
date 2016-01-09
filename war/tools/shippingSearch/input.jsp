@@ -40,6 +40,7 @@ function postNo(){
 	var request = [
 	       	    { url: "/tools/shippingSearch/SearchSagawa" },
 	       	    { url: "/tools/shippingSearch/SearchYamato" },
+	       	    { url: "/tools/shippingSearch/SearchYusei" },
 	       	    /* { url: "/tools/shippingSearch/SearchSeino" }, */
 	];
 	
@@ -54,6 +55,7 @@ function postNo(){
 			default:
 		    	if(data.obj != null){
 		    		 $.each(data.obj, function(index, val) {
+		    			 console.log(data.obj[index]);
 						if(data.obj[index].shippingDate){
 				    		var company = "<td class='company'>" + data.obj[index].company + "</td>";
 				    		var inquiryNo = "<td class='inquiryNo'>" + data.obj[index].inquiryNo + "</td>";
@@ -65,7 +67,6 @@ function postNo(){
 						}
 	    	    	});
 		    	}
-				hideLoadingImage();
 				break;
 				
 			case 'error':
@@ -78,6 +79,8 @@ function postNo(){
 	}
 }
 
+
+
 // クルクル画像表示
 function showLoadingImage() {
 	$(".imgBox").append('<img src="/img/load.gif" class="loader" width="30%;">');
@@ -86,6 +89,10 @@ function showLoadingImage() {
 function hideLoadingImage() {
 	$(".loader").fadeOut(0);
 }
+
+$(document).ajaxComplete(function(){
+	hideLoadingImage();
+});
 
 	
 /* 
