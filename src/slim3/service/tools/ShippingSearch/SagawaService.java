@@ -76,7 +76,7 @@ public class SagawaService implements SearchService {
         String latestStatus = StringUtil.trim(doc.getElementsByClass("state2").text());
         if (latestStatus.equals("該当なし")) {
             log.info("佐川に該当商品はありませんでした。");
-            return null;
+            return goodsStatusMap;
         }
         
         Element goodsInfoElems = doc.getElementById("MainList");

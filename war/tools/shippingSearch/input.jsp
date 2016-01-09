@@ -13,9 +13,28 @@
 
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
+<script type="text/javascript" src="/js/countable/Countable.js"></script>
+
 <script>
+$(document).ready(function(){
+var area = document.getElementById('countableArea');
+Countable.live(area, function(counter){
+  document.getElementById('paragraphs').innerHTML = counter['paragraphs'];
+  
+  if(counter['paragraphs'] > 10 ){
+	  $('#paragraphs').attr("style", "color:red;");
+  }
+  if(counter['paragraphs'] <= 10 ){
+	  $('#paragraphs').attr("style", "color:#000;");
+  }
+})
+	
+});
+
 function postNo(){
-	$('.goodsDetail').remove();
+	showLoadingImage();
+	
+	$('#goodsInfo tbody tr td').remove();
 	var inquiryNo = $('[name=inquiryNo]').val();
 	
 	var request = [
@@ -28,20 +47,25 @@ function postNo(){
 	 	$.post(request[i].url, {
 			'inquiryNo' : inquiryNo
 		}, function(data){
-			console.log(data.obj);
 			switch(data.obj){
 			case null:
 				break;
 	
 			default:
 		    	if(data.obj != null){
-		    		$('#goodsInfo tbody').append("<tr class='goodsDetail'>");
-		    		$('.goodsDetail').append("<td class='company'>" + data.obj.company + "</td>");
-		    		$('.goodsDetail').append("<td class='inquiryNo'>" + data.obj.inquiryNo + "</td>");
-		    		$('.goodsDetail').append("<td class='status'>" + data.obj.status + "</td>");
-		    		$('.goodsDetail').append("<td class='shippingDate'>" + data.obj.shippingDate + "</td>");
-		    		$('.goodsDetail').append("<td class='arriveDate'>" + data.obj.arriveDate + "</td>");
+		    		 $.each(data.obj, function(index, val) {
+						if(data.obj[index].shippingDate){
+				    		var company = "<td class='company'>" + data.obj[index].company + "</td>";
+				    		var inquiryNo = "<td class='inquiryNo'>" + data.obj[index].inquiryNo + "</td>";
+				    		var status = "<td class='status'>" + data.obj[index].status + "</td>";
+				    		var shippingDate = "<td class='shippingDate'>" + data.obj[index].shippingDate + "</td>";
+				    		var arriveDate = "<td class='arriveDate'>" + data.obj[index].arriveDate + "</td>";
+ 			    		
+				    		$('tbody').append("<tr>" + company + inquiryNo + status + shippingDate + arriveDate + "</tr>");
+						}
+	    	    	});
 		    	}
+				hideLoadingImage();
 				break;
 				
 			case 'error':
@@ -51,7 +75,18 @@ function postNo(){
 				
 			}
 		}, 'json');
-	}}
+	}
+}
+
+// クルクル画像表示
+function showLoadingImage() {
+	$(".imgBox").append('<img src="/img/load.gif" class="loader" width="30%;">');
+}
+// クルクル画像消去
+function hideLoadingImage() {
+	$(".loader").fadeOut(0);
+}
+
 	
 /* 
 	var jqXHRList = [];
@@ -91,10 +126,18 @@ function postNo(){
 	<div class="container span12">
 		<div class="span12">
 			<form id="entryForm">
-				<input name="inquiryNo" type="text">
+				<p>最大10個まで一度に検索できます。</p>
+				<p>追跡番号は段落で区切ります。最大20秒ほどかかります。</p>
+				<p>対応会社：佐川急便、クロネコヤマト、日本郵政</p>
+				<p>以下は例です。</p>
+				<blockquote>0000000000<br/>1111111111<br/>2222222222</blockquote>
+				<div class="warningArea"></div>
+				<div class="commentArea"></div>
+			  	<p>追跡番号:<span id="paragraphs">0</span>個</p>
+				<textarea rows="3" name="inquiryNo" id="countableArea"></textarea>
 				<p class="btn btn-info" onclick="postNo();">検索</p>
 			</form>
-
+			
 			<table class="table table-bordered table-striped" id="goodsInfo">
 				<thead>
 					<tr>
@@ -106,15 +149,9 @@ function postNo(){
 					</tr>
 				</thead>
 				<tbody>
-					<!-- <tr class="goodsDetail">
-						<td class="company"></td>
-						<td class="inquiryNo"></td>
-						<td class="status"></td>
-						<td class="shippingDate"></td>
-						<td class="arriveDate"></td>
-					</tr> -->
 				</tbody>
 			</table>
+			<div class="imgBox"></div>
 		</div>
 	</div>
 </body>

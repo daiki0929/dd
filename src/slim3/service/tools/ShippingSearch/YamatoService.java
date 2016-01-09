@@ -1,5 +1,6 @@
 package slim3.service.tools.ShippingSearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -7,8 +8,8 @@ import java.util.logging.Logger;
 import org.slim3.util.ArrayMap;
 
 import main.java.org.jsoup.Connection;
-import main.java.org.jsoup.Jsoup;
 import main.java.org.jsoup.Connection.Method;
+import main.java.org.jsoup.Jsoup;
 import main.java.org.jsoup.nodes.Document;
 import main.java.org.jsoup.nodes.Element;
 import main.java.org.jsoup.select.Elements;
@@ -20,7 +21,8 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
-public class YamatoService implements SearchService {
+public class YamatoService {
+//TODO メソッドの戻り値が異なるので、インターフェースの継承を切ってます。parseDocument
     
     public final static Logger log = Logger.getLogger(YamatoService.class.getName());
     
@@ -76,40 +78,70 @@ public class YamatoService implements SearchService {
                 .timeout(10000);
     }
     
+    /**
+     * Http通信するConnectionを作成します。
+     * @param inquiryNoList
+     * @return
+     */
+    //TODO 質問：メソッド名同じで引数によって変えてる。インターフェースを作成したが、あまり上手く使えていない。
+    public Connection createConnection(String[] inquiryNoList){
+        //クッキーを作成します。
+        createCookie();
+
+        Connection connectYamato = Jsoup
+        .connect(YAMATO_URL)
+        .header("Accept", "*/*")
+        .header("Host", YAMATO_HOST_NAME)
+        .header("Accept-Language", "ja,en-US;q=0.8,en;q=0.6")
+        .header("Connection", "keep-alive")
+        .header("User-Agent", Const.UA.getRandom().getName())
+        .cookies(cookies)
+        .method(Method.GET)
+        .timeout(10000);
+        
+        String[] numberList = {"number01", "number02", "number03", "number04", "number05", "number06", "number07", "number08", "number09", "number10"};
+        for (int i = 0; i < inquiryNoList.length; i++) {
+            log.info(numberList[i] + inquiryNoList[i]);
+            connectYamato.data(numberList[i], inquiryNoList[i]);
+        }
+                
+        return connectYamato;
+    }
+    
     
     /**
      * 必要なデータをパースしてマップに詰めます。
      */
-    public ArrayMap<String, String> parseDocument(Document doc){
-        ArrayMap<String, String> goodsStatusMap = new ArrayMap<String, String>();
-        Elements goodsTable = doc.getElementsByClass("ichiran");
-        for (Element elem : goodsTable) {
-            String status = StringUtil.trim(elem.select("tr:nth-child(3) .ct font").text());
-            log.info(status);
-            if (status.equals("伝票番号誤り")) {
+    public ArrayList<ArrayMap<String, String>> parseDocument(Document doc){
+        ArrayList<ArrayMap<String, String>> goodsInfoList = new ArrayList<ArrayMap<String, String>>();
+        
+        Elements goodsDetailRow = doc.select(".ichiran tr");
+        
+        for (Element elem : goodsDetailRow) {
+            ArrayMap<String, String> goodsStatusMap = new ArrayMap<String, String>();
+            String shippingDate = elem.select(".hiduke font").text();
+            
+            if (shippingDate.isEmpty()) {
                 log.info("ヤマトに該当商品はありませんでした。");
-                return null;
-            }else if (status.equals("伝票番号未登録")) {
-                log.info("ヤマトに該当商品はありませんでした。");
-                return null;
+                continue;
             }
 
-            String inquiryNo = elem.select("tr:nth-child(3) .denpyo b").text();
-            String shippingDate = elem.select("tr:nth-child(3) .hiduke font").text();
+            String status = StringUtil.trim(elem.select(".ct font").text());
 
+            String inquiryNo = elem.select(".input input").val();
             goodsStatusMap.put("status", status);
             goodsStatusMap.put("inquiryNo", inquiryNo);
             goodsStatusMap.put("shippingDate", shippingDate);
+            goodsStatusMap.put("arriveDate", "☓");
             goodsStatusMap.put("company", "クロネコヤマト");
-            break;
+            goodsInfoList.add(goodsStatusMap);
+            
+            for(Map.Entry<String, String> e : goodsStatusMap.entrySet()) {
+                System.out.println(e.getKey() + " : " + e.getValue());
+            }
         }
 
-        for(Map.Entry<String, String> e : goodsStatusMap.entrySet()) {
-            System.out.println(e.getKey() + " : " + e.getValue());
-        }
-
-
-        return goodsStatusMap;
+        return goodsInfoList;
     }
     
     

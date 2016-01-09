@@ -6,3 +6,4 @@ gaeLaunchAppInBrowser=true
 googleCloudSqlEnabled=false
 localDevMySqlEnabled=true
 ormEnhancementInclusions=
+validationExclusions=src/slim3/controller/tools/shippingSearch/SearchSagawaController.java
