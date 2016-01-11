@@ -20,6 +20,7 @@ import slim3.Const.RegexType;
 import slim3.dto.JsonDto;
 import slim3.exception.MyException;
 import slim3.service.AuthService;
+import slim3.service.CacheService;
 import slim3.service.datastore.DsService;
 import slim3.service.factory.ServiceFactory;
 import slim3.service.sns.FacebookService;
@@ -40,18 +41,10 @@ public abstract class AbstractController extends Controller {
     // Service
     /** Datastoreサービス */
     protected DsService dsService = new DsService();
-//    protected ManageUserDto manageUserDto = new ManageUserDto();
-//    protected CustomerService customerService = new CustomerService();
-//    protected MsUserDto msUserDto = new MsUserDto();
+    
+    protected CacheService cacheService = new CacheService();
+    
     protected JsonDto jsonDto = new JsonDto();
-//    
-//    protected MsUserService userService = new MsUserService();
-//    protected MenuPageService menuPageService = new MenuPageService();
-//    protected MenuService menuService = new MenuService();
-//    protected MsShopService shopService = new MsShopService();
-//    protected ReserveService reserveService = new ReserveService();
-//    
-//    protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
     
     
     /** 認証サービス */

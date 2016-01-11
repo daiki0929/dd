@@ -8,9 +8,7 @@ import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
 import org.slim3.memcache.Memcache;
 
-import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.Menu;
@@ -31,22 +29,22 @@ public class ReserveListController extends AbstractReseController {
             return super.showLoginPage();
         }
         
-        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
+        MsUser msUser = msUserService.getSingleByCookie(request);
         if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
             return forward("/tools/rese/comeAndGo/login");
         }
         
         //作成したメニューを全て取り出す。
-        //TODO 公開しているメニューのみに変更する。(公開・非公開の変更をする処理が未実装)
         ArrayList<Menu> allMenuList = new ArrayList<Menu>();
-        MenuPageMeta menuPageMeta = new MenuPageMeta();
+        MenuPageMeta menuPageMeta = MenuPageMeta.get();
         List<MenuPage> menuPageList = Datastore
                 .query(menuPageMeta)
                 .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
                 .filter(menuPageMeta.status.equal(Status.PUBLIC.getStatus()))
                 .asList();
+        
         for (MenuPage menuPage : menuPageList) {
             List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
             for (Menu menu : menuList) {
@@ -57,31 +55,30 @@ public class ReserveListController extends AbstractReseController {
             }
         }
         
-        
-        //予約を全て取り出す。
-        //キャッシュから取り出す。無い場合はデータストアから取り出す。
+        //キャッシュから予約情報を取り出す。無い場合はデータストアから取り出す。
         List<Reserve> reserveList = Memcache.get(msUser.getMailaddress());
-        //キャッシュに無い場合
-        if (reserveList == null) {
-            log.info("キャッシュに無かったので、データストアから取り出します。");
-            reserveList = reserveService.getListByMsUserKey(msUser.getKey());
+        //キャッシュにある場合
+        if (cacheService.exist(msUser.getMailaddress())) {
+            log.info("キャッシュにありました。");
             ArrayList<String> timeList = getReserveTime(reserveList);
             request.setAttribute("reserveList", reserveList);
             request.setAttribute("timeList", timeList);
             request.setAttribute("allMenuList", allMenuList);
-            //キャッシュに予約リストを保存
-            Memcache.put(msUser.getMailaddress(), reserveList);
+            
             return forward("reserveList.jsp");
         }
-        
-        //キャッシュにある場合
-        log.info("キャッシュにありました。");
+        //キャッシュに無い場合
+        log.info("データストアから取り出します。");
+        reserveList = reserveService.getListByMsUserKey(msUser.getKey());
         ArrayList<String> timeList = getReserveTime(reserveList);
         request.setAttribute("reserveList", reserveList);
         request.setAttribute("timeList", timeList);
         request.setAttribute("allMenuList", allMenuList);
+        //キャッシュに予約リストを保存
+        Memcache.put(msUser.getMailaddress(), reserveList);
         
         return forward("reserveList.jsp");
+        
 
     }
     

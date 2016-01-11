@@ -25,8 +25,8 @@ public class DoneCreateMenuController extends AbstractController {
         
         Validators v = new Validators(request);
         validate(v, "title", 1, 50, true, null, null);
-        validate(v, "time", 1, 10, false, RegexType.NUMBER, null);
-        validate(v, "price", 1, 10, false, RegexType.NUMBER, null);
+        validate(v, "time", 1, 10, true, RegexType.NUMBER, null);
+        validate(v, "price", 1, 10, true, RegexType.NUMBER, null);
         validate(v, "content", 1, 600, false, null, null);
         validate(v, "imgPath", 1, 400, false, null, null);
 
@@ -38,13 +38,12 @@ public class DoneCreateMenuController extends AbstractController {
         Menu menu = new Menu();
         menu.setTitle(asString("title"));
         menu.setImgPath(asString("imgPath"));
-        if (asInteger("price") != null) {
         menu.setPrice(asInteger("price"));
-        }
         menu.setContent(asString("content"));
         menu.setTime(asString("time"));
         menu.setStatus(Status.PUBLIC.getStatus());
         Key menuPageKey = asKey("menuPageKey");
+        
 //        log.info("menuPageKey：" + menuPageKey.toString());
         menu.getMenuPageRef().setKey(menuPageKey);
         Datastore.put(menu);

@@ -21,8 +21,11 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
-public class YamatoService {
-//TODO メソッドの戻り値が異なるので、インターフェースの継承を切ってます。parseDocument
+public class YamatoService{
+    //TODO メソッドの戻り値が異なるので、インターフェースの継承を切ってます。parseDocument
+    //継承を使うタイミングがいまいち理解出来ていない。
+    //今は、使うメソッドを明記するためだけにインターフェースクラスを作成している。
+    //インターフェースクラスにある値などの利用も無し。
     
     public final static Logger log = Logger.getLogger(YamatoService.class.getName());
     
@@ -83,7 +86,6 @@ public class YamatoService {
      * @param inquiryNoList
      * @return
      */
-    //TODO 質問：メソッド名同じで引数によって変えてる。インターフェースを作成したが、あまり上手く使えていない。
     public Connection createConnection(String[] inquiryNoList){
         //クッキーを作成します。
         createCookie();

@@ -13,6 +13,7 @@ import slim3.Const;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import util.CookieUtil;
 /**
  * 店舗の営業日時の編集完了後のコントローラです。
  * 定休日と営業時間をJsonで保存します。
@@ -64,10 +65,10 @@ public class DoneEditOperationHoursController extends AbstractReseController {
             return returnResponse(createJsonDto(Const.JSON_STATUS_ERROR, "開始時刻は終了時刻より前に設定してください。", "error"));
         }
 
-        MsUserMeta msUserMeta = MsUserMeta.get();
-        //クッキー情報(userId)でユーザーを取得
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
+        //データベースからクッキー情報(userId)でデータを1つ取得。
+        MsUser msUser = msUserService.getSingleByCookie(request);
         if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
             return forward("/tools/rese/comeAndGo/login");
         }
 

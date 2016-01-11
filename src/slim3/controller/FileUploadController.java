@@ -1,4 +1,4 @@
-package slim3.controller.tools.rese;
+package slim3.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,6 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.blobstore.UploadOptions;
 
-import slim3.controller.AbstractController;
 import slim3.model.reserve.ImgInGCS;
 import util.StringUtil;
 /**
@@ -22,8 +21,8 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
+//TODO 共通化する。
 public class FileUploadController extends AbstractController {
-
     private static final String BUCKET = "rese";
 
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -60,7 +59,7 @@ public class FileUploadController extends AbstractController {
                 UploadOptions.Builder.withGoogleStorageBucketName(BUCKET)
                     .maxUploadSizeBytes(100 * MEGA_BYTE);
         final String url =
-                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/rese/test",
+                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/test",
                         options);
         System.out.println("URL : " + url);
         response.setCharacterEncoding("utf-8");

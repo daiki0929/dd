@@ -1,14 +1,12 @@
 package slim3.model.reserve;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 import org.slim3.datastore.ModelRef;
 
-import com.google.appengine.api.datastore.Key;
-
+import slim3.model.AbstractModel;
 import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 
@@ -18,7 +16,7 @@ import slim3.model.customerManage.Customer;
  * @author uedadaiki
  *
  */
-public class Reserve implements Serializable {
+public class Reserve extends AbstractModel {
 
     private static final long serialVersionUID = 1L;
     
@@ -61,10 +59,6 @@ public class Reserve implements Serializable {
     private Customer customer;    
     
     // ------------------------------------------------------
-
-
-    @Attribute(primaryKey = true)
-    private Key key;
 
     @Attribute(version = true)
     private Long version;
@@ -137,15 +131,6 @@ public class Reserve implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-
-    public Key getKey() {
-        return key;
-    }
-
-    public void setKey(Key key) {
-        this.key = key;
     }
 
     public Long getVersion() {

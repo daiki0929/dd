@@ -27,7 +27,6 @@ public class MenuListController extends AbstractReseController {
             return super.showLoginPage();
         }
         
-        
         try {
             Key menuPageKey = asKey("id");
             MenuPage menuPage = menuPageService.get(menuPageKey);

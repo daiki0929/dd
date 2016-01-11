@@ -15,6 +15,7 @@ import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.model.reserve.MenuPage;
+import util.CookieUtil;
 /**
  * カスタマーの一覧を表示します。
  * @author uedadaiki
@@ -29,10 +30,10 @@ public class CustomerListController extends AbstractReseController {
             return super.showLoginPage();
         }
         
-        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
+        MsUser msUser = msUserService.getSingleByCookie(request);
         if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
             return forward("/tools/rese/comeAndGo/login");
         }
         

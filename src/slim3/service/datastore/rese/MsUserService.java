@@ -45,19 +45,31 @@ public class MsUserService extends AbstractDatastoreService{
         return false;
     }
     
-    //データベースからkeyでデータを1つ取得。
+    /**
+     * データベースからkeyでデータを1つ取得。
+     * @param id
+     * @return
+     */
     public MsUser get(Key id){
         return dsService.getSingle(MsUser.class, MsUserMeta.get(),id);
     }
-    //データベースからemailでデータを1つ取得。
+    /**
+     * データベースからemailでデータを1つ取得。
+     * @param email
+     * @return
+     */
     public MsUser getSingleByEmail(String email){
         return Datastore.query(MS_USER_META).filter(MS_USER_META.mailaddress.equal(email)).asSingle();
     }
     
-    //データベースからクッキー情報(userId)でデータを1つ取得。
-    public MsUser getSingleByCookie(HttpServletRequest request, String cookieName, MsUserMeta msUserMeta){
+      //TODO クッキーでモデルを１つ取得するのが他でも使えそうなら抽象化して利用する。
+    /**
+     * データベースからクッキー情報(userId)でデータを1つ取得。
+     * @param request
+     * @return
+     */
+    public MsUser getSingleByCookie(HttpServletRequest request){
         String cookie = CookieUtil.getCookie(request, Const.MS_AUTH_COOKIE_NAME);
-//        log.info("クッキーを取り出しました：" + cookie);
         if (StringUtil.isEmpty(cookie)) {
             log.info("クッキーがありませんでした。");
             return null;

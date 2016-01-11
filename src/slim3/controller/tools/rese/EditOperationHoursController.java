@@ -11,6 +11,7 @@ import slim3.meta.MsShopMeta;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import util.CookieUtil;
 /**
  * 定休日・営業時間の編集画面を表示します。
  * @author uedadaiki
@@ -25,10 +26,10 @@ public class EditOperationHoursController extends AbstractReseController {
             return super.showLoginPage();
         }
         
-        MsUserMeta msUserMeta = MsUserMeta.get();
         //データベースからクッキー情報(userId)でデータを1つ取得。
-        MsUser msUser = msUserService.getSingleByCookie(request, Const.MS_AUTH_COOKIE_NAME, msUserMeta);
+        MsUser msUser = msUserService.getSingleByCookie(request);
         if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
             return forward("/tools/rese/comeAndGo/login");
         }
 

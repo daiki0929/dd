@@ -23,6 +23,10 @@ public class MenuPageService extends AbstractDatastoreService{
         return dsService.getSingle(MenuPage.class, MenuPageMeta.get(),id);
     }
     
+    public MenuPage getInPublic(Key id){
+        return dsService.getSingle(MenuPage.class, MenuPageMeta.get(),id);
+    }
+    
     
     
 }
