@@ -32,7 +32,6 @@
 				<input type="text" name="phone" value="${msUser.phone}">
 				<p>住所</p>
 				<input type="text" name="address" value="${msUser.address}"><br/>
-				<input type="submit" class="btn btn-info" value="変更する">
 			</form>
 			
 			<c:if test="${msUser.gmailAddress != null}">

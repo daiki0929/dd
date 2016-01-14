@@ -1,4 +1,4 @@
-    package slim3.controller.tools.rese.reserve;
+    package slim3.controller;
 
 import org.slim3.controller.router.RouterImpl;
 
