@@ -29,14 +29,23 @@ public class MenuPageListController extends AbstractReseController {
             log.info("ユーザー情報がありませんでした。");
             return forward("/tools/rese/comeAndGo/login");
         }
+        request.setAttribute("msUser", msUser);
         
         //ユーザーが所持するメニューページを取り出す
         MenuPageMeta menuPageMeta = MenuPageMeta.get();
-        List<MenuPage> menuPageList = Datastore
+        List<MenuPage> openMenuPageList = Datastore
                 .query(menuPageMeta)
                 .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
+                .filter(menuPageMeta.status.equal(PUBLIC))
                 .asList();
-        request.setAttribute("menuPageList", menuPageList);
+        request.setAttribute("openMenuPageList", openMenuPageList);
+        
+        List<MenuPage> closedMenuPageList = Datastore
+                .query(menuPageMeta)
+                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
+                .filter(menuPageMeta.status.equal(CLOSED))
+                .asList();
+        request.setAttribute("closedMenuPageList", closedMenuPageList);
         
         
         return forward("menuPageList.jsp");

@@ -7,9 +7,9 @@ import slim3.dto.MsUserDto;
 import slim3.service.datastore.rese.CustomerService;
 import slim3.service.datastore.rese.MenuPageService;
 import slim3.service.datastore.rese.MenuService;
-import slim3.service.datastore.rese.ShopService;
 import slim3.service.datastore.rese.MsUserService;
 import slim3.service.datastore.rese.ReserveService;
+import slim3.service.datastore.rese.ShopService;
 import slim3.service.tools.rese.SetShopDefaultService;
 
 /**
@@ -32,6 +32,16 @@ public abstract class AbstractReseController extends AbstractController {
     protected ShopService shopService = new ShopService();
     protected ReserveService reserveService = new ReserveService();
     protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
+    
+    // ================================================================
+    // メニューページの公開・非公開
+    public static final String PUBLIC = "public";
+    public static final String CLOSED = "closed";
+    
+    // ================================================================
+    // 正規表現
+    public final static String USER_PATH = "@.*";
+    
         
 }
 

@@ -38,7 +38,7 @@ public class DoneEditMenuPageController extends AbstractReseController {
         Validators v = new Validators(request);
         validate(v, "pageTitle", 1, 50, false, null, null);
         validate(v, "description", 1, 600, false, null, null);
-        validate(v, "topImg", 1, 400, false, null, null);
+        validate(v, "topImgPath", 1, 400, false, null, null);
         //承認制 or 先着順
         validate(v, "reserveSystem", 1, 20, false, null, null);
         //公開 or 非公開
@@ -66,7 +66,7 @@ public class DoneEditMenuPageController extends AbstractReseController {
         
         menuPage.setPageTitle(asString("pageTitle"));
         menuPage.setDescription(asString("description"));
-        menuPage.setTopImg(asString("topImg"));
+        menuPage.setTopImgPath(asString("topImgPath"));
         menuPage.setReserveSystem(asString("reserveSystem"));
         menuPage.setInterval(asInteger("reserveInterval"));
         menuPage.setStatus(asString("status"));
@@ -74,22 +74,23 @@ public class DoneEditMenuPageController extends AbstractReseController {
         menuPage.setReserveEndTime(asInteger("reserveEndTime"));
         menuPage.setCancelTime(asInteger("cancelTime"));
         
-        ArrayList<Date> noReserveDateList = new ArrayList<Date>();
-        String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
-        
-        for (String noReserveDateStr : splitedNoReserveDateStr) {
-            Date noReserveDate = 
-                    DateTimeFormat
-                    .forPattern("yyyy/MM/dd")
-                    .parseDateTime(noReserveDateStr)
-                    .toDate();
-            noReserveDateList.add(noReserveDate);
-            log.info(noReserveDateStr);
+        if (asString("noReserveDate") != null) {
+            ArrayList<Date> noReserveDateList = new ArrayList<Date>();
+            String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
+            
+            for (String noReserveDateStr : splitedNoReserveDateStr) {
+                Date noReserveDate = 
+                        DateTimeFormat
+                        .forPattern("yyyy/MM/dd")
+                        .parseDateTime(noReserveDateStr)
+                        .toDate();
+                noReserveDateList.add(noReserveDate);
+                log.info(noReserveDateStr);
+            }
+            log.info(noReserveDateList.toString());
+            
+            menuPage.setNoReserveDate(noReserveDateList);
         }
-        log.info(noReserveDateList.toString());
-        
-        menuPage.setNoReserveDate(noReserveDateList);
-        
         
         Datastore.put(menuPage);
 

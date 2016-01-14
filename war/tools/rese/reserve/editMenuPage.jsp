@@ -10,11 +10,16 @@
 <title>メニューページ編集</title>
 <!-- css -->
 <%@ include file="/tools/rese/common/importCss.jsp"%>
-
+<style type="text/css">
+.selected a {
+  background: #dedede !important;
+}
+</style>
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 <%@ include file="/tools/rese/common/actionMenuPageJs.jsp"%>
 <script type="text/javascript" src="/js/tools/rese/noReserveDate.js"></script>
+<!-- <script type="text/javascript" src="/js/tools/rese/uploadImg.js"></script> -->
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
@@ -25,40 +30,43 @@
 			<div class="span12">
 				<a href="/tools/rese/reserve/menuPageList"><button type="button" class="btn btn-warning navbar-btn">戻る</button></a>
 				<h3>メニューページ編集</h3>
-				<form action="/tools/rese/reserve/doneEditMenuPage" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+				<form action="/tools/rese/reserve/doneEditMenuPage" id="entryForm" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
 					<p>メニューページのタイトル</p>
 					<input type="text" name="pageTitle" value="${menuPage.pageTitle}">
 					<p>説明文</p>
 					<textarea rows="3" name="description">${menuPage.description}</textarea>
-					<p>トップ画像</p>
-					<input type="file" name="topImg" value="${menuPage.topImg}">
+					<%-- <p>トップ画像</p>
+					<p>※有料会員限定です。</p>
+					<input name="topImgPath" id="uploadImg" type="file" enctype="multipart/form-data" value="${menuPage.topImgPath}" onchange="startUpload();" disabled="disabled">
+					<input id="uploadUrl" type="hidden" /> --%>
 					<p>予約形態</p>
 					<c:if test="${menuPage.reserveSystem == 'firstArrival'}">
 						<label class="radio">
 							<input type="radio" name="reserveSystem" value="firstArrival" checked> 先着順
 						</label>
 						<label class="radio">
-							<input type="radio" name="reserveSystem" value="recognition"> 承認制
+							<input type="radio" name="reserveSystem" value="recognition" disabled="disabled"> 承認制(※有料会員限定)
 						</label>
 					</c:if>
 					<c:if test="${menuPage.reserveSystem == 'recognition'}">
-						<label class="radio"> <input type="radio" name="reserveSystem" value="firstArrival" checked> 先着順
+						<label class="radio"> <input type="radio" name="reserveSystem" value="firstArrival"> 先着順
 						</label>
-						<label class="radio"> <input type="radio" name="reserveSystem" value="recognition" checked> 承認制
+						<label class="radio"> <input type="radio" name="reserveSystem" value="recognition" disabled="disabled" checked> 承認制(※有料会員限定)
 						</label>
 					</c:if>
 
 					<p>公開設定</p>
-					<c:if test="${menuPage.status == 'open'}">
-						<label class="radio"> <input type="radio" name="status" value="open" checked> 公開
+					<p>※非公開のメニューページは毎週日曜日に自動で削除されます。</p>
+					<c:if test="${menuPage.status == 'public'}">
+						<label class="radio"> <input type="radio" name="status" value="public" checked> 公開
 						</label>
-						<label class="radio"> <input type="radio" name="status" value="not_open"> 非公開
+						<label class="radio"> <input type="radio" name="status" value="closed"> 非公開
 						</label>
 					</c:if>
-					<c:if test="${menuPage.status == 'not_open'}">
-						<label class="radio"> <input type="radio" name="status" value="open"> 公開
+					<c:if test="${menuPage.status == 'closed'}">
+						<label class="radio"> <input type="radio" name="status" value="public"> 公開
 						</label>
-						<label class="radio"> <input type="radio" name="status" value="not_open" checked> 非公開
+						<label class="radio"> <input type="radio" name="status" value="closed" checked> 非公開
 						</label>
 					</c:if>
 
@@ -75,13 +83,20 @@
 					<div class="dayForm" style="display: none;">
 						<p>受付開始</p>
 						<select name="reserveStartTime">
-							<option value="0">設定しない</option>
+							<!-- <option value="0">設定しない</option>
 							<option value="7">7日前から</option>
 							<option value="14">14日前から</option>
 							<option value="21">21日前から</option>
 							<option value="30">30日前から</option>
 							<option value="60">60日前から</option>
-							<option value="90">90日前から</option>
+							<option value="90">90日前から</option> -->
+							<option value="0">設定しない</option>
+							<option value="604800">7日前から</option>
+							<option value="1209600">14日前から</option>
+							<option value="1814400">21日前から</option>
+							<option value="2592000">30日前から</option>
+							<option value="5184000">60日前から</option>
+							<option value="7776000">90日前から</option>
 						</select>
 						<p>受付終了</p>
 						<select name="reserveEndTime">
@@ -133,14 +148,16 @@
 
 					<p>休み設定</p>
 					<small>定休日以外に、メニューページごとで休みを設定出来ます。</small>
-					
-					<!-- 表示を直す -->
-					<input type="text" id="datepicker" name="noReserveDate" value="${menuPage.noReserveDate}">
+					<p>※有料会員限定です。</p>
 					<input type="hidden" name="noReserveDate" value="">
-					<a id="button" href="javascript:;">カレンダー</a>
-  					<div id="pochipochi"></div>
-					<input type="hidden" name="id" value="${f:h(menuPage.key)}">
+					<%-- <br />
+					<input type="text" id="datepicker" name="noReserveDate" value="${menuPage.noReserveDate}">
 					<br />
+					<a id="button" href="javascript:;">カレンダーから選択する。</a>
+  					<div id="pochipochi"></div>
+					<br /> --%>
+					
+					<input type="hidden" name="id" value="${f:h(menuPage.key)}">
 					<input type="submit" value="更新" class="btn btn-warning">
 				</form>
 			</div>

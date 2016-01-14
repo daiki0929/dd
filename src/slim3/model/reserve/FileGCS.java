@@ -20,27 +20,27 @@ import slim3.model.MsUser;
  * @author uedadaiki
  *
  */
-public class ImgInGCS implements Serializable {
+public class FileGCS implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     // ------------------------------------------------------
-    // MsUserへの多対1の宣言(子)
-    private ModelRef<MsUser> msUserRef = new ModelRef<MsUser>(MsUser.class);
+    // MenuPageへの多対1の宣言(子)
+    private ModelRef<MenuPage> menuPageRef = new ModelRef<MenuPage>(MenuPage.class);
 
-    public ModelRef<MsUser> getMsUserRef() {
-        return msUserRef;
+    public ModelRef<MenuPage> getMenuPageRef() {
+        return menuPageRef;
     }
     
-    public MsUser getMsUser() {
-        return msUser;
+    public MenuPage getMenuPage() {
+        return menuPage;
     }
-    public void setMsUser(MsUser msUser) {
-        this.msUser = msUser;
+    public void setMenuPage(MenuPage menuPage) {
+        this.menuPage = menuPage;
     }
     
     @Attribute(persistent = false)
-    private MsUser msUser;    
+    private MenuPage menuPage;    
     
     // ------------------------------------------------------
 
@@ -66,7 +66,7 @@ public class ImgInGCS implements Serializable {
      * @author sinmetal
      */
     public static Key createKey(BlobKey blobKey) {
-        return Datastore.createKey(ImgInGCS.class, blobKey.getKeyString());
+        return Datastore.createKey(FileGCS.class, blobKey.getKeyString());
     }
 
     public String getMd5Hash() {
@@ -121,7 +121,7 @@ public class ImgInGCS implements Serializable {
      * the constructor.
      * @category constructor
      */
-    public ImgInGCS() {
+    public FileGCS() {
     }
 
     /**
@@ -129,7 +129,7 @@ public class ImgInGCS implements Serializable {
      * @param info
      * @category constructor
      */
-    public ImgInGCS(BlobInfo info) {
+    public FileGCS(BlobInfo info) {
         this.key = createKey(info.getBlobKey());
         this.filename = info.getFilename();
         this.contentType = info.getContentType();

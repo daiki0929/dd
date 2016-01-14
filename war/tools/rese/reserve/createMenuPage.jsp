@@ -13,10 +13,11 @@
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 <style type="text/css">
 .selected a {
-  background: green !important;
+  background: #dedede !important;
 }
 </style>
 <script type="text/javascript" src="/js/tools/rese/noReserveDate.js"></script>
+<!-- <script type="text/javascript" src="/js/tools/rese/uploadImg.js"></script> -->
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
@@ -25,18 +26,22 @@
 	<div class="container">
 		<div class="span12">
 			<h3>メニューページ作成</h3>
-			<form action="/tools/rese/reserve/doneCreateMenuPage" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+			<form action="/tools/rese/reserve/doneCreateMenuPage" id="entryForm" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
 				<p>メニューページのタイトル</p>
 				<input type="text" name="pageTitle">
 				<p>説明文</p>
 				<textarea rows="3" name="description"></textarea>
-				<p>トップ画像</p>
-				<input type="file" name="topImg">
+				<%-- <p>トップ画像</p>
+				<p>※有料会員限定です。</p>
+				<!-- <input type="file" name="topImgPath"> -->
+				<input name="topImgPath" type="file" enctype="multipart/form-data" value="${menuPage.topImgPath}" onchange="startUpload();" disabled="disabled">
+				<input id="uploadUrl" type="hidden" /> --%>
 				<p>予約形態</p>
 				<label class="radio"> <input type="radio" name="reserveSystem" value="firstArrival" checked> 先着順
-				</label> <label class="radio"> <input type="radio" name="reserveSystem" value="recognition"> 承認制
+				</label> <label class="radio"> <input type="radio" name="reserveSystem" value="recognition" disabled="disabled"> 承認制(※有料会員限定)
 				</label>
 				<p>公開設定</p>
+				<p>※非公開のメニューページは毎週日曜日に自動で削除されます。</p>
 				<label class="radio"> <input type="radio" name="status" value="public" checked> 公開
 				</label> <label class="radio"> <input type="radio" name="status" value="closed"> 非公開
 				</label>
@@ -107,11 +112,16 @@
 				</select>
 				<p>休み設定</p>
 				<small>定休日以外に、メニューページごとで休みを設定出来ます。</small>
+				<p>※有料会員限定です。</p>
 				<input type="hidden" name="noReserveDate" value="">
-				<a id="button" href="javascript:;">カレンダー</a>
-  				<div id="pochipochi"></div>
+				<%-- <br />
+				<input type="text" id="datepicker" name="noReserveDate" value="${menuPage.noReserveDate}">
 				<br />
-				<input type="submit" value="完了" class="btn btn-warning">
+				<a id="button" href="javascript:;">カレンダーから選択する。</a>
+ 					<div id="pochipochi"></div>
+				<br /> --%>
+				<input type="hidden" name="id" value="${f:h(menuPage.key)}">
+				<input type="submit" value="完了" class="btn btn-warning" id="upload">
 			</form>
 		</div>
 	</div>

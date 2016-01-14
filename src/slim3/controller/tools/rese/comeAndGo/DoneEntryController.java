@@ -12,11 +12,13 @@ import slim3.Const;
 import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.exception.MyException;
+import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 import util.Base64Util;
 import util.CookieUtil;
 import util.DateUtil;
+import util.StringUtil;
 
 /**
  * 会員登録完了のコントローラです。
@@ -65,6 +67,9 @@ public class DoneEntryController extends AbstractReseController {
         msUser.setName(name);
         msUser.setMailaddress(mailaddress);
         msUser.setPassword(password);
+        //@より前だけにします。
+        String userPath = StringUtil.parseRegex(mailaddress, USER_PATH, "");
+        msUser.setUserPath(userPath);
         
         // クッキー値を作成
         String encrypt;
@@ -88,7 +93,8 @@ public class DoneEntryController extends AbstractReseController {
         MsShop shopDefaultHour = setShopDefaultService.setShopDefault(msUser);
         Datastore.put(shopDefaultHour);
         
-        return redirect("/tools/rese/customerManage/customerList");
+        return redirect("/tools/rese/reserve/reserveList");
 //        log.info("会員登録完了しました");
     }
+    
 }

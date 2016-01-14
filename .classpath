@@ -21,5 +21,20 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsoup.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/facebook4j-core-2.4.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-appengine-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-jackson2-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-client-servlet-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-bigquery-v2-rev239-1.20.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-gmail-v1-rev17-1.19.0-sources.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-gmail-v1-rev17-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-api-services-oauth2-v1-rev85-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-appengine-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-jackson2-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-jdo-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-appengine-1.19.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-servlet-1.19.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

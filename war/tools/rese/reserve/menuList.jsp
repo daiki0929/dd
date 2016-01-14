@@ -55,7 +55,8 @@ $(document).ready(function() {
 				<p>メニューの内容(600字以内)</p>
 				<input type="text" name="content">
 				<p>画像</p>
-				<input type="file" name="img">
+				<p>※有料会員限定</p>
+				<input type="file" name="imgPath" disabled="disabled">
 				<input type="hidden" name="menuPageKey" value="${f:h(menuPageKey)}">
 				<br />
 				<p class="btn btn-info" onclick="createMenu();">追加</p>

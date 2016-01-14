@@ -14,20 +14,30 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.blobstore.UploadOptions;
 
-import slim3.model.reserve.ImgInGCS;
+import slim3.controller.tools.rese.AbstractReseController;
+import slim3.model.MsUser;
+import slim3.model.reserve.FileGCS;
 import util.StringUtil;
 /**
  * ファイルをGCSにアップロードします。
  * @author uedadaiki
  *
  */
-//TODO 共通化する。
-public class FileUploadController extends AbstractController {
+//TODO 共通化する。今はRese用にしてます。
+public class FileUploadController extends AbstractReseController {
     private static final String BUCKET = "rese";
-
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    MsUser msUser;
     
     public Navigation run() throws Exception {
+        
+        //データベースからクッキー情報(userId)でデータを1つ取得。
+        msUser = msUserService.getSingleByCookie(request);
+        if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
+            return forward("/tools/rese/comeAndGo/login");
+        }
+        
         switch (request.getMethod()) {
         case "GET":
             String key = request.getParameter("key");
@@ -46,6 +56,10 @@ public class FileUploadController extends AbstractController {
     return null;
     }
     
+    /**
+     * ファイルをアップロードするURLを生成します。
+     * @throws Exception
+     */
     private void respondUploadUrl() throws Exception {
         System.out.println("responseUploadUrl");
 
@@ -59,7 +73,7 @@ public class FileUploadController extends AbstractController {
                 UploadOptions.Builder.withGoogleStorageBucketName(BUCKET)
                     .maxUploadSizeBytes(100 * MEGA_BYTE);
         final String url =
-                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/test",
+                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/rese/reserve/createMenuPage",
                         options);
         System.out.println("URL : " + url);
         response.setCharacterEncoding("utf-8");
@@ -67,7 +81,12 @@ public class FileUploadController extends AbstractController {
         response.getWriter().println("{\"url\":\"" + url + "\"}");
         response.flushBuffer();
     }
-
+    
+    /**
+     * ファイルをダウンロードします。
+     * @param blobKey
+     * @throws Exception
+     */
     private void downloadGcsFile(BlobKey blobKey) throws Exception {
         System.out.println("downloadGcsFile");
 
@@ -80,7 +99,11 @@ public class FileUploadController extends AbstractController {
         response.setContentLength((int) blobInfo.getSize());
         blobstoreService.serve(blobKey, response);
     }
-
+    
+    /**
+     * アップロードされたファイルの情報を受け取って保存します。
+     * @throws Exception
+     */
     private void receiveBlobServiceRedirect() throws Exception {
         System.out.println("receiveBlobServiceRedirect");
 
@@ -90,7 +113,8 @@ public class FileUploadController extends AbstractController {
             System.out.println(entry.getKey());
 
             for (BlobInfo info : entry.getValue()) {
-                ImgInGCS content = new ImgInGCS(info);
+                FileGCS content = new FileGCS(info);
+//                content.getMenuPageRef().setKey();
                 Datastore.put(content);
             }
         }

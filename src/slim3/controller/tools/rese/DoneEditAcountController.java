@@ -19,6 +19,13 @@ public class DoneEditAcountController extends AbstractReseController {
             return super.showLoginPage();
         }
         
+        //データベースからクッキー情報(userId)でデータを1つ取得。
+        MsUser msUser = msUserService.getSingleByCookie(request);
+        if (msUser == null) {
+            log.info("ユーザー情報がありませんでした。");
+            return forward("/tools/rese/comeAndGo/login");
+        }
+        
         Validators v = new Validators(request);
         validate(v, "name", 1, 20, true, null, null);
         validate(v, "phone", 1, 50, false, null, null);
@@ -34,7 +41,6 @@ public class DoneEditAcountController extends AbstractReseController {
         String phone = asString("phone");
         String address = asString("address");
         
-        MsUser msUser = new MsUser();
         msUser.setName(name);
         msUser.setMailaddress(mailaddress);
         msUser.setPhone(phone);
@@ -43,6 +49,6 @@ public class DoneEditAcountController extends AbstractReseController {
         Datastore.put(msUser);
         log.info("アカウント情報を変更しました。");
 
-        return forward("account.jsp");
+        return redirect("/tools/rese/doneEditAcount");
     }
 }

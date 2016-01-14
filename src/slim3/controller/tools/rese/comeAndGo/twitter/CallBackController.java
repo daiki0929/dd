@@ -17,6 +17,7 @@ import util.CookieUtil;
  * @author uedadaiki
  *
  */
+//TODO クッキー保存とかをDoneEntryControllerに移動した方がいいかも。
 public class CallBackController extends AbstractReseController {
 
     @Override
@@ -72,6 +73,6 @@ public class CallBackController extends AbstractReseController {
         
         
         log.info("名前/メールアドレス記入フォームへ移動します。");
-        return redirect("/tools/rese/comeAndGo/twitter/entry");
+        return redirect("/tools/rese/comeAndGo/entryBySNS");
     }
 }

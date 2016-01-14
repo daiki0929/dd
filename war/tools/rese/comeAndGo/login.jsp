@@ -32,8 +32,9 @@
 					<input type="submit" value="ログイン">
 				</form>
 				<h3>SNSでログインする</h3>
-				<a href="/tools/rese/comeAndGo/twitter/signIn"><p class="btn btn-info">Twitterでログイン</p></a>
-				<a href="/api/twitter/logOut">logout</a>
+				<a href="/tools/rese/comeAndGo/twitter/signIn?s=Rese"><p class="btn btn-info">Twitterでログイン</p></a>
+				<a href="/tools/rese/comeAndGo/facebook/signIn?s=Rese"><p class="btn btn-info">Facebookでログイン</p></a>
+				<a href="/tools/rese/comeAndGo/google/signIn"><p class="btn btn-info">Googleでログイン</p></a>
 			</div>
 		</div>
 	</div>

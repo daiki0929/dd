@@ -68,7 +68,7 @@ public class CallBackController extends AbstractReseController {
             Datastore.put(shopDefaultHour);
             
             log.info("名前/メールアドレス記入フォームへ移動します。");
-            return redirect("/tools/rese/comeAndGo/twitter/entry");
+            return redirect("/tools/rese/comeAndGo/entryBySNS");
             
         } catch (FacebookException e) {
             throw new MyException(e);

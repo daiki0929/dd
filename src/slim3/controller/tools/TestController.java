@@ -11,6 +11,8 @@ public class TestController extends AbstractController {
 
     @Override
     public Navigation run() throws Exception {
+        
+        
         return forward("/tools/rese/test.jsp");
     }
 }

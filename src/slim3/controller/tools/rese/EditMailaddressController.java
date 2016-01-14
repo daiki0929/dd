@@ -9,10 +9,11 @@ import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import util.CookieUtil;
 /**
- * ユーザーのアカウント情報を表示します。
+ * ユーザーのメールアドレスを変更します。
  * @author uedadaiki
  *
  */
+//TODO 変更に認証は要らないかも。
 public class EditMailaddressController extends AbstractReseController {
 
     @Override

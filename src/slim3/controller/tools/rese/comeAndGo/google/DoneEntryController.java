@@ -1,4 +1,4 @@
-//package slim3.controller.tools.rese.comeAndGo.twitter;
+//package slim3.controller.tools.rese.comeAndGo.google;
 //
 //import org.slim3.controller.Navigation;
 //import org.slim3.controller.validator.Validators;

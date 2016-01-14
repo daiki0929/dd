@@ -29,6 +29,8 @@ public class MsUser extends AbstractModel {
     private String mailaddress;
     //パスワード
     private String password;
+    //予約ページのユーザーパス
+    private String userPath;
     
     //TwitterAPI
     private String twAccessToken;
@@ -37,6 +39,13 @@ public class MsUser extends AbstractModel {
     //FacebookAPI
     private String fbAccessToken;
     private String fbAccessTokenSecret;
+    
+    //Gmail用アクセストークン
+    private String gmailAccessToken;
+    //Gmailアドレス
+    private String gmailAddress;
+    //リフレッシュトークン
+    private String gmailRefreshToken;
     
     
     
@@ -138,6 +147,38 @@ public class MsUser extends AbstractModel {
 
     public void setTwAccessTokenSecret(String twAccessTokenSecret) {
         this.twAccessTokenSecret = twAccessTokenSecret;
+    }
+
+    public String getGmailAccessToken() {
+        return gmailAccessToken;
+    }
+
+    public void setGmailAccessToken(String gmailAccessToken) {
+        this.gmailAccessToken = gmailAccessToken;
+    }
+
+    public String getGmailAddress() {
+        return gmailAddress;
+    }
+
+    public void setGmailAddress(String gmailAddress) {
+        this.gmailAddress = gmailAddress;
+    }
+
+    public String getGmailRefreshToken() {
+        return gmailRefreshToken;
+    }
+
+    public void setGmailRefreshToken(String gmailRefreshToken) {
+        this.gmailRefreshToken = gmailRefreshToken;
+    }
+
+    public String getUserPath() {
+        return userPath;
+    }
+
+    public void setUserPath(String userPath) {
+        this.userPath = userPath;
     }
 
 

@@ -2,18 +2,16 @@ package slim3.controller.tools.rese.reserve;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 
-import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.MsUserMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.Menu.Status;
-import util.CookieUtil;
 import slim3.model.reserve.MenuPage;
 /**
  * メニューページ作成完了後のコントローラです。
@@ -39,7 +37,8 @@ public class DoneCreateMenuPageController extends AbstractReseController {
         Validators v = new Validators(request);
         validate(v, "pageTitle", 1, 50, true, null, null);
         validate(v, "description", 1, 600, false, null, null);
-        validate(v, "topImg", 1, 400, false, null, null);
+        //TODO 画像のサイズでバリデートする。
+//        validate(v, "topImgPath", 1, 400, false, null, null);
         //承認制 or 先着順
         validate(v, "reserveSystem", 1, 20, true, null, null);
         //公開 or 非公開
@@ -63,7 +62,7 @@ public class DoneCreateMenuPageController extends AbstractReseController {
         menuPage.getMsUserRef().setKey(msUser.getKey());
         menuPage.setPageTitle(asString("pageTitle"));
         menuPage.setDescription(asString("description"));
-        menuPage.setTopImg(asString("topImg"));
+        menuPage.setTopImgPath(asString("topImgPath"));
         menuPage.setReserveSystem(asString("reserveSystem"));
         menuPage.setInterval(asInteger("reserveInterval"));
         if (asString("status").equals("closed")) {
@@ -72,6 +71,7 @@ public class DoneCreateMenuPageController extends AbstractReseController {
             menuPage.setStatus(Status.PUBLIC.getStatus());
         }
         //asIntegerがnullだとエラーが表示されるので、エラーページへ飛ばします。
+        //nullだった場合、
         try {
             menuPage.setReserveStartTime(asInteger("reserveStartTime"));
             menuPage.setReserveEndTime(asInteger("reserveEndTime"));
@@ -82,23 +82,30 @@ public class DoneCreateMenuPageController extends AbstractReseController {
             return forward("/tools/rese/common/errorPage.jsp");
         }
         
-        ArrayList<Date> noReserveDateList = new ArrayList<Date>();
-        String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
-        
-        for (String noReserveDateStr : splitedNoReserveDateStr) {
-            Date noReserveDate = 
-                    DateTimeFormat
-                    .forPattern("yyyy/MM/dd")
-                    .parseDateTime(noReserveDateStr)
-                    .toDate();
-            noReserveDateList.add(noReserveDate);
-            log.info(noReserveDateStr);
+        if (asString("noReserveDate") != null) {
+            ArrayList<Date> noReserveDateList = new ArrayList<Date>();
+            String[] splitedNoReserveDateStr = asString("noReserveDate").split(",", 0);
+            
+            for (String noReserveDateStr : splitedNoReserveDateStr) {
+                Date noReserveDate = 
+                        DateTimeFormat
+                        .forPattern("yyyy/MM/dd")
+                        .parseDateTime(noReserveDateStr)
+                        .toDate();
+                noReserveDateList.add(noReserveDate);
+                log.info(noReserveDateStr);
+            }
+            log.info(noReserveDateList.toString());
+            
+            menuPage.setNoReserveDate(noReserveDateList);
         }
-        log.info(noReserveDateList.toString());
         
-        menuPage.setNoReserveDate(noReserveDateList);
+        //メニューページのURLパス
+        Random rnd = new Random();
+        int pagePath = rnd.nextInt(999999);
+        menuPage.setPagePath(pagePath);
         
         Datastore.put(menuPage);
-        return forward("/tools/rese/reserve/menuPageList");
+        return redirect("/tools/rese/reserve/menuPageList");
     }
 }

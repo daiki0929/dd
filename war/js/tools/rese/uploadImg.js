@@ -22,21 +22,41 @@ $(document).ready(function() {
 	}).error(function() {
 		alert("error.");
 	});
-	$("#upload").on("click", function() {
-		var $form = $("#entryForm");
-		var formData = new FormData($form[0]);
-		var promise = $.ajax({
-			type : "POST",
-			url : $("#uploadUrl").val(),
-			processData : false,
-			contentType : false,
-			data : formData
-		});
-		promise.success(function(data) {
-			alert("作成しました");
-		}).error(function() {
-			alert("作成に失敗しました");
-		});
-		return false;
-	});
+
+//	$("#upload").on("click", function() {
+//		var $form = $("#entryForm");
+//		var formData = new FormData($form[0]);
+//		var promise = $.ajax({
+//			type : "POST",
+//			url : $("#uploadUrl").val(),
+//			processData : false,
+//			contentType : false,
+//			data : formData
+//		});
+//		promise.success(function(data) {
+//			alert("作成しました");
+//		}).error(function() {
+//			alert("作成に失敗しました");
+//		});
+//		return false;
+//	});
 });
+
+function startUpload() {
+	console.log("画像アップロード開始");
+	var $form = $("#entryForm");
+	var formData = new FormData($form[0]);
+	var promise = $.ajax({
+		type : "POST",
+		url : $("#uploadUrl").val(),
+		processData : false,
+		contentType : false,
+		data : formData
+	});
+	promise.success(function(data) {
+//		alert("作成しました");
+	}).error(function() {
+		alert("画像アップロードに失敗しました。");
+	});
+	return false;
+};

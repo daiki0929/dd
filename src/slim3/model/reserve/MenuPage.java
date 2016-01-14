@@ -37,11 +37,12 @@ public class MenuPage extends AbstractModel {
     @Attribute(version = true)
     private Long version;
     
-
+    //予約ページのURLパス(7桁の乱数)
+    private int pagePath;
     //メニューコンテンツ情報
     private String pageTitle;
     private String description;
-    private String topImg;
+    private String topImgPath;
     //承認制 or 先着順
     private String reserveSystem;
     //公開 or 非公開
@@ -94,12 +95,12 @@ public class MenuPage extends AbstractModel {
         this.description = description;
     }
 
-    public String getTopImg() {
-        return topImg;
+    public String getTopImgPath() {
+        return topImgPath;
     }
 
-    public void setTopImg(String topImg) {
-        this.topImg = topImg;
+    public void setTopImgPath(String topImgPath) {
+        this.topImgPath = topImgPath;
     }
 
     public String getReserveSystem() {
@@ -166,6 +167,15 @@ public class MenuPage extends AbstractModel {
     public void setNoReserveDate(List<Date> noReserveDate) {
         this.noReserveDate = noReserveDate;
     }
+
+    public int getPagePath() {
+        return pagePath;
+    }
+
+    public void setPagePath(int pagePath) {
+        this.pagePath = pagePath;
+    }
+
 
 
 

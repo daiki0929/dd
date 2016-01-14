@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+    <!-- 非公開メニューページの削除 -->
+	<cron>
+		<url>/tools/rese/reserve/deleteMenuPage</url>
+		<description>delete closedMenuPage</description>
+		<schedule>every sunday 00:00</schedule>
+		<timezone>Asia/Tokyo</timezone>
+	</cron>
+</cronentries>

@@ -1,0 +1,17 @@
+{
+    "web": {
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", 
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth", 
+        "client_id": "665174848314-r09h7bnanojfldqvtbjjvenj8s480ial.apps.googleusercontent.com", 
+        "client_secret": "FhQe8BwEHmNEgUbooc1MP_rm", 
+        "javascript_origins": [
+            "http://dd01-1142.appspot.com"
+        ], 
+        "project_id": "dd01-1142", 
+        "redirect_uris": [
+            "http://localhost:8888/tools/rese/comeAndGo/google/callBack", 
+            "http://dd01-1142.appspot.com/tools/rese/comeAndGo/google/callBack"
+        ], 
+        "token_uri": "https://accounts.google.com/o/oauth2/token"
+    }
+}

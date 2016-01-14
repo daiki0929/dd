@@ -10,6 +10,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.reserve.MenuMeta;
+import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
@@ -23,14 +24,22 @@ public class SelectMenuController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
-        Key menuPageKey = asKey("id");
-        if (menuPageKey == null) {
-            log.info("メニューページのkeyを取得出来ませんでした。");
-            return forward("/tools/rese/reserve/createMenuPage.jsp");
-        }
-        MenuPage menuPage = menuPageService.get(menuPageKey);
+        int pagePath = Integer.parseInt(asString("pagePath"));
+//        String userPath = asString("userPath");
         
-        //ユーザーが所持するメニューを取り出す
+//        
+//        if (pagePath == null) {
+//            log.info("メニューページのkeyを取得出来ませんでした。");
+//            return forward("/tools/rese/reserve/createMenuPage.jsp");
+//        }
+//        
+
+        MenuPageMeta menuPageMeta = MenuPageMeta.get();
+        MenuPage menuPage = Datastore
+                .query(menuPageMeta)
+                .filter(menuPageMeta.pagePath.equal(pagePath))
+                .asSingle();
+        
         MenuMeta menuMeta = MenuMeta.get();
         List<Menu> menuList = Datastore
                 .query(menuMeta)

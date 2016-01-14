@@ -225,6 +225,32 @@ public class Const {
         }
     }
     
+    // ================================
+    // GoogleAPI
+    /**
+     * GoogleAPIのアクセストークン・リフレッシュトークン
+     * @author uedadaiki
+     *
+     */
+    public static enum GGAPI{
+        Rese("ya29.ZwJehmAzILvZesGoa--zynsy3h7YOooHE08K-7F-ForYM2iCwfMqrFZXMsXQ9QdEm6Tu","1/9w6RsBl9VfSrQ5gnhMJbP2GzxMD3-HjknNQOeR6ckAE");
+        
+        private final String accessToken;
+        private final String refreshToken;
+        
+        private GGAPI(String accessToken, String refreshToken){
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
+        }
+        
+        public String getGGAccessToken() {
+            return accessToken;
+        }
+        public String getGGRefreshToken() {
+            return refreshToken;
+        }
+    }
+    
     
     // ================================
     // 権限種別

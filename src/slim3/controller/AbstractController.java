@@ -2,8 +2,11 @@ package slim3.controller;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
@@ -24,6 +27,7 @@ import slim3.service.CacheService;
 import slim3.service.datastore.DsService;
 import slim3.service.factory.ServiceFactory;
 import slim3.service.sns.FacebookService;
+import slim3.service.sns.GoogleService;
 import slim3.service.sns.TwitterService;
 import util.CookieUtil;
 import util.StackTraceUtil;
@@ -49,11 +53,14 @@ public abstract class AbstractController extends Controller {
     
     /** 認証サービス */
     protected AuthService authService = ServiceFactory.getService(AuthService.class);
-    //Twitter認証
-    protected TwitterService twitterService = new TwitterService();
-    //Facebook認証
-    protected FacebookService facebookService = new FacebookService();
     
+    //Twitter
+    protected TwitterService twitterService = new TwitterService();
+    //Facebook
+    protected FacebookService facebookService = new FacebookService();
+    //Google
+    protected GoogleService googleService = new GoogleService();
+
     
     
     /**
@@ -254,6 +261,22 @@ public abstract class AbstractController extends Controller {
    }
    
    /**
+    * リクエストパラメータの内容をログに出力します。
+    *
+    * @param request
+    */
+   protected void showParametor(HttpServletRequest request) {
+       Enumeration<?> names = request.getParameterNames();
+       while(names.hasMoreElements()) {
+           String name = (String) names.nextElement();
+           String[] parameterValues = request.getParameterValues(name);
+           for(String str : parameterValues) {
+               log.info(String.format("リクエストパラメータ[%s][%s]", name, str));
+           }
+       }
+   }
+   
+   /**
     * スタックトレースをログに出力します。
     *
     * @param e
@@ -295,6 +318,17 @@ public abstract class AbstractController extends Controller {
 
        return jsonDto;
        
+   }
+   
+   /**
+    * 返却用のJSONオブジェクトを生成します。
+    *
+    * @param status
+    * @param msg
+    * @return JsonDto
+    */
+   protected JsonDto createJsonDto(String status, String msg) {
+       return createJsonDto(status, msg, null);
    }
 
    
@@ -340,6 +374,35 @@ public abstract class AbstractController extends Controller {
            throw new MyException(e);
        }
        return null;
+   }
+   
+
+   /**
+    * 返却用のJSONオブジェクトを生成します。Controller側で呼び出す必要はありません。
+    *
+    * @param status
+    * @param msg
+    * @return
+    */
+   private JsonDto createErrorObject(String status, Errors errors) {
+       StringBuilder msg = new StringBuilder("エラーが発生しました。<br/>");
+       for(Map.Entry<String, String> e : errors.entrySet()) {
+           msg.append(e.getValue() + "<br>");
+       }
+       return createJsonDto(status, msg.toString());
+   }
+   
+   /**
+    * Errorsを<br>
+    * で改行区切りにしてレスポンスを返却します。
+    *
+    * @param errors
+    * @return
+    */
+   protected Navigation returnResponse(Errors errors) {
+       JsonDto jsonDto = createErrorObject(Const.JSON_STATUS_ERROR, errors);
+       byte[] bytes = toJson(jsonDto).getBytes(Charset.forName(Const.DEFAULT_CONTENT_TYPE));
+       return write(bytes);
    }
    
    /**
