@@ -57,12 +57,12 @@
 			<p>メニューをお選び下さい。</p>
 			<div>
 				<c:forEach var="menu" items="${menuList}">
-					<form action="/tools/rese/reserve/customer/timeschedule" method="post">
+					<form action="/r/reserve/${msUser.userPath}/${menuPage.pagePath}" method="post">
 						<div class="span3 menuCard" style="background-color: #f2f2f2; border: 1px solid #dedede; padding: 10px;">
 							<p style="font-size: 1.1em">${menu.title}</p>
 							<p>時間：<span class="menuTime">${menu.time/60}</span>分</p>
 							<p>料金：${menu.price}円</p>
-							<input type="hidden" name="userId" value="${f:h(msUserKey)}">
+							<input type="hidden" name="userId" value="${f:h(msUser.key)}">
 							<input type="hidden" name="menuId" value="${f:h(menu.key)}">
 							<input type="submit" class="reserveBtn" value="予約する">
 						</div>

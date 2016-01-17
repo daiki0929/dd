@@ -13,33 +13,86 @@
 
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
+<style type="text/css">
+	
+table.company {
+    border-collapse: separate;
+    border-spacing: 0px 15px;
+}
+ 
+table.company th,
+table.company td {
+    padding: 10px;
+}
+ 
+table.company th {
+    background: #295890;
+    vertical-align: middle;
+    text-align: left;
+    width: 100px;
+    overflow: visible;
+    position: relative;
+    color: #fff;
+    font-weight: normal;
+    font-size: 15px;
+}
+ 
+table.company td {
+    background: #f8f8f8;
+    width: 360px;
+    padding-left: 20px;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	//予約日時のフォーマットを変更します。 
+	$(".reserveTime").each(function(index, element){
+		var m = moment($(element).text(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
+		var output = m.format('MM月DD日 HH:mm');
+		$(element).text(output);
+	});
+});
+</script>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div class="container">
-		<div id="content">
-			<div class="span12">
-				<h3>${customer.name} 様</h3>
-				<div class="span2" style="background-color: #f2f2f2;">
-					<p>年齢</p>
-					<p>${customer.age}</p>
-					<p>性別</p>
-					<p>${customer.sex}</p>
-					<p>住所</p>
-					<p>${customer.address}</p>
-					<p>電話番号</p>
-					<p>${customer.phone}</p>
-					<p>メールアドレス</p>
-					<p>${customer.mailaddress}</p>
-				</div>
-				<div class="span10" style="background-color: #f2f2f2;">
-				<c:forEach var="reserve" items="${reserveList}">
-					<p>${reserve.menuTitle}</p>
-					<p>${reserve.startTime}</p>
-				</c:forEach>
+		<div class="span12">
+			<div class="span8">
+			<h3>お客様情報</h3>
+			<p>お客様の連絡情報、来店履歴を確認することが出来ます。</p>
+			</div>
+			<table class="company span8">
+			    <tbody>
+			        <tr>
+			            <th class="arrow_box">名前</div></th>
+			            <td>${customer.name}</td>
+			        </tr>
+			        <tr>
+			            <th class="arrow_box">Mail</th>
+			            <td>${customer.mailaddress}</td>
+			        </tr>
+			        <tr>
+			            <th>TEL</th>
+			            <td>${customer.phone}</td>
+			        </tr>
+			    </tbody>
+			</table>
+			<div class="span3" style="background-color: #000; height: 200px;"></div>
+			<div class="span8" style="background-color: #f8f8f8;">
+    		   <div style="width: 100%; background-color: #295890; margin-bottom: 10px;">
+    		   		<div style=" padding: 8px;">
+    		   			<h5 style="color:#fff; font-weight: lighter;">来店履歴</h5>
+    		   		</div>
+    		   </div>
+				<div style="padding: 10px;">
+			        <c:forEach var="reserve" items="${reserveList}">
+						<p style="border-bottom: 1px solid #dedede; padding-bottom: 10px;"><span class="reserveTime" style="margin-right: 20px;">${reserve.startTime}</span>${reserve.menuTitle}</p>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>

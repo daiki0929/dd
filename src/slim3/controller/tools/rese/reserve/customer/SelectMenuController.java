@@ -9,6 +9,7 @@ import org.slim3.datastore.ModelRef;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.tools.rese.AbstractReseController;
+import slim3.meta.MsUserMeta;
 import slim3.meta.reserve.MenuMeta;
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
@@ -24,7 +25,7 @@ public class SelectMenuController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
-        int pagePath = Integer.parseInt(asString("pagePath"));
+        String pagePath = asString("pagePath");
 //        String userPath = asString("userPath");
         
 //        
@@ -47,10 +48,15 @@ public class SelectMenuController extends AbstractReseController {
                 .asList();
         
         //ユーザーID
-        ModelRef<MsUser> msUser = menuPage.getMsUserRef();
-        Key msUserKey = msUser.getKey();
+//        ModelRef<MsUser> msUser = menuPage.getMsUserRef();
+//        Key msUserKey = msUser.getKey();
+        MsUserMeta msUserMeta = MsUserMeta.get();
+        MsUser msUser = Datastore
+                .query(msUserMeta)
+                .filter(msUserMeta.key.equal(menuPage.getMsUserRef().getKey()))
+                .asSingle();
         
-        request.setAttribute("msUserKey", msUserKey);
+        request.setAttribute("msUser", msUser);
         request.setAttribute("menuPage", menuPage);
         request.setAttribute("menuList", menuList);
         

@@ -52,8 +52,8 @@
 		});
 		$('.fc-button-group .fc-prev-button').attr("onClick","getMonthReserve();");
 		$('.fc-button-group .fc-next-button').attr("onClick","getMonthReserve();");
-		console.log($(".fc-content-skeleton .fc-sun:first").attr('data-date'));
-		console.log($(".fc-content-skeleton .fc-sat:last").attr('data-date'));
+		/* console.log($(".fc-content-skeleton .fc-sun:first").attr('data-date')); */
+		/* console.log($(".fc-content-skeleton .fc-sat:last").attr('data-date')); */
 	 	$.post("/tools/rese/reserve/getMonthReserveList", {
 	 		'startDate' : $(".fc-content-skeleton .fc-sun:first").attr('data-date'),
 	 		'endDate' : $(".fc-content-skeleton .fc-sat:last").attr('data-date')
@@ -64,7 +64,7 @@
 	 			break;
 
 	 		default:
-	 			console.log(data.obj);
+	 			/* console.log(data.obj); */
 	 			var eventsThisMonth = {};
 	 			$.each(data.obj, function(index, val){
 		 			var event = {
@@ -73,7 +73,7 @@
 						end : data.obj[index].end,
 						url : data.obj[index].key
 					}
-	 				console.log(data.obj[index].key);
+	 				/* console.log(data.obj[index].key); */
 		 			
 		 			eventsThisMonth["event"] = event;
 	 				eventList.push(eventsThisMonth.event);
@@ -89,10 +89,17 @@
 	 	//予約日時のフォーマットを変更します。 
 	 	$(".reserveTime").each(function(index, element){
 		 	var m = moment($(element).val(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
-		 	var output = m.format('MM/DD HH:mm');
+		 	var output = m.format('MM月DD日 HH:mm');
 		 	$(element).text(output);
 		 	$(element).attr("value", output);
-		 	$(element).append("<input type='text' name='startTime' value='${reserve.startTime}' class='reserveTime'>");
+		 	/* $(element).append("<input type='text' name='startTime' value='${reserve.startTime}' class='reserveTime'>"); */
+	 	});
+	 	
+	 	//新規予約日時のフォーマットを変更します。 
+	 	$(".newReserve").each(function(index, element){
+		 	var m = moment($(element).text(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
+		 	var output = m.format('MM月DD日 HH:mm');
+		 	$(element).text(output);
 	 	});
 	});
 	
@@ -154,7 +161,7 @@
 	 		}
 	 	}, 'json');
 	};
-
+	
 	
 </script>
 </head>
@@ -162,12 +169,23 @@
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div class="container">
 		<div class="span12">
-			<div class="span8" style="height: 150px;"><p>新規予約</p></div>
-			<div class="span3" style="background-color: #f1c40f; height: 150px;">広告</div>
-		</div>
-		<div class="span12">
-		<div id="calendar" class="span8"></div>
-		<div class="span3" style="background-color: #f2f2f2; height: 400px;"></div>
+			<div class="span8" style="height: 150px; margin-bottom: 20px;">
+				<h3>予約管理</h3>
+				<p>予約情報が自動で追加されます。カレンダーの予約情報をクリックすると、詳細を表示することが出来ます。</p>
+				<div class="button"><a href="">予約を記入する</a></div>
+			</div>
+			<div class="span3" style="background-color: #000; height: 180px; margin-bottom: 20px;"></div>
+			<div id="calendar" class="span8" style="margin-bottom: 20px;"></div>
+			<div class="span3">
+				<div style="width: 100%; border-bottom: 1px solid #dedede; background-color: #dedede;">
+					<h4 style="padding: 10px 0 0 10px;">新規予約情報</h4>
+				</div>
+				<div style="padding:10px; background-color: #F8F8F8;">
+					<c:forEach var="reserve" items="${reserveList}" begin="1" end="5">
+						<p style="margin-bottom: 15px;"><a href="/tools/rese/customerManage/customerDetail?id=${f:h(reserve.customerRef.key)}">${reserve.customerName}</a> 様から予約が入りました。<br/><span class="newReserve">${reserve.startTime}</span></p>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
 		
 		<c:forEach var="reserve" items="${reserveList}">
@@ -175,18 +193,18 @@
 			  <form action="">
 				  <div class="modal-header">
 				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				    <a href=""><h3 id="myModalLabel">${reserve.customerName} 様</h3></a>
+				    <a href="/tools/rese/customerManage/customerDetail?id=${f:h(reserve.customerRef.key)}"><h3 id="myModalLabel">${reserve.customerName} 様</h3></a>
 				  </div>
 				  <div class="modal-body">
-				    <p>予約日</p>
+				    <h5>予約日</h5>
 				    <input type="text" name="startTime" value="${reserve.startTime}" class="reserveTime">
 				    <input type="text" name="endTime" value="${reserve.endTime}" class="reserveTime">
-				    <p>予約メニュー</p>
+				    <h5>予約メニュー</h5>
 				    <p>${reserve.menuTitle}</p>
 					</select>
-				    <p>メールアドレス</p>
+				    <h5>メールアドレス</h5>
 				    <p>${reserve.customerMailaddress}</p>
-				    <p>携帯番号</p>
+				    <h5>携帯番号</h5>
 				    <p>${reserve.customerPhone}</p>
 				  </div>
 				  <div class="modal-footer">
@@ -196,7 +214,7 @@
 			  </form>
 			</div>
 		</c:forEach>
-		
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>

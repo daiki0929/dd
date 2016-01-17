@@ -81,6 +81,7 @@ public class Customer implements Serializable {
     private Date visitDate;
     private String orderMenu;
     private String sex;
+    private String customerPath;
     
     
     
@@ -203,6 +204,14 @@ public class Customer implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getCustomerPath() {
+        return customerPath;
+    }
+
+    public void setCustomerPath(String customerPath) {
+        this.customerPath = customerPath;
     }
 
 

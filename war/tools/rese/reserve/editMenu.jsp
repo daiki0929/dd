@@ -64,9 +64,10 @@
 				<input type="file" name="imgPath" disabled="disabled">
 				<input type="hidden" name="menuKey" value="${f:h(menu.key)}">
 				<br />
-				<input type="submit" value="更新">
+				<input type="submit" value="更新" style="width: 200px; background-color: #f39c12; border: none; padding: 10px; color:#fff; border-radius: 5px; margin-top: 20px;">
 			</form>
 		</div>
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>

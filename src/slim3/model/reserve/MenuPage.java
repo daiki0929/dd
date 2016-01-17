@@ -38,7 +38,7 @@ public class MenuPage extends AbstractModel {
     private Long version;
     
     //予約ページのURLパス(7桁の乱数)
-    private int pagePath;
+    private String pagePath;
     //メニューコンテンツ情報
     private String pageTitle;
     private String description;
@@ -168,13 +168,14 @@ public class MenuPage extends AbstractModel {
         this.noReserveDate = noReserveDate;
     }
 
-    public int getPagePath() {
+    public String getPagePath() {
         return pagePath;
     }
 
-    public void setPagePath(int pagePath) {
+    public void setPagePath(String pagePath) {
         this.pagePath = pagePath;
     }
+
 
 
 

@@ -1,6 +1,5 @@
 package slim3.controller.tools.rese.customerManage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slim3.controller.Navigation;
@@ -18,11 +17,11 @@ import slim3.model.customerManage.Customer;
 import slim3.model.reserve.MenuPage;
 import util.CookieUtil;
 /**
- * カスタマーの一覧を表示します。
+ * カスタマーを検索します。
  * @author uedadaiki
  *
  */
-public class CustomerListController extends AbstractReseController {
+public class SearchController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {
@@ -51,9 +50,9 @@ public class CustomerListController extends AbstractReseController {
         
         //ユーザーが所持する顧客情報を取り出す
         CustomerMeta customerMeta = CustomerMeta.get();
-        if (asKey("p") != null) {
+        if (asKey("id") != null) {
             log.info("予約ページで絞り込みます。");
-            Key menuPageKey = asKey("p");
+            Key menuPageKey = asKey("id");
             List<Customer> customerList = Datastore
                     .query(customerMeta)
                     .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
@@ -62,37 +61,6 @@ public class CustomerListController extends AbstractReseController {
             request.setAttribute("customerList", customerList);
             request.setAttribute("menuPageKey", menuPageKey);
             
-            return forward("customerList.jsp");
-        }else if (asString("s") != null) {
-            log.info("名前・メールアドレス・電話番号で絞り込みます。");
-            String searchKw = asString("s");
-            ArrayList<Customer> customerList = new ArrayList<Customer>();
-            
-            ArrayList<List<Customer>> filterCustomerList = new ArrayList<List<Customer>>();
-            //名前、メールアドレス、電話番号で検索
-            List<Customer> customerListByName = Datastore
-                    .query(customerMeta)
-                    .filterInMemory(customerMeta.name.contains(searchKw))
-                    .asList();
-            List<Customer> customerListByMail = Datastore
-                    .query(customerMeta)
-                    .filterInMemory(customerMeta.mailaddress.contains(searchKw))
-                    .asList();
-            List<Customer> customerListByPhone = Datastore
-                    .query(customerMeta)
-                    .filterInMemory(customerMeta.phone.contains(searchKw))
-                    .asList();
-            filterCustomerList.add(customerListByName);
-            filterCustomerList.add(customerListByMail);
-            filterCustomerList.add(customerListByPhone);
-            
-            for (List<Customer> l : filterCustomerList) {
-                for (Customer customer : l) {
-//                    log.info("名前：" + customer.getName());
-                    customerList.add(customer);
-                }
-            }
-            request.setAttribute("customerList", customerList);
             return forward("customerList.jsp");
         }else {
             List<Customer> customerList = Datastore

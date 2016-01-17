@@ -118,7 +118,8 @@ $(document).ready(function() {
 <div class="container">
 	<div class="span12">
 		<h2>予約をすすめる</h2>
-		<form action="/tools/rese/reserve/customer/confirmReserve" name="selectMenu" id="form_1">
+<%-- 		<form action="/tools/rese/reserve/customer/confirmReserve" name="selectMenu" id="form_1"> --%>
+		<form action="/confirm" name="selectMenu" id="form_1" method="post">
 			<div class="span7">
 				<h3>メニュー・予約日時を選択して下さい</h3>
 				<c:forEach var="menu" items="${menuList}">

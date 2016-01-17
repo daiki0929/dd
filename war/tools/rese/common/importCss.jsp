@@ -11,6 +11,7 @@
 	<link href="/css/animate.css" rel="stylesheet" />
 	<link href="/css/bcc_random_banner.css" rel="stylesheet" />
 	<link href="/css/global.css" rel="stylesheet" />
+	<link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
 
 
 	<style type="text/css">
@@ -22,6 +23,104 @@
 		body {
 			margin-top: 60px;
 		}
+	}
+	#footer{
+		width: 100%;
+		height: 100px;
+		background-color: #7f8c8d;
+		margin-top: 60px;
+	}
+	.button a {
+	  width: 280px;
+	  background-color: #f39c12;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 18px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	}
+	.button {
+	  width: 280px;
+	  background-color: #f39c12;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 18px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	  cursor: pointer;
+	}
+	.button a:hover {
+	  opacity:0.6;
+	}
+	.button:hover {
+	  opacity:0.6;
+	}
+	.buttonMin-gray a {
+	  width: 200px;
+	  background-color: #bdc3c7;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 16px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	}
+	.buttonMin-gray {
+	  width: 200px;
+	  background-color: #bdc3c7;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 18px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	  cursor: pointer;
+	}
+	.buttonMin-gray:hover {
+	  opacity:0.6;
+	}
+	.buttonMin-gray a:hover {
+	  opacity:0.6;
+	}
+	.buttonMin-blue {
+	  width: 200px;
+	  background-color: #295890;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 18px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	  cursor: pointer;
+	}
+	.buttonMin-blue a:hover {
+	  opacity:0.6;
+	}
+	.buttonMin-red {
+	  width: 200px;
+	  background-color: #e74c3c;
+	  border-radius: 5px;
+	  color: #ffffff;
+	  display: block;
+	  font-size: 18px;
+	  text-align: center;
+	  text-decoration: none;
+	  padding: 10px 0;
+	  cursor: pointer;
+	}
+	.buttonMin-red a:hover {
+	  opacity:0.6;
+	}
+	
+	.sideBar{
+		margin-top: 20px;
 	}
 	</style>
 

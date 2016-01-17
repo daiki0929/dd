@@ -102,7 +102,7 @@ public class DoneCreateMenuPageController extends AbstractReseController {
         
         //メニューページのURLパス
         Random rnd = new Random();
-        int pagePath = rnd.nextInt(999999);
+        String pagePath = Integer.toString(rnd.nextInt(999999));
         menuPage.setPagePath(pagePath);
         
         Datastore.put(menuPage);

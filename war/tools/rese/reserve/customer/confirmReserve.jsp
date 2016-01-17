@@ -13,35 +13,6 @@
 
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
-<script type="text/javascript">
-/**
- * 予約を完了します。
- */
-var postUrl = "/tools/rese/reserve/customer/doneReserve";
-function CompleteReserve(daysOfTheWeek){
-
-	$.post(postUrl, {
-		'menuKey' : '${f:h(menu.key)}',
-		'reserveTime' : '${reserveTime}',
-		'menuEndTime' : '${menuEndTime}',
-		'customerName' : '${customerName}',
-		'customerMailaddress' : '${customerMailaddress}',
-		'customerPhone' : '${customerPhone}'
-	}, function(data){
-		console.log(data.obj);
-		switch(data.obj){
-		case null:
-			alert("読み込みに失敗しました。");
-			break;
-
-		default:
-			location.href = "/tools/rese/reserve/customer/finishReserve";
-		break;
-		}
-	}, 'json');
-}
-</script>
-
 </head>
 <body>
 	<div class="container">
@@ -56,8 +27,16 @@ function CompleteReserve(daysOfTheWeek){
 			<p>お名前：${customerName}様</p>
 			<p>メールアドレス：${customerMailaddress}</p>
 			<p>携帯番号：${customerPhone}</p>
-
-			<p class="btn btn-info" onclick="CompleteReserve();">予約を完了する</p>
+			
+			<form action="/tools/rese/reserve/customer/doneReserve" method="post">
+				<input type="hidden" name="menuKey" value="${f:h(menu.key)}">
+				<input type="hidden" name="reserveTime" value="${reserveTime}">
+				<input type="hidden" name="menuEndTime" value="${menuEndTime}">
+				<input type="hidden" name="customerName" value="${customerName}">
+				<input type="hidden" name="customerMailaddress" value="${customerMailaddress}">
+				<input type="hidden" name="customerPhone" value="${customerPhone}">
+				<input type="submit" value="予約を確定する">
+			</form>
 		</div>
 	</div>
 </body>

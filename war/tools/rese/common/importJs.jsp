@@ -19,7 +19,8 @@
 
 
 		<script src="/js/moment/moment-2.0.0.js"></script>
-
+		
+		<script type="text/javascript" src="/js/footerFixed.js"></script>
 
 		<script src="/js/main.js"></script>
 		<!-- グラフ -->

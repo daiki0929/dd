@@ -30,5 +30,6 @@
 			</p>
 		</div>
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>

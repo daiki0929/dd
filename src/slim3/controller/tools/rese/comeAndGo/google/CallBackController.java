@@ -16,6 +16,7 @@ import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.exception.MyException;
 import slim3.meta.MsUserMeta;
+import slim3.model.MsShop;
 import slim3.model.MsUser;
 import util.CookieUtil;
 import util.StringUtil;
@@ -136,6 +137,11 @@ public class CallBackController extends AbstractReseController {
             newMsUser.setUserId(msUserEncrypt);
             
             dsService.put(newMsUser);
+            
+            //店舗情報のデフォルト値を保存
+            MsShop shopDefaultHour = setShopDefaultService.setShopDefault(newMsUser);
+            dsService.put(shopDefaultHour);
+            
             //TODO 保存後すぐに取得するとエラーになるので書いてます。
             Datastore.getOrNull(newMsUser.getKey());
             

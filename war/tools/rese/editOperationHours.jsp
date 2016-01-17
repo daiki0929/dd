@@ -29,7 +29,7 @@
 			<h3>営業日時</h3>
 			<!-- 日曜日 -->
 			<form name="sunday">
-				<p>日曜日</p>
+				<h5>日曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="sundayShopStatus" value="open"
 					onchange="postShopStatus('sunday','open')"> 営業日
@@ -49,7 +49,7 @@
 
 			<!-- 月曜日 -->
 			<form name="monday">
-				<p>月曜日</p>
+				<h5>月曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="mondayShopStatus" value="open"
 					onchange="postShopStatus('monday','open')"> 営業日
@@ -69,7 +69,7 @@
 
 			<!-- 火曜日 -->
 			<form name="tuesday">
-				<p>火曜日</p>
+				<h5>火曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="tuesdayShopStatus" value="open"
 					onchange="postShopStatus('tuesday','open')"> 営業日
@@ -89,7 +89,7 @@
 
 			<!-- 水曜日 -->
 			<form name="wednesday">
-				<p>水曜日</p>
+				<h5>水曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="wednesdayShopStatus" value="open"
 					onchange="postShopStatus('wednesday','open')"> 営業日
@@ -109,7 +109,7 @@
 
 			<!-- 木曜日 -->
 			<form name="thursday">
-				<p>木曜日</p>
+				<h5>木曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="thursdayShopStatus" value="open"
 					onchange="postShopStatus('thursday','open')"> 営業日
@@ -129,7 +129,7 @@
 
 			<!-- 金曜日 -->
 			<form name="friday">
-				<p>金曜日</p>
+				<h5>金曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="fridayShopStatus" value="open"
 					onchange="postShopStatus('friday','open')"> 営業日
@@ -149,7 +149,7 @@
 
 			<!-- 土曜日 -->
 			<form name="saturday">
-				<p>土曜日</p>
+				<h5>土曜日</h5>
 				<label class="radio"> <input type="radio"
 					name="saturdayShopStatus" value="open"
 					onchange="postShopStatus('saturday','open')"> 営業日
@@ -168,5 +168,6 @@
 			</form>
 		</div>
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>

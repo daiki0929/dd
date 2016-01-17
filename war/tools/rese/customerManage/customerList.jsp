@@ -7,7 +7,7 @@
 <head>
 <%-- META情報 --%>
 <%@ include file="/tools/rese/common/meta.jsp"%>
-<title>Index</title>
+<title>お客様一覧</title>
 <!-- css -->
 <%@ include file="/tools/rese/common/importCss.jsp"%>
 
@@ -34,7 +34,7 @@
 	   
 	   function filterCustomer(){
 		   var menuPageKey = $('select[name=rebuildSelect]').val();
-		   window.location.href = "/tools/rese/customerManage/customerList?id=" + menuPageKey;
+		   window.location.href = "/tools/rese/customerManage/customerList?p=" + menuPageKey;
 	   }
 	</script>
 </head>
@@ -42,11 +42,31 @@
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<div class="container">
 		<div id="content" class="span12">
-			<div class="span3" style="height: 500px; background-color: #f2f2f2;">
-				<div style="margin-left: 10px;">
+			<div class="span8">
+				<h3>顧客リスト</h3>
+				<p>顧客のリストです。名前をクリックすると、詳細ページを開くことが出来ます。</p>
+				<div class="button" style="margin-bottom: 20px;"><a href="#myModal" data-toggle="modal">追加する</a></div>
+				<c:forEach var="customer" items="${customerList}">
+					<div class="span2" style="border:2px solid #dedede; padding: 10px; margin-bottom:20px; position: relative;">
+						<p><a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">${customer.name}</a></p>
+						<div style="width:100%; height: 1px; background-color: #dedede;"></div>
+						<div style="margin-top: 10px;">
+							<p>${customer.phone}</p>
+							<p>${customer.mailaddress}</p>
+						</div>
+					</div>
+					<%-- <label class="checkbox inline hidden userCheck" style="float: left;">
+						<input type="checkbox" id="" value="${customer.key}" name="useId"> 追加
+					</label> --%>
+				</c:forEach>
+			</div>
+			<div class="span3" style="height: 300px; background-color: #f2f2f2;">
+				<div style="padding: 10px;">
 					<h5>顧客を検索する</h5>
-					<form action="">
-						<input type="text" placeholder="名前/メールアドレス/電話番号">
+					<p style="font-size: 0.9em;">携帯番号はハイフンを付けてご記入ください。</p>
+					<form action="/tools/rese/customerManage/customerList">
+						<input type="text" placeholder="名前/メールアドレス/電話番号" name="s" style="width: 80%; padding: 20px 0 20px 5px; float: left;">
+						<button type="submit" value="Search" style="background-color: #f8f8f8; border: 1px solid #dedede; width: 15%; height: 40px; margin-left: 5px;"><img src="/img/search.png" width="60%" style="padding: 5px 0 5px 0;"></button>
 					</form>
 					<h5>予約ページで絞り込む</h5>
 					<select name="rebuildSelect" onchange="filterCustomer();">
@@ -57,22 +77,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="span8">
-				<a href="#myModal" role="button" class="btn" data-toggle="modal">追加する</a>
-				<h3>お客様一覧</h3>
-				<c:forEach var="customer" items="${customerList}">
-					<a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">
-						<div class="span2" style="background-color: #f2f2f2;">
-							<p>${customer.name}</p>
-							<p>${customer.phone}</p>
-							<p>${customer.mailaddress}</p>
-						</div>
-					</a>
-					<label class="checkbox inline hidden userCheck" style="float: left;">
-						<input type="checkbox" id="" value="${customer.key}" name="useId"> 追加
-					</label>
-				</c:forEach>
-			</div>
+			<div class="span3" style="background-color: #000; height: 180px; margin-top: 20px;"></div>
 		</div>
 		
 		<div class="span12">
@@ -115,5 +120,6 @@
 			</form>
 		</div>
 	</div>
+	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>
 </html>
