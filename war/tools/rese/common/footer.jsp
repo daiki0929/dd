@@ -3,6 +3,9 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="f" uri="http://www.slim3.org/functions"%>
  
+ <p id="back-top">
+		<a href="#top"><span><img src="/img/toTop.png" width="60px" height="60px" alt="ページトップへ戻る" /></span></a>
+</p>
 <div id="footer">
     <div style="background-color: #bdc3c7; width: 100%; height: 3px;"></div>
     <div id="footerInner" class="container" style="padding: 25px 10px 0 10px;">

@@ -24,6 +24,21 @@
 			margin-top: 60px;
 		}
 	}
+	/*
+	Back to top button 
+	*/
+	#back-top {
+	    position: fixed;
+	    bottom: 3%;
+	    right: 3%;
+    }
+	#back-top span {
+	    width: 66px;
+	    height: 60px;
+	    display: block;
+    }
+	    
+	    
 	#footer{
 		width: 100%;
 		height: 100px;
@@ -50,7 +65,7 @@
 	  font-size: 18px;
 	  text-align: center;
 	  text-decoration: none;
-	  padding: 10px 0;
+	  padding: 5px 0;
 	  cursor: pointer;
 	}
 	.button a:hover {
@@ -79,7 +94,7 @@
 	  font-size: 18px;
 	  text-align: center;
 	  text-decoration: none;
-	  padding: 10px 0;
+	  padding: 5px 0;
 	  cursor: pointer;
 	}
 	.buttonMin-gray:hover {

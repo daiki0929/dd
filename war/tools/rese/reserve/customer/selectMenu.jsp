@@ -44,7 +44,7 @@
 	
 </script>
 </head>
-<body style="background-image: url('/img/rese/reserveBack.jpg'); no-repeat">
+<body style="background-image: url('/img/rese/sky.jpg'); no-repeat">
 	<div class="container" style="background-color: #fff;">
 		<div style="padding: 3%;">
 			<h2>${menuPage.pageTitle}</h2>

@@ -15,9 +15,9 @@
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 <style type="text/css">
 .link{
-	width: 220px;
+	width: 240px;
 	display: inline-block;
-	padding: 10px 15px;
+	padding: 5px 15px;
 	margin-right: 30px;
 	background-color: #f8f8f8;
 	float: left;
@@ -30,6 +30,14 @@ $(document).ready(function(){
 		  $(this).tab('show');
 		});
 });
+
+/**
+ * メニューページにアクセスします。
+ */
+function accessMenuPage(menuPageURL){
+	
+	window.open(menuPageURL, '_blank');
+}
 
 </script>
 </head>
@@ -52,10 +60,13 @@ $(document).ready(function(){
 				<div class="tab-content">
 				  <div class="tab-pane active" id="public">
 				  	<c:forEach var="menuPage" items="${openMenuPageList}">
-					  	<div style="width: 99%; border:1px solid #dedede; margin-left: 0; ">
+					  	<div style="width: 99%; border:1px solid #dedede; margin: 0 0 20px 0;">
 							<p style="background-color: #f2f2f2; padding: 10px 0 10px 10px">${menuPage.pageTitle}</p>
 							<!-- <img src="/img/link.png" style="float:left; padding: 0 5px 0 5px;" width="5%;"> -->
-							<p class="link">/r/${msUser.userPath}/${menuPage.pagePath}</p>
+							<div class="link">
+								<img alt="" src="/img/link2.png" width="28px;" style="cursor: pointer;" onclick="accessMenuPage('http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}');">
+								<input type="text" value="http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}" readonly="readonly" onclick="this.select()" style="padding: 15px 10px 15px 10px; margin-top:5px; cursor: default;"/>
+							</div>
 							<div style="margin-left: 10px;">
 								<p class="buttonMin-gray" style="display: inline-block; margin-right: 10px;">
 									<a href="/tools/rese/reserve/editMenuPage?id=${f:h(menuPage.key)}">メニューページ編集</a>

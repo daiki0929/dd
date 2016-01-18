@@ -8,6 +8,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.dto.ManageUserDto;
 import slim3.meta.customerManage.CustomerMeta;
+import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.service.datastore.AbstractDatastoreService;
 /**
@@ -17,7 +18,7 @@ import slim3.service.datastore.AbstractDatastoreService;
  */
 public class CustomerService extends AbstractDatastoreService{
     
-    private final static CustomerMeta MANAGE_USER_META = CustomerMeta.get();
+    private final static CustomerMeta CUSTOMER_META = CustomerMeta.get();
     
     /**
      * 重複しているかをチェックします。
@@ -28,8 +29,8 @@ public class CustomerService extends AbstractDatastoreService{
     public boolean duplicateMailAddress(String mailaddress, ManageUserDto manageUserDto){
         //登録済みチェック
         List<Customer> dupulicateUserList = Datastore
-            .query(MANAGE_USER_META)
-            .filter(MANAGE_USER_META.mailaddress.equal(mailaddress))
+            .query(CUSTOMER_META)
+            .filter(CUSTOMER_META.mailaddress.equal(mailaddress))
             .asList();
         for (Customer t : dupulicateUserList) {
             if (!t.getKey().equals(manageUserDto.getManageUserId())) {
@@ -46,6 +47,15 @@ public class CustomerService extends AbstractDatastoreService{
      */
     public Customer get(Key id){
         return dsService.getSingle(Customer.class, CustomerMeta.get(),id);
+    }
+    
+    /**
+     * MsUserで全てのカスタマーを取り出します。
+     * @param msUser
+     * @return
+     */
+    public List<Customer> getByMsUser(MsUser msUser){
+        return dsService.getList(Customer.class, CUSTOMER_META, null, CUSTOMER_META.MsUserRef.equal(msUser.getKey()));
     }
     
 }

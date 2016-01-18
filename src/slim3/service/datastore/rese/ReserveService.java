@@ -61,11 +61,11 @@ public class ReserveService extends AbstractDatastoreService{
             //②メニュー開始が当月末日より後
             if (reserveStartDateTime.isBefore(startDateTime)) {
                 if (reserveEndDateTime.isBefore(endDateTime)) {
-                    log.info("当月に該当しません。");
+//                    log.info("当月に該当しません。");
                     continue;
                 }
             }else if (reserveStartDateTime.isAfter(endDateTime)) {
-                log.info("当月に該当しません。");
+//                log.info("当月に該当しません。");
                 continue;
             }
             //一部だけ表示するパターン
@@ -73,28 +73,36 @@ public class ReserveService extends AbstractDatastoreService{
             //②メニュー開始が当月末日より前and終了が当月末日より後
             if (reserveStartDateTime.isBefore(startDateTime)) {
                 if (reserveEndDateTime.isAfter(startDateTime)) {
-                    log.info("一部だけ表示①");
+//                    log.info("一部だけ表示①");
                     //カレンダー開始からメニュー終了まで
                     menuDetail.put("title", reserve.getMenuTitle());
                     menuDetail.put("start", startDateTime.toString());
                     menuDetail.put("end", reserve.getEndTime().toString());
                     menuDetail.put("customerName", reserve.getCustomerName().toString());
-                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
-                    menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                    if (reserve.getCustomerMailaddress() != null) {
+                        menuDetail.put("customerMailadress", reserve.getCustomerMailaddress());
+                    }
+                    if (reserve.getCustomerPhone() != null) {
+                        menuDetail.put("customerPhone", reserve.getCustomerPhone());
+                    }
                     menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                     eventList.add(menuDetail);
                     continue;
                 }
             }else if (reserveStartDateTime.isBefore(endDateTime)) {
                 if (reserveEndDateTime.isAfter(endDateTime)) {
-                    log.info("一部だけ表示②");
+//                    log.info("一部だけ表示②");
                     //メニュー開始からカレンダー終了まで
                     menuDetail.put("title", reserve.getMenuTitle());
                     menuDetail.put("start", reserve.getStartTime().toString());
                     menuDetail.put("end", endDateTime.toString());
                     menuDetail.put("customerName", reserve.getCustomerName().toString());
-                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
-                    menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                    if (reserve.getCustomerMailaddress() != null) {
+                        menuDetail.put("customerMailadress", reserve.getCustomerMailaddress());
+                    }
+                    if (reserve.getCustomerPhone() != null) {
+                        menuDetail.put("customerPhone", reserve.getCustomerPhone());
+                    }
                     menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                     eventList.add(menuDetail);
                     continue;
@@ -104,33 +112,37 @@ public class ReserveService extends AbstractDatastoreService{
             //完全に表示するパターン
             //メニュー開始が当月初日より後or同じandメニュー終了が当月末日より前or同じ
             if (reserveStartDateTime.isAfter(startDateTime) || reserveStartDateTime.isEqual(startDateTime)) {
-                log.info("完全表示1");
+//                log.info("完全表示1");
                 menuDetail.put("title", reserve.getMenuTitle());
                 menuDetail.put("start", reserveStartDateTime.toString());
                 menuDetail.put("end", reserveEndDateTime.toString());
                 menuDetail.put("customerName", reserve.getCustomerName().toString());
-                log.info(reserve.getCustomerName().toString());
-                menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
-                log.info(reserve.getCustomerMailaddress().toString());
-                menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                if (reserve.getCustomerMailaddress() != null) {
+                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress());
+                }
+                if (reserve.getCustomerPhone() != null) {
+                    menuDetail.put("customerPhone", reserve.getCustomerPhone());
+                }
                 menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
-                log.info(reserve.getCustomerPhone().toString());
-                
                 eventList.add(menuDetail);
-                log.info("menuDetail.toString()：" + menuDetail.toString());
             }else if (reserveEndDateTime.isBefore(endDateTime) || reserveEndDateTime.isEqual(endDateTime)) {
-                log.info("完全表示2");
+//                log.info("完全表示2");
                 menuDetail.put("title", reserve.getMenuTitle());
                 menuDetail.put("start", reserve.getStartTime().toString());
                 menuDetail.put("end", reserve.getEndTime().toString());
                 menuDetail.put("customerName", reserve.getCustomerName().toString());
-                menuDetail.put("customerMailadress", reserve.getCustomerMailaddress().toString());
-                menuDetail.put("customerPhone", reserve.getCustomerPhone().toString());
+                if (reserve.getCustomerMailaddress() != null) {
+                    menuDetail.put("customerMailadress", reserve.getCustomerMailaddress());
+                }
+                if (reserve.getCustomerPhone() != null) {
+                    menuDetail.put("customerPhone", reserve.getCustomerPhone());
+                }
                 menuDetail.put("key", "#" + Datastore.keyToString(reserve.getKey()));
                 eventList.add(menuDetail);
             }
             
         }
+        log.info("イベントリストを返却します。");
         return eventList;
         
     }

@@ -47,10 +47,10 @@
 				<p>顧客のリストです。名前をクリックすると、詳細ページを開くことが出来ます。</p>
 				<div class="button" style="margin-bottom: 20px;"><a href="#myModal" data-toggle="modal">追加する</a></div>
 				<c:forEach var="customer" items="${customerList}">
-					<div class="span2" style="border:2px solid #dedede; padding: 10px; margin-bottom:20px; position: relative;">
+					<div class="span3" style="border:2px solid #dedede; padding: 10px; margin-bottom:20px; position: relative;">
 						<p><a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">${customer.name}</a></p>
 						<div style="width:100%; height: 1px; background-color: #dedede;"></div>
-						<div style="margin-top: 10px;">
+						<div style="margin-top: 10px; background-color: #f8f8f8; padding: 10px;">
 							<p>${customer.phone}</p>
 							<p>${customer.mailaddress}</p>
 						</div>
@@ -59,6 +59,7 @@
 						<input type="checkbox" id="" value="${customer.key}" name="useId"> 追加
 					</label> --%>
 				</c:forEach>
+				
 			</div>
 			<div class="span3" style="height: 300px; background-color: #f2f2f2;">
 				<div style="padding: 10px;">

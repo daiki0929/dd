@@ -71,6 +71,9 @@ public class Reserve extends AbstractModel {
     private Date startTime;
     //終了日時
     private Date endTime;
+    //予約を確定した日時
+    private Date noticeDate;
+    
     //TODO Customerに紐付けたので必要無し。ReserveServiceの修正必要
     private String customerName;
     private String customerMailaddress;
@@ -147,5 +150,13 @@ public class Reserve extends AbstractModel {
 
     public void setCustomerMailaddress(String customerMailaddress) {
         this.customerMailaddress = customerMailaddress;
+    }
+
+    public Date getNoticeDate() {
+        return noticeDate;
+    }
+
+    public void setNoticeDate(Date noticeDate) {
+        this.noticeDate = noticeDate;
     }
 }

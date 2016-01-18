@@ -42,6 +42,10 @@ table.company td {
     width: 360px;
     padding-left: 20px;
 }
+.customerForm{
+	border: none;
+	background-color: #f8f8f8;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -65,16 +69,16 @@ $(document).ready(function() {
 			<table class="company span8">
 			    <tbody>
 			        <tr>
-			            <th class="arrow_box">名前</div></th>
-			            <td>${customer.name}</td>
+			            <th class="arrow_box">名前</th>
+			            <td><input type="text" name="name" value="${customer.name}" style="padding: 10px;"></td>
 			        </tr>
 			        <tr>
 			            <th class="arrow_box">Mail</th>
-			            <td>${customer.mailaddress}</td>
+			            <td><input type="text" name="mailaddress" value="${customer.mailaddress}" style="padding: 10px;"></td>
 			        </tr>
 			        <tr>
-			            <th>TEL</th>
-			            <td>${customer.phone}</td>
+			            <th class="arrow_box">Phone</th>
+			            <td><input type="text" name="phone" value="${customer.phone}" style="padding: 10px;"></td>
 			        </tr>
 			    </tbody>
 			</table>

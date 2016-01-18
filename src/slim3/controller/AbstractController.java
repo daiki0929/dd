@@ -17,6 +17,7 @@ import org.slim3.util.ApplicationMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.appengine.api.utils.SystemProperty;
 
 import slim3.Const;
 import slim3.Const.RegexType;
@@ -414,6 +415,20 @@ public abstract class AbstractController extends Controller {
    protected Navigation returnResponse(JsonDto jsonDto) {
        byte[] bytes = toJson(jsonDto).getBytes(Charset.forName(Const.DEFAULT_CONTENT_TYPE));
        return write(bytes);
+   }
+   
+   /**
+    * 商用環境かどうかをチェックします。
+    *
+    * @param request
+    * @return
+    */
+   public boolean isCommerce(HttpServletRequest request) {
+       if(SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+           return true;
+       } else {
+           return false;
+       }
    }
     
 }

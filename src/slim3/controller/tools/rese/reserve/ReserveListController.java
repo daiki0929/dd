@@ -63,8 +63,8 @@ public class ReserveListController extends AbstractReseController {
             ArrayList<String> timeList = getReserveTime(reserveList);
             request.setAttribute("reserveList", reserveList);
             request.setAttribute("timeList", timeList);
+            request.setAttribute("menuPageList", menuPageList);
             request.setAttribute("allMenuList", allMenuList);
-            
             return forward("reserveList.jsp");
         }
         //キャッシュに無い場合
@@ -73,6 +73,7 @@ public class ReserveListController extends AbstractReseController {
         ArrayList<String> timeList = getReserveTime(reserveList);
         request.setAttribute("reserveList", reserveList);
         request.setAttribute("timeList", timeList);
+        request.setAttribute("menuPageList", menuPageList);
         request.setAttribute("allMenuList", allMenuList);
         //キャッシュに予約リストを保存
         Memcache.put(msUser.getMailaddress(), reserveList);

@@ -1,4 +1,4 @@
-package slim3.controller.tools.rese.reserve.customer;
+package slim3.controller.tools.rese.reserve;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -8,11 +8,13 @@ import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slim3.controller.Navigation;
+import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 import org.slim3.datastore.ModelRef;
 
 import com.google.appengine.api.datastore.Key;
 
+import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
 import slim3.meta.customerManage.CustomerMeta;
@@ -21,36 +23,68 @@ import slim3.model.customerManage.Customer;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
 import slim3.model.reserve.Reserve;
+import util.StringUtil;
 
 /**
- * メニュー予約完了後のコントローラです。
+ * 予約を作成するコントローラです。
  * @author uedadaiki
  *
  */
-public class DoneReserveController extends AbstractReseController {
+public class DoneCreateReserveController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
         
-        Key menuKey = asKey("menuKey");
-        Menu orderMenu = menuService.get(menuKey);
+        Validators v = new Validators(request);
+        validate(v, "orderMenu", 1, 50, false, null, null);
+        validate(v, "reserveDate", 1, 10, false, RegexType.YEAR_DATE, null);
+        validate(v, "reserveMoments", 1, 10, false, RegexType.MOMENTS, null);
+        validate(v, "customerName", 1, 20, false, null, null);
+        validate(v, "customerMailaddress", 1, 30, false, RegexType.MAIL_ADDRESS, null);
+        validate(v, "customerPhone", 1, 15, false, RegexType.PHONE, null);
         
-        ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
-        MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
-        Key msUserKey = menuPage.getMsUserRef().getKey();
-        //バリデートはConfirmReserveで行っています。
-        String reserveTime = asString("reserveTime");
-        String menuEndTime = asString("menuEndTime");
         String customerName = asString("customerName");
         String customerMailaddress = asString("customerMailaddress");
         String customerPhone = asString("customerPhone");
         
-        Date reserveDateTime = 
+        //登録済みの顧客を選択した場合
+        if (asKey("customerKey") != null) {
+            Key customerKey = asKey("customerKey");
+            Customer customer = customerService.get(customerKey);
+            customerName = customer.getName();
+            customerMailaddress = customer.getMailaddress();
+            customerPhone = customer.getPhone();
+        }
+        
+        String reserveDateStr = asString("reserveDate");
+        String reserveMoments = asString("reserveMoments");
+        //(例)2015/12/16 9:00
+        String reserveTime = String.format("%s %s", reserveDateStr,reserveMoments);
+        
+        Key menuKey = asKey("menuKey");
+        Menu orderMenu = menuService.get(menuKey);
+        
+        //メニュー終了時刻を計算します。
+        DateTime reserveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(reserveTime);
+        log.info("予約開始時刻：" + reserveDateTime.toString());
+        int menuTimeInt = Integer.parseInt(orderMenu.getTime());
+        log.info("メニューにかかる時間：" + Integer.toString(menuTimeInt/60) + "分");
+        //メニュー終了時刻
+        DateTime menuEndDateTime = reserveDateTime.plusMinutes(menuTimeInt/60);
+        String menuEndTimeStr = String.format("%s/%s/%s %s:%s", menuEndDateTime.getYear(), menuEndDateTime.getMonthOfYear(), menuEndDateTime.getDayOfMonth(), menuEndDateTime.getHourOfDay(), menuEndDateTime.getMinuteOfHour());
+        String parseMenuEndTime = StringUtil.parseRegex(menuEndTimeStr, ":[0-9]$", ":00");
+        String menuEndTime = parseMenuEndTime;
+        log.info("予約終了時刻：" + menuEndTime);
+        
+      
+        
+        //Date型に変更します。
+        Date reserveDate = 
                 DateTimeFormat
                 .forPattern("yyyy/MM/dd HH:mm")
                 .parseDateTime(reserveTime)
                 .toDate();
-        Date menuEndDateTime = 
+        Date menuEndDate = 
                 DateTimeFormat
                 .forPattern("yyyy/MM/dd HH:mm")
                 .parseDateTime(menuEndTime)
@@ -62,14 +96,20 @@ public class DoneReserveController extends AbstractReseController {
         customer.setPhone(customerPhone);
         customer.setMailaddress(customerMailaddress);
         
+        
+        //メニューからMsUserのkeyを取得します。
+        ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
+        MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
+        Key msUserKey = menuPage.getMsUserRef().getKey();
+        
         //予約を保存します。
         Reserve reserve = new Reserve();
         reserve.getMsUserRef().setKey(msUserKey);
         reserve.setMenuTitle(orderMenu.getTitle());
         reserve.setTime(orderMenu.getTime());
         reserve.setPrice(orderMenu.getPrice());
-        reserve.setStartTime(reserveDateTime);
-        reserve.setEndTime(menuEndDateTime);
+        reserve.setStartTime(reserveDate);
+        reserve.setEndTime(menuEndDate);
         reserve.setCustomerName(customerName);
         reserve.setCustomerMailaddress(customerMailaddress);
         reserve.setCustomerPhone(customerPhone);
@@ -85,9 +125,9 @@ public class DoneReserveController extends AbstractReseController {
         boolean repeater = false;
         for (Customer savedCustomer : CustomerList) {
             log.info("保存されてるメールアドレス：" + savedCustomer.getMailaddress());
-            if (savedCustomer.getMailaddress().equals(customerMailaddress)) {
+            Key savedCustomerKey = savedCustomer.getKey();
+            if (savedCustomerKey.equals(asKey("customerKey"))) {
                 log.info("リピーター客として保存します。");
-                Key savedCustomerKey = savedCustomer.getKey();
                 reserve.getCustomerRef().setKey(savedCustomerKey);
                 repeater = true;
                 break;
@@ -115,42 +155,9 @@ public class DoneReserveController extends AbstractReseController {
         DateTime now = new DateTime();
         reserve.setNoticeDate(now.toDate());
         
-        Datastore.put(reserve);
+        dsService.put(reserve);
         log.info(String.format("%s%s", customerName, "様の予約を保存しました"));
         
-        //メニューの時間
-        int menuTime = Integer.parseInt(orderMenu.getTime())/60;
-        //円をカンマ区切りに
-        NumberFormat nfNum = NumberFormat.getNumberInstance();  
-        String menuPrice = nfNum.format(orderMenu.getPrice());
-        //キャンセルのリンク
-        String menuPageKeyStr = Datastore.keyToString(menuPage.getKey());
-        String reserveKeyStr = Datastore.keyToString(reserve.getKey());
-        //ユーザー
-        MsUserMeta msUserMeta = MsUserMeta.get();
-        MsUser msUser = Datastore
-                .query(msUserMeta)
-                .filter(msUserMeta.key.equal(menuPage.getMsUserRef().getKey()))
-                .asSingle();
-        //顧客
-        String customerPath = customer.getCustomerPath();
-        
-        //TODO テスト環境用にしてます。
-        String cancelURL = String.format("%s%s%s%s", "http://localhost:8888/tools/rese/reserve/customer/cancel?menuPageKey=", menuPageKeyStr, "&reserveKey=", reserveKeyStr);
-        String customerContent = String.format("%s様\n\n以下の通り、ご予約が確定しました。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆キャンセル\n予約をキャンセルする場合はこちらのリンクから\n%s", customerName, orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, cancelURL);
-        String userContent = String.format("%s様\n\n予約が入りました。予約内容をご確認ください。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆予約者の情報\n%s様\n%s/%s", msUser.getName(), orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, customerName, "http://localhost:8888/c/customer", customerPath);
-        
-        
-        //admアカウントから送信します。
-        MsUser adm = msUserService.getSingleByEmail("reseinfomail@gmail.com");
-        
-        //TODO テスト環境用にしてます。
-        //カスタマーへのメール
-        googleService.sendMessage(adm, "0929dddd@gmail.com", null, "予約が確定しました", customerContent);
-        //ユーザーへのメール
-        googleService.sendMessage(adm, "0929dddd@gmail.com", null, "[Rese]予約が入りました", userContent);
-        
-        //重複予約しないようにリロードします。
-        return redirect("/finish");
+        return redirect("/tools/rese/reserve/reserveList");
     }
 }

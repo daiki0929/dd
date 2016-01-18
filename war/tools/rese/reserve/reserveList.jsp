@@ -13,6 +13,7 @@
 <link href="/css/fullCalendar/fullcalendar.min.css" rel="stylesheet">
 <link href="/css/tools/rese/common.css" rel="stylesheet">
 
+
 <%-- JSインポート --%>
 <script src="/js/fullCalendar/moment.min.js" type="text/javascript"></script>
 <script src="/js/moment/moment-timezone-with-data.js"></script>
@@ -24,8 +25,6 @@
 <script src="/js/fullCalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="/js/fullCalendar/ja.js" type="text/javascript"></script>
 <script src="/js/fullCalendar/gcal.js" type="text/javascript"></script>
-
-
 
 <style type="text/css">
 .fc-sun { color: #e74c3c; }  /* 日曜日 */
@@ -39,9 +38,10 @@
 		/* console.log("eventList" + JSON.stringify(eventList)); */
 		calendar = $('#calendar').fullCalendar({
 			header : {
-				left : 'prev,next today',
+				left : 'prev,next',
 				center : 'title',
-				right : 'month agendaWeek agendaDay'
+				right : '',
+				height: 700
 			},
 			eventClick : function(view) {
 				/* 予約詳細ページに飛ばす */
@@ -54,7 +54,8 @@
 		$('.fc-button-group .fc-next-button').attr("onClick","getMonthReserve();");
 		/* console.log($(".fc-content-skeleton .fc-sun:first").attr('data-date')); */
 		/* console.log($(".fc-content-skeleton .fc-sat:last").attr('data-date')); */
-	 	$.post("/tools/rese/reserve/getMonthReserveList", {
+	 	
+		$.post("/tools/rese/reserve/getMonthReserveList", {
 	 		'startDate' : $(".fc-content-skeleton .fc-sun:first").attr('data-date'),
 	 		'endDate' : $(".fc-content-skeleton .fc-sat:last").attr('data-date')
 	 	}, function(data){
@@ -162,6 +163,54 @@
 	 	}, 'json');
 	};
 	
+	/**
+	 * メニューを取得します。
+	 */
+	 var postUrl = "/tools/rese/reserve/getMenu";
+	 function getMenu(){
+		 deleteMenu();
+	 	var menuPageKey = $("select[name=menuPage]").val();
+	 	$.post(postUrl, {
+	 		'menuPageKey' : menuPageKey
+	 	}, function(data){
+	 		console.log(data);
+	 		switch(data.obj){
+	 		case null:
+	 			break;
+
+	 		default:
+	 			if(data.obj == null){
+					$('#menuSelect option').append("<option value='' disabled>選択できるメニューはありません。</option>");
+	 			}
+	 			$.each(data.obj,function(index,val){
+	 				console.log("ログ：" + data.obj.key);
+					$('#menuSelect').append("<option value=" + data.obj[index].key + ">" + data.obj[index].title);
+	 			});
+	 			break;
+	 		}
+	 	}, 'json');
+	 }
+	
+	//最上部までスクロール
+	$(document).ready(function() {
+		$(function() {
+			// scroll body to 0px on click
+			$('#back-top a').click(function() {
+				$('body,html').animate({
+					scrollTop : 0
+				}, 600);
+				return false;
+			});
+		});
+	});
+	
+	/**
+	  * 予約時間を削除します。
+	  */
+	 function deleteMenu(){
+		 $('#menuSelect option').remove();
+	 }
+	
 	
 </script>
 </head>
@@ -172,17 +221,18 @@
 			<div class="span8" style="height: 150px; margin-bottom: 20px;">
 				<h3>予約管理</h3>
 				<p>予約情報が自動で追加されます。カレンダーの予約情報をクリックすると、詳細を表示することが出来ます。</p>
-				<div class="button"><a href="">予約を記入する</a></div>
+				<div class="button"><a href="/tools/rese/reserve/createReserve">予約を記入する</a></div>
+				<!-- <div class="button"><a href="#createReserve" data-toggle="modal">予約を記入する</a></div> -->
 			</div>
 			<div class="span3" style="background-color: #000; height: 180px; margin-bottom: 20px;"></div>
-			<div id="calendar" class="span8" style="margin-bottom: 20px;"></div>
+			<div id="calendar" class="span8" style="margin-bottom: 20px; height: auto;"></div>
 			<div class="span3">
 				<div style="width: 100%; border-bottom: 1px solid #dedede; background-color: #dedede;">
 					<h4 style="padding: 10px 0 0 10px;">新規予約情報</h4>
 				</div>
 				<div style="padding:10px; background-color: #F8F8F8;">
-					<c:forEach var="reserve" items="${reserveList}" begin="1" end="5">
-						<p style="margin-bottom: 15px;"><a href="/tools/rese/customerManage/customerDetail?id=${f:h(reserve.customerRef.key)}">${reserve.customerName}</a> 様から予約が入りました。<br/><span class="newReserve">${reserve.startTime}</span></p>
+					<c:forEach var="reserve" items="${reserveList}" begin="0" end="4">
+						<p style="margin-bottom: 15px;"><a href="/tools/rese/customerManage/customerDetail?id=${f:h(reserve.customerRef.key)}">${reserve.customerName}</a> 様から予約が入りました。<br/><span class="newReserve">${reserve.noticeDate}</span></p>
 					</c:forEach>
 				</div>
 			</div>
@@ -201,11 +251,10 @@
 				    <input type="text" name="endTime" value="${reserve.endTime}" class="reserveTime">
 				    <h5>予約メニュー</h5>
 				    <p>${reserve.menuTitle}</p>
-					</select>
 				    <h5>メールアドレス</h5>
-				    <p>${reserve.customerMailaddress}</p>
+			    	<p>${reserve.customerMailaddress}</p>
 				    <h5>携帯番号</h5>
-				    <p>${reserve.customerPhone}</p>
+			    	<p>${reserve.customerPhone}</p>
 				  </div>
 				  <div class="modal-footer">
 				    <a><p data-dismiss="modal" aria-hidden="true" class="closeButton" style="float: left; margin-top: 10px; cursor: pointer;">☓ 閉じる</p></a>
@@ -214,6 +263,43 @@
 			  </form>
 			</div>
 		</c:forEach>
+		
+		<div id='createReserve' class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <form action="/tools/rese/reserve/createReserve" method="post">
+				  <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				  	<h4>予約の新規作成</h4>
+				  </div>
+				  <div class="modal-body">
+				    <h5>メニューページ</h5>
+				    <p>メニューページを選択してください。</p>
+			    	<select name="menuPage" onchange="getMenu();">
+						<option value="no">選択してください。
+						<c:forEach var="menuPage" items="${menuPageList}">
+							<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
+					    </c:forEach>
+					</select>
+					
+					<h5>メニュー</h5>
+				    <p>メニューを選択してください。</p>
+			    	<select name="menu" id="menuSelect">
+					</select>
+					
+					<h5>予約日時</h5>
+					<p>日程を選択してください。</p>
+					<input style="cursor:pointer; background-color: #fff;" id="calendar" type="text" placeholder="クリックしてください" onchange="calculate();" name="reserveDate">
+					<p>時間を選択してください。</p>
+					<select id="reserveMoments" name="reserveMoments" class="validate[required]">
+					</select>
+					
+					
+				  </div>
+				  <div class="modal-footer">
+				    <a><p data-dismiss="modal" aria-hidden="true" class="closeButton" style="float: left; margin-top: 10px; cursor: pointer;">☓ 閉じる</p></a>
+				  	<input type="submit" value="次へ">
+				  </div>
+			  </form>
+		</div>
 	</div>
 	<%@ include file="/tools/rese/common/footer.jsp"%>
 </body>

@@ -36,6 +36,16 @@
         $('.dropdown-toggle').dropdown();
     });
     // ]]>
+    
+	//最上部までスクロール
+	$(document).ready(function() {
+			$('#back-top a').click(function() {
+				$('body,html').animate({
+					scrollTop : 0
+				}, 600);
+				return false;
+			});
+		});
 </script>
 
 <script src="/js/wow.js"></script>

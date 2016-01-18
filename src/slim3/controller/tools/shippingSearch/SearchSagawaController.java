@@ -20,10 +20,12 @@ public class SearchSagawaController extends AbstractShippingSearchController {
         
         
         String inquiryNo = asString("inquiryNo");
+        inquiryNo.replaceAll("\r\n", "\n");
         String[] inquiryNoList = inquiryNo.split("\n");
         int length = inquiryNoList.length;
         if (length > 10) {
-            return returnResponse(createJsonDto(Const.JSON_STATUS_ERROR, "追跡番号は10個までです。", null)); 
+            //TODO ここでコード形式をチェックしてもいいかな？全角だったら半角に変えてあげたりしてやると新設だね
+            return returnResponse(createJsonDto(Const.JSON_STATUS_ERROR, "追跡番号は10個までです。", null));
         }
         
         log.info("問い合わせNo：" + inquiryNoList);

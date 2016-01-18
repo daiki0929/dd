@@ -55,6 +55,7 @@ public class GetMonthReserveListController extends AbstractReseController {
         log.info("開始日時" + startDateTime.toString());
         log.info("終了日時" + endDateTime.toString());
         
+        
         //期間を絞り込った予約リスト
         ArrayList<HashMap<String, String>> eventList = reserveService.getReserveByRange(reserveList, startDateTime, endDateTime);
         
