@@ -27,6 +27,7 @@ import slim3.model.reserve.Reserve;
  * @author uedadaiki
  *
  */
+//TODO DoReserve
 public class DoneReserveController extends AbstractReseController {
 
     @Override
@@ -34,6 +35,9 @@ public class DoneReserveController extends AbstractReseController {
         
         Key menuKey = asKey("menuKey");
         Menu orderMenu = menuService.get(menuKey);
+        //注文回数
+        orderMenu.setOrderNumber(orderMenu.getOrderNumber() + 1);
+        Datastore.put(orderMenu);
         
         ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
         MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
@@ -61,6 +65,9 @@ public class DoneReserveController extends AbstractReseController {
         customer.setName(customerName);
         customer.setPhone(customerPhone);
         customer.setMailaddress(customerMailaddress);
+        customer.setVisitNumber(customer.getVisitNumber() + 1);
+        customer.setTotalPayment(customer.getTotalPayment() + orderMenu.getPrice());
+        
         
         //予約を保存します。
         Reserve reserve = new Reserve();
@@ -114,7 +121,7 @@ public class DoneReserveController extends AbstractReseController {
         //予約確定日時を保存
         DateTime now = new DateTime();
         reserve.setNoticeDate(now.toDate());
-        
+        //TODO 被ってないかチェック
         Datastore.put(reserve);
         log.info(String.format("%s%s", customerName, "様の予約を保存しました"));
         
@@ -151,6 +158,7 @@ public class DoneReserveController extends AbstractReseController {
         googleService.sendMessage(adm, "0929dddd@gmail.com", null, "[Rese]予約が入りました", userContent);
         
         //重複予約しないようにリロードします。
+        //TODO 重複の確認(jsでもあり)
         return redirect("/finish");
     }
 }

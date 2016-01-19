@@ -7,15 +7,12 @@ import org.slim3.datastore.Datastore;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.MsUserMeta;
 import slim3.meta.customerManage.CustomerMeta;
 import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.model.reserve.MenuPage;
-import util.CookieUtil;
 /**
  * カスタマーを検索します。
  * @author uedadaiki

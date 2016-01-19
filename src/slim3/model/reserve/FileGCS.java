@@ -12,8 +12,6 @@ import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 
-import slim3.model.MsUser;
-
 @Model(schemaVersion = 1)
 /**
  * GCSに保存する画像ファイルのモデル

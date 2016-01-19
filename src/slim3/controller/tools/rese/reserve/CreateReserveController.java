@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.slim3.controller.Navigation;
 
-import com.google.appengine.api.datastore.Key;
-
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
-import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
 
 /**
@@ -33,12 +30,9 @@ public class CreateReserveController extends AbstractReseController {
             return forward("/tools/rese/comeAndGo/login");
         }
         
-//        Key menuPageKey = asKey("menuPageKey");
-//        List<Menu> menuList = menuService.getListByMenuPageKey(menuPageKey);
-//        MenuPage menuPage = menuPageService.get(menuPageKey);
-        //TODO ソートする
-        List<Customer> customerList = customerService.getByMsUser(msUser);
-        List<MenuPage> menuPageList = menuPageService.getByMsUser(msUser);
+        //TODO 名前順にソートする or リアルタイムで検索できるようにする
+        List<Customer> customerList = customerService.getByMsUser(msUser.getKey());
+        List<MenuPage> menuPageList = menuPageService.getByMsUser(msUser.getKey());
         
         request.setAttribute("customerList", customerList);
         request.setAttribute("menuPageList", menuPageList);

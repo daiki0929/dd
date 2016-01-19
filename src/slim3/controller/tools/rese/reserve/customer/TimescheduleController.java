@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 
 import org.joda.time.DateTime;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;

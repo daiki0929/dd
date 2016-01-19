@@ -28,7 +28,7 @@
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
 	<%-- <!-- エラーメッセージ -->
 	<%@ include file="/tools/rese/common/error.jsp"%> --%>
-	<div class="container">
+	<div class="container mainContent">
 		<div class="span12">
 			<div class="span8">
 				<h3>メニューページ作成</h3>

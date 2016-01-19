@@ -16,8 +16,8 @@
         <ul class="nav">
 			<li><a href="/tools/rese/reserve/reserveList" style="color:#fff;">予約管理</a></li>
 			<li><a href="/tools/rese/customerManage/customerList" style="color:#fff;">顧客リスト</a></li>
-			<li><a href="/tools/rese/reserve/menuPageList" style="color:#fff;">メニューページ</a></li>
-			<li><a href="#" style="color:#fff;">レポート</a></li>
+			<li><a href="/tools/rese/reserve/menuPageList" style="color:#fff;">ページ作成</a></li>
+			<li><a href="/tools/rese/report/chart" style="color:#fff;">レポート</a></li>
 			<li><a href="/tools/rese/setting" style="color:#fff;">管理者ページ</a></li>
         </ul>
         <ul class="nav pull-right">

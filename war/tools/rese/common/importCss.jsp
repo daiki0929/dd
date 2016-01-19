@@ -24,6 +24,24 @@
 			margin-top: 60px;
 		}
 	}
+	body{
+		 background-color: #f8f8f8;
+	}
+	.mainContent{
+		min-height: 400px;
+		background-color: #fff;
+	}
+	.sideBar{
+		margin-top: 30px;
+	}
+	.minTitle{
+		font-weight: bold;
+	}
+	.minTitleIcon{
+		width: 18px;
+		margin-right: 3px;
+		margin-top: -2px;
+	}
 	/*
 	Back to top button 
 	*/

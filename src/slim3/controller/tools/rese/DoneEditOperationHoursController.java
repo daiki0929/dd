@@ -10,10 +10,8 @@ import org.slim3.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
-import util.CookieUtil;
 /**
  * 店舗の営業日時の編集完了後のコントローラです。
  * 定休日と営業時間をJsonで保存します。
@@ -58,8 +56,6 @@ public class DoneEditOperationHoursController extends AbstractReseController {
         DateTime startDateTime = DateTimeFormat.forPattern("HH:mm").parseDateTime(startTime);
         DateTime endDateTime = DateTimeFormat.forPattern("HH:mm").parseDateTime(endTime);
         
-//        DateTime startDateTime = new DateTime(startTime);
-//        DateTime endDateTime = new DateTime(endTime);
         if (startDateTime.isAfter(endDateTime)) {
             log.info("開始時刻が終了時刻より後に設定されています。");
             return returnResponse(createJsonDto(Const.JSON_STATUS_ERROR, "開始時刻は終了時刻より前に設定してください。", "error"));
@@ -77,7 +73,6 @@ public class DoneEditOperationHoursController extends AbstractReseController {
         MsShop msShop = shopService.getByMsUserKey(msUserKey);
         ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         //曜日別のデータを取得
-//        HashMap<String, Object> weekMap = shopStatusByDays.get(daysOfTheWeek);
         ArrayMap<String, Object> weekMap = new ArrayMap<String, Object>();
         
         //データをMapに詰める

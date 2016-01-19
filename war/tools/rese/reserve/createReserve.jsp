@@ -182,7 +182,7 @@ $(function() {
 </head>
 <body>
 <%@ include file="/tools/rese/common/topBar.jsp"%>
-<div class="container">
+<div class="container mainContent">
 	<div class="span12">
 		<h3>予約の新規作成</h3>
 		<div class="span7">

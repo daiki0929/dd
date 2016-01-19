@@ -8,7 +8,6 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.dto.ManageUserDto;
 import slim3.meta.customerManage.CustomerMeta;
-import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.service.datastore.AbstractDatastoreService;
 /**
@@ -50,12 +49,12 @@ public class CustomerService extends AbstractDatastoreService{
     }
     
     /**
-     * MsUserで全てのカスタマーを取り出します。
+     * MsUserのKeyで全てのカスタマーを取り出します。
      * @param msUser
      * @return
      */
-    public List<Customer> getByMsUser(MsUser msUser){
-        return dsService.getList(Customer.class, CUSTOMER_META, null, CUSTOMER_META.MsUserRef.equal(msUser.getKey()));
+    public List<Customer> getByMsUser(Key msUserKey){
+        return dsService.getList(Customer.class, CUSTOMER_META, null, CUSTOMER_META.MsUserRef.equal(msUserKey));
     }
     
 }

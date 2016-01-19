@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.meta.reserve.MenuPageMeta;
-import slim3.model.MsUser;
 import slim3.model.reserve.MenuPage;
 import slim3.service.datastore.AbstractDatastoreService;
 /**
@@ -35,8 +34,8 @@ public class MenuPageService extends AbstractDatastoreService{
      * @param msUser
      * @return
      */
-    public List<MenuPage> getByMsUser(MsUser msUser){
-        return dsService.getList(MenuPage.class, MENUPAGE_META, null, MENUPAGE_META.msUserRef.equal(msUser.getKey()));
+    public List<MenuPage> getByMsUser(Key msUserKey){
+        return dsService.getList(MenuPage.class, MENUPAGE_META, null, MENUPAGE_META.msUserRef.equal(msUserKey));
     }
     
     

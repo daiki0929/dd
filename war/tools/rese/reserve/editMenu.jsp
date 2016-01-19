@@ -30,7 +30,7 @@
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<!-- エラーメッセージ -->
 		<%@ include file="/tools/rese/common/error.jsp"%>
 		<div class="span12">

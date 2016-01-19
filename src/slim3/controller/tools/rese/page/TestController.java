@@ -1,4 +1,4 @@
-package slim3.controller.tools.rese;
+package slim3.controller.tools.rese.page;
 
 import java.io.BufferedReader;
 import java.io.File;

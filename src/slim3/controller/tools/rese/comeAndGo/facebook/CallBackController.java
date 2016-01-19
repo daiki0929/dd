@@ -64,7 +64,7 @@ public class CallBackController extends AbstractReseController {
             Datastore.put(msUser);
               
             //店舗情報のデフォルト値を保存
-            MsShop shopDefaultHour = setShopDefaultService.setShopDefault(msUser);
+            MsShop shopDefaultHour = setShopDefault(msUser);
             Datastore.put(shopDefaultHour);
             
             log.info("名前/メールアドレス記入フォームへ移動します。");

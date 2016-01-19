@@ -25,6 +25,7 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
+//TODO それぞれをメソッドにして、管理しやすいようにする。
 public class CalculateTimeController extends AbstractReseController {
 
     @Override

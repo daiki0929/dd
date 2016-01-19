@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.slim3.controller.Navigation;
 import org.slim3.datastore.Datastore;
-import org.slim3.datastore.ModelRef;
-
-import com.google.appengine.api.datastore.Key;
 
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
@@ -20,20 +17,13 @@ import slim3.model.reserve.MenuPage;
  * @author uedadaiki
  *
  */
+//TODO showmenuなど
 public class SelectMenuController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
         
         String pagePath = asString("pagePath");
-//        String userPath = asString("userPath");
-        
-//        
-//        if (pagePath == null) {
-//            log.info("メニューページのkeyを取得出来ませんでした。");
-//            return forward("/tools/rese/reserve/createMenuPage.jsp");
-//        }
-//        
 
         MenuPageMeta menuPageMeta = MenuPageMeta.get();
         MenuPage menuPage = Datastore
@@ -47,9 +37,6 @@ public class SelectMenuController extends AbstractReseController {
                 .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
                 .asList();
         
-        //ユーザーID
-//        ModelRef<MsUser> msUser = menuPage.getMsUserRef();
-//        Key msUserKey = msUser.getKey();
         MsUserMeta msUserMeta = MsUserMeta.get();
         MsUser msUser = Datastore
                 .query(msUserMeta)

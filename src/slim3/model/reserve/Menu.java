@@ -57,9 +57,13 @@ public class Menu extends AbstractModel {
         public String getStatus(){
             return value;
         }
-     
-        
     }
+    
+    /**
+     * レポート用 
+     */
+    //注文回数
+    private int orderNumber;
     
 
     public String getTitle() {
@@ -117,5 +121,13 @@ public class Menu extends AbstractModel {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }

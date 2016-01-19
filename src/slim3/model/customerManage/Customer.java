@@ -83,6 +83,14 @@ public class Customer implements Serializable {
     private String sex;
     private String customerPath;
     
+    /**
+     * レポート用
+     */
+    //来店回数
+    private int visitNumber;
+    //支払い金額
+    private int totalPayment;
+    
     
     
     
@@ -212,6 +220,22 @@ public class Customer implements Serializable {
 
     public void setCustomerPath(String customerPath) {
         this.customerPath = customerPath;
+    }
+
+    public int getVisitNumber() {
+        return visitNumber;
+    }
+
+    public void setVisitNumber(int visitNumber) {
+        this.visitNumber = visitNumber;
+    }
+
+    public int getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(int totalPayment) {
+        this.totalPayment = totalPayment;
     }
 
 

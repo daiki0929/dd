@@ -14,8 +14,6 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.exception.MyException;
-import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 import util.CookieUtil;
@@ -29,21 +27,6 @@ public class CallBackController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
-//        // 認証
-//        if(!authService.isMsAuth(request, msUserDto, null)) {
-//            throw new MyException("認証情報が存在しません。");
-//        }
-//
-//        Validators validators = new Validators(request);
-//        validate(validators, "state", 1, 200, true, null, null);
-//        if(errors.size() != 0) {
-//            showParametor(request);
-//            return returnResponse(errors);
-//        }
-//        MsUser msUser = msUserService.get(KeyFactory.stringToKey(asString("state")));
-//        if(msUser == null) {
-//            throw new MyException("bmMwsProperty is null");
-//        }
 
         // 認可コードを取得
         String code = request.getParameter("code");
@@ -62,7 +45,7 @@ public class CallBackController extends AbstractReseController {
             
             //===========================================
             // 既に登録済み(ログイン)
-            //同じリフレッシュトークンを持つユーザーがいるか調べます。
+            //TODO 同じリフレッシュトークンを持つユーザーがいるか調べます。
 //            MsUserMeta msUserMeta = MsUserMeta.get();
 //            MsUser msUser = Datastore
 //                    .query(msUserMeta)
@@ -72,9 +55,7 @@ public class CallBackController extends AbstractReseController {
 
             if(sameMsUser != null) {
                 log.info("既に登録済みでした。新しいアクセストークンを保存します。");
-//                msUser.setGmailAddress(sameMsUser.getGmailAddress());
                 sameMsUser.setGmailAccessToken(credential.getAccessToken());
-//                msUser.setGmailRefleshToken(sameMsUser.getGmailRefleshToken());
                 dsService.put(sameMsUser);
                 
                 log.info("クッキーを保存します");
@@ -139,7 +120,7 @@ public class CallBackController extends AbstractReseController {
             dsService.put(newMsUser);
             
             //店舗情報のデフォルト値を保存
-            MsShop shopDefaultHour = setShopDefaultService.setShopDefault(newMsUser);
+            MsShop shopDefaultHour = setShopDefault(newMsUser);
             dsService.put(shopDefaultHour);
             
             //TODO 保存後すぐに取得するとエラーになるので書いてます。

@@ -50,6 +50,7 @@ public class Const {
     public static final String[] DAYS_OF_THE_WEEK = {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
     
     
+    
     // ================================
     // 入力チェック正規表現
     /**
@@ -168,7 +169,8 @@ public class Const {
      *
      */
     public static enum FbCallbackEnum{
-        Rese("http://localhost:8888/tools/rese/comeAndGo/facebook/callBack");
+        Rese_TEST("http://localhost:8888/tools/rese/comeAndGo/facebook/callBack"),
+        Rese("http://dd01-1142.appspot.com/tools/rese/comeAndGo/facebook/callBack");
         
         private final String callbackURL;
         
@@ -214,7 +216,8 @@ public class Const {
      *
      */
     public static enum TwCallbackEnum{
-        Rese("http://127.0.0.1:8888/tools/rese/comeAndGo/twitter/CallBack");
+        Rese_TEST("http://127.0.0.1:8888/tools/rese/comeAndGo/twitter/CallBack"),
+        Rese("http://dd01-1142.appspot.com/tools/rese/comeAndGo/twitter/CallBack");
         
         private final String callbackURL;
         private TwCallbackEnum(final String callbackURL){

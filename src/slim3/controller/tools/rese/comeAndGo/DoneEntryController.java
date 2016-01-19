@@ -12,7 +12,6 @@ import slim3.Const;
 import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.exception.MyException;
-import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
 import util.Base64Util;
@@ -90,7 +89,7 @@ public class DoneEntryController extends AbstractReseController {
         Datastore.put(msUser);
         
         //店舗情報のデフォルト値を保存
-        MsShop shopDefaultHour = setShopDefaultService.setShopDefault(msUser);
+        MsShop shopDefaultHour = setShopDefault(msUser);
         Datastore.put(shopDefaultHour);
         
         return redirect("/tools/rese/reserve/reserveList");

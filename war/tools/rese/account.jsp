@@ -19,7 +19,7 @@
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<div class="span12">
 			<form action="/tools/rese/doneEditAcount">
 				<h2>アカウント情報</h2>

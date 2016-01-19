@@ -29,194 +29,22 @@
 <style type="text/css">
 .fc-sun { color: #e74c3c; }  /* 日曜日 */
 .fc-sat { color: #2980b9; } /* 土曜日 */
+
+.fc-button{
+	border: 1px solid #dedede;
+	color: #000;
+}
+.fc-next-button{
+	margin-left: 5px;
+	padding-left: 5px;
+}
 </style>
-<script type="text/javascript">
-	var eventList = [];
-	var calendar;
-	//今月の予約情報を取得します。
-	$(document).ready(function() {
-		/* console.log("eventList" + JSON.stringify(eventList)); */
-		calendar = $('#calendar').fullCalendar({
-			header : {
-				left : 'prev,next',
-				center : 'title',
-				right : '',
-				height: 700
-			},
-			eventClick : function(view) {
-				/* 予約詳細ページに飛ばす */
-				/* alert('ビュー表示イベント ' + view.title); */
-			},
-			timeFormat : 'H:mm',
-			eventSources : [eventList]
-		});
-		$('.fc-button-group .fc-prev-button').attr("onClick","getMonthReserve();");
-		$('.fc-button-group .fc-next-button').attr("onClick","getMonthReserve();");
-		/* console.log($(".fc-content-skeleton .fc-sun:first").attr('data-date')); */
-		/* console.log($(".fc-content-skeleton .fc-sat:last").attr('data-date')); */
-	 	
-		$.post("/tools/rese/reserve/getMonthReserveList", {
-	 		'startDate' : $(".fc-content-skeleton .fc-sun:first").attr('data-date'),
-	 		'endDate' : $(".fc-content-skeleton .fc-sat:last").attr('data-date')
-	 	}, function(data){
-	 		switch(data.obj){
-	 		case null:
-	 			alert("読み込みに失敗しました");
-	 			break;
-
-	 		default:
-	 			/* console.log(data.obj); */
-	 			var eventsThisMonth = {};
-	 			$.each(data.obj, function(index, val){
-		 			var event = {
-						title : data.obj[index].customerName,
-						start : data.obj[index].start,
-						end : data.obj[index].end,
-						url : data.obj[index].key
-					}
-	 				/* console.log(data.obj[index].key); */
-		 			
-		 			eventsThisMonth["event"] = event;
-	 				eventList.push(eventsThisMonth.event);
-	 			});
-	 			$('#calendar').fullCalendar('addEventSource', eventList);
- 				$('#calendar').fullCalendar('refetchEvents');
- 				$('.fc-day-grid-event').attr("data-toggle", "modal");
- 				$('.fc-day-grid-event').attr("role", "button");
-	 		break;
-	 		}
-	 	}, 'json');
-	 	
-	 	//予約日時のフォーマットを変更します。 
-	 	$(".reserveTime").each(function(index, element){
-		 	var m = moment($(element).val(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
-		 	var output = m.format('MM月DD日 HH:mm');
-		 	$(element).text(output);
-		 	$(element).attr("value", output);
-		 	/* $(element).append("<input type='text' name='startTime' value='${reserve.startTime}' class='reserveTime'>"); */
-	 	});
-	 	
-	 	//新規予約日時のフォーマットを変更します。 
-	 	$(".newReserve").each(function(index, element){
-		 	var m = moment($(element).text(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
-		 	var output = m.format('MM月DD日 HH:mm');
-		 	$(element).text(output);
-	 	});
-	});
-	
-	
-	//1月の予約情報を取得します。
-	function getMonthReserve(){
-		/* console.log($(".fc-content-skeleton .fc-sun:first").attr('data-date'));
-		console.log($(".fc-content-skeleton .fc-sat:last").attr('data-date')); */
-		var monthEventList = [];
-		/* var eventArray = {}; */
-		eventList.splice(0, eventList.length);
-		$.post("/tools/rese/reserve/getMonthReserveList", {
-	 		'startDate' : $(".fc-content-skeleton .fc-sun:first").attr('data-date'),
-	 		'endDate' : $(".fc-content-skeleton .fc-sat:last").attr('data-date')
-	 	}, function(data){
-	 		switch(data.obj){
-	 		case null:
-	 			alert("読み込みに失敗しました");
-	 			break;
-
-	 		default:
-	 			console.log(data.obj);
- 				var eventArray = {};
-	 			$('#calendar').fullCalendar('removeEvents');
- 				$.each(data.obj, function(index, val){
-	 			var event = {
-					title : data.obj[index].customerName,
-					start : data.obj[index].start,
-					end : data.obj[index].end
-				}
-	 			eventArray["event"] = event;
-	 			monthEventList.push(eventArray.event);
- 				});
- 				$('#calendar').fullCalendar('addEventSource', monthEventList);
- 				$('#calendar').fullCalendar('refetchEvents');
-	 		break;
-	 		}
-	 	}, 'json');
-	};
-	
-	
-	function editReserve(reservKey){
-		var startTime = $('#' + reservKey +' form input[name=startTime]').val();
-		var endTime = $('#' + reservKey +' form input[name=endTime]').val();
-		
-		$.post("/tools/rese/reserve/doneEditReserve", {
-	 		'startDate' : startDate,
-	 		'endDate' : endDate,
-	 	}, function(data){
-	 		switch(data.obj){
-	 		case null:
-	 			alert("読み込みに失敗しました");
-	 			break;
-
-	 		default:
-	 			console.log(data.obj);
-	 			$('#' + data.obj +' form .closeButton').prepend("<p style='color:red;' class='saveMsg'>保存しました</p>");
-	 		break;
-	 		}
-	 	}, 'json');
-	};
-	
-	/**
-	 * メニューを取得します。
-	 */
-	 var postUrl = "/tools/rese/reserve/getMenu";
-	 function getMenu(){
-		 deleteMenu();
-	 	var menuPageKey = $("select[name=menuPage]").val();
-	 	$.post(postUrl, {
-	 		'menuPageKey' : menuPageKey
-	 	}, function(data){
-	 		console.log(data);
-	 		switch(data.obj){
-	 		case null:
-	 			break;
-
-	 		default:
-	 			if(data.obj == null){
-					$('#menuSelect option').append("<option value='' disabled>選択できるメニューはありません。</option>");
-	 			}
-	 			$.each(data.obj,function(index,val){
-	 				console.log("ログ：" + data.obj.key);
-					$('#menuSelect').append("<option value=" + data.obj[index].key + ">" + data.obj[index].title);
-	 			});
-	 			break;
-	 		}
-	 	}, 'json');
-	 }
-	
-	//最上部までスクロール
-	$(document).ready(function() {
-		$(function() {
-			// scroll body to 0px on click
-			$('#back-top a').click(function() {
-				$('body,html').animate({
-					scrollTop : 0
-				}, 600);
-				return false;
-			});
-		});
-	});
-	
-	/**
-	  * 予約時間を削除します。
-	  */
-	 function deleteMenu(){
-		 $('#menuSelect option').remove();
-	 }
-	
-	
-</script>
+<!-- 予約リストに関するjs -->
+<%@ include file="/tools/rese/common/reserveListJs.jsp"%>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<div class="span12">
 			<div class="span8" style="height: 150px; margin-bottom: 20px;">
 				<h3>予約管理</h3>
@@ -224,13 +52,11 @@
 				<div class="button"><a href="/tools/rese/reserve/createReserve">予約を記入する</a></div>
 				<!-- <div class="button"><a href="#createReserve" data-toggle="modal">予約を記入する</a></div> -->
 			</div>
-			<div class="span3" style="background-color: #000; height: 180px; margin-bottom: 20px;"></div>
+			<div class="span3" style="background-color: #000; height: 180px; margin-bottom: 20px; margin-top: 20px;"></div>
 			<div id="calendar" class="span8" style="margin-bottom: 20px; height: auto;"></div>
-			<div class="span3">
-				<div style="width: 100%; border-bottom: 1px solid #dedede; background-color: #dedede;">
-					<h4 style="padding: 10px 0 0 10px;">新規予約情報</h4>
-				</div>
-				<div style="padding:10px; background-color: #F8F8F8;">
+			<div class="span3" style="border: 1px solid #dedede;">
+				<p class="minTitle" style="padding: 10px 0 10px 10px; background-color: #ecf0f1;"><img alt="" src="/img/letter.png" class="minTitleIcon">新規予約情報</p>
+				<div style="padding:0 10px 10px 10px;">
 					<c:forEach var="reserve" items="${reserveList}" begin="0" end="4">
 						<p style="margin-bottom: 15px;"><a href="/tools/rese/customerManage/customerDetail?id=${f:h(reserve.customerRef.key)}">${reserve.customerName}</a> 様から予約が入りました。<br/><span class="newReserve">${reserve.noticeDate}</span></p>
 					</c:forEach>

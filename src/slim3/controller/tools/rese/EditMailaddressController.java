@@ -31,25 +31,6 @@ public class EditMailaddressController extends AbstractReseController {
             return null;
         }
         
-        
-        MsUserMeta msUserMeta = MsUserMeta.get();
-        //TODO 質問：msUserDto.getMsUser()でフィルターをかけて取り出せますか？kitazawa ココで取り出したものと、 msUserDto.getMsUser()って一緒じゃない？
-        try {
-            MsUser msUser = Datastore
-                    .query(msUserMeta)
-                    .filter(msUserMeta.userId.equal(cookie))
-                    .asSingle();
-            if (msUser == null) {
-                log.info("MsUserに存在しません。");
-                return null;
-            }
-
-            //ユーザー情報
-            request.setAttribute("msUser", msUser);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return forward("editMailaddress.jsp");
     }
 }

@@ -40,15 +40,15 @@
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<div id="content" class="span12">
-			<div class="span8">
+			<div class="span8" style="border-right: 1px solid #dedede; margin-top: 20px;">
 				<h3>顧客リスト</h3>
 				<p>顧客のリストです。名前をクリックすると、詳細ページを開くことが出来ます。</p>
 				<div class="button" style="margin-bottom: 20px;"><a href="#myModal" data-toggle="modal">追加する</a></div>
 				<c:forEach var="customer" items="${customerList}">
 					<div class="span3" style="border:2px solid #dedede; padding: 10px; margin-bottom:20px; position: relative;">
-						<p><a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">${customer.name}</a></p>
+						<p><img alt="" src="/img/login-human.png" class="minTitleIcon"><a href="/tools/rese/customerManage/customerDetail?id=${f:h(customer.key)}">${customer.name}</a></p>
 						<div style="width:100%; height: 1px; background-color: #dedede;"></div>
 						<div style="margin-top: 10px; background-color: #f8f8f8; padding: 10px;">
 							<p>${customer.phone}</p>
@@ -61,22 +61,21 @@
 				</c:forEach>
 				
 			</div>
-			<div class="span3" style="height: 300px; background-color: #f2f2f2;">
-				<div style="padding: 10px;">
-					<h5>顧客を検索する</h5>
-					<p style="font-size: 0.9em;">携帯番号はハイフンを付けてご記入ください。</p>
-					<form action="/tools/rese/customerManage/customerList">
-						<input type="text" placeholder="名前/メールアドレス/電話番号" name="s" style="width: 80%; padding: 20px 0 20px 5px; float: left;">
-						<button type="submit" value="Search" style="background-color: #f8f8f8; border: 1px solid #dedede; width: 15%; height: 40px; margin-left: 5px;"><img src="/img/search.png" width="60%" style="padding: 5px 0 5px 0;"></button>
-					</form>
-					<h5>予約ページで絞り込む</h5>
-					<select name="rebuildSelect" onchange="filterCustomer();">
-						<option value="">指定なし
-						<c:forEach var="menuPage" items="${menuPageList}">
-							<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
-						</c:forEach>
-					</select>
-				</div>
+			<div class="span3" style="height: 300px; margin-top: 20px;">
+				<p class="minTitle" style="background-color: #ecf0f1; padding: 5px 0"><img alt="" src="/img/search.png" class="minTitleIcon" style="margin-left: 10px;">顧客を検索する</p>
+				<p style="font-size: 0.9em;">携帯番号はハイフンを付けてご記入ください。</p>
+				<form action="/tools/rese/customerManage/customerList">
+					<input type="text" placeholder="名前/メールアドレス/電話番号" name="s" style="width: 80%; padding: 20px 0 20px 5px; float: left;">
+					<button type="submit" value="Search" style="background-color: #f8f8f8; border: 1px solid #dedede; width: 15%; height: 40px; margin-left: 5px;"><img src="/img/search.png" width="60%" style="padding: 5px 0 5px 0;"></button>
+				</form>
+				
+				<p class="minTitle" style="background-color: #ecf0f1; padding: 5px 0"><img alt="" src="/img/note.png" class="minTitleIcon" style="margin-left: 10px;">予約ページで絞り込む</p>
+				<select name="rebuildSelect" onchange="filterCustomer();">
+					<option value="">指定なし
+					<c:forEach var="menuPage" items="${menuPageList}">
+						<option value="${f:h(menuPage.key)}">${menuPage.pageTitle}
+					</c:forEach>
+				</select>
 			</div>
 			<div class="span3" style="background-color: #000; height: 180px; margin-top: 20px;"></div>
 		</div>

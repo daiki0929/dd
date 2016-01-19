@@ -6,12 +6,9 @@ import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
 
-import slim3.Const;
 import slim3.meta.MsShopMeta;
-import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
-import util.CookieUtil;
 /**
  * 定休日・営業時間の編集画面を表示します。
  * @author uedadaiki

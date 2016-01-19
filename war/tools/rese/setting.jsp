@@ -7,7 +7,7 @@
 <head>
 <%-- META情報 --%>
 <%@ include file="/tools/rese/common/meta.jsp"%>
-<title>会員登録ページ</title>
+<title>管理者ページ</title>
 <!-- css -->
 <%@ include file="/tools/rese/common/importCss.jsp"%>
 
@@ -19,7 +19,7 @@
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<div class="span12">
 			<h2>管理者ページ</h2>
 			<p>

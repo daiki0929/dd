@@ -52,7 +52,7 @@ public class DoneEntryBySNSController extends AbstractReseController {
         log.info("名前/メールアドレスを保存しました。");
         
         //店舗情報のデフォルト値を保存
-        MsShop shopDefaultHour = setShopDefaultService.setShopDefault(msUser);
+        MsShop shopDefaultHour = setShopDefault(msUser);
         dsService.put(shopDefaultHour);
         
         return forward("/tools/rese/reserve/reserveList");

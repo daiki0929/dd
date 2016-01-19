@@ -14,6 +14,7 @@ import slim3.model.reserve.Menu.Status;
  * @author uedadaiki
  *
  */
+//TODO switchStatusとか作る。１つに出来る。
 public class DoPublicMenuController extends AbstractReseController {
 
     @Override

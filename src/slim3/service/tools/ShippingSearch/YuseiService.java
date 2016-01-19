@@ -1,6 +1,7 @@
 package slim3.service.tools.ShippingSearch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -55,6 +56,7 @@ public class YuseiService {
      * @return
      */
     public Connection createConnection(String inquiryNO){
+        //TODO Arrays.asList()で、下のメソッドを呼ぶ。
         //クッキーを作成します。
         createCookie();
 
@@ -69,6 +71,7 @@ public class YuseiService {
                 .cookies(cookies)
                 .method(Method.GET)
                 .timeout(10000);
+        //TODO 共通のところをprivateのメソッドで詰めるようにする。
     }
     
     /**

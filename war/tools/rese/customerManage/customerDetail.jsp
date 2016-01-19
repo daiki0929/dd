@@ -60,7 +60,7 @@ $(document).ready(function() {
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container">
+	<div class="container mainContent">
 		<div class="span12">
 			<div class="span8">
 			<h3>お客様情報</h3>
@@ -83,7 +83,7 @@ $(document).ready(function() {
 			    </tbody>
 			</table>
 			<div class="span3" style="background-color: #000; height: 200px;"></div>
-			<div class="span8" style="background-color: #f8f8f8;">
+			<div class="span8" style="background-color: #f8f8f8; margin-bottom: 30px;">
     		   <div style="width: 100%; background-color: #295890; margin-bottom: 10px;">
     		   		<div style=" padding: 8px;">
     		   			<h5 style="color:#fff; font-weight: lighter;">来店履歴</h5>

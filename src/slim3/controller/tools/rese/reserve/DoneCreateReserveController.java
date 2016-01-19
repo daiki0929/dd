@@ -1,6 +1,5 @@
 package slim3.controller.tools.rese.reserve;
 
-import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -16,9 +15,7 @@ import com.google.appengine.api.datastore.Key;
 
 import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.MsUserMeta;
 import slim3.meta.customerManage.CustomerMeta;
-import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
@@ -63,6 +60,9 @@ public class DoneCreateReserveController extends AbstractReseController {
         
         Key menuKey = asKey("menuKey");
         Menu orderMenu = menuService.get(menuKey);
+        //注文回数
+        orderMenu.setOrderNumber(orderMenu.getOrderNumber() + 1);
+        Datastore.put(orderMenu);
         
         //メニュー終了時刻を計算します。
         DateTime reserveDateTime = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm").parseDateTime(reserveTime);
@@ -95,7 +95,8 @@ public class DoneCreateReserveController extends AbstractReseController {
         customer.setName(customerName);
         customer.setPhone(customerPhone);
         customer.setMailaddress(customerMailaddress);
-        
+        customer.setVisitNumber(customer.getVisitNumber() + 1);
+        customer.setTotalPayment(customer.getTotalPayment() + orderMenu.getPrice());
         
         //メニューからMsUserのkeyを取得します。
         ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();

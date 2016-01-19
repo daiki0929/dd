@@ -15,10 +15,12 @@
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 <style type="text/css">
 .link{
-	width: 240px;
+	width: 35%;
+	min-width: 210px;;
 	display: inline-block;
 	padding: 5px 15px;
 	margin-right: 30px;
+	margin-left: 10px;
 	background-color: #f8f8f8;
 	float: left;
 }
@@ -43,7 +45,7 @@ function accessMenuPage(menuPageURL){
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-	<div class="container" style="min-height: 500px;">
+	<div class="container mainContent" style="min-height: 500px;">
 		<div class="span12">
 			<div class="span12" style="margin-bottom: 20px;">
 				<h3>メニューページの一覧</h3>
@@ -64,7 +66,7 @@ function accessMenuPage(menuPageURL){
 							<p style="background-color: #f2f2f2; padding: 10px 0 10px 10px">${menuPage.pageTitle}</p>
 							<!-- <img src="/img/link.png" style="float:left; padding: 0 5px 0 5px;" width="5%;"> -->
 							<div class="link">
-								<img alt="" src="/img/link2.png" width="28px;" style="cursor: pointer;" onclick="accessMenuPage('http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}');">
+								<img alt="" src="/img/link2.png" width="28px;" style="cursor: pointer; margin-top: -2px;" onclick="accessMenuPage('http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}');">
 								<input type="text" value="http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}" readonly="readonly" onclick="this.select()" style="padding: 15px 10px 15px 10px; margin-top:5px; cursor: default;"/>
 							</div>
 							<div style="margin-left: 10px;">

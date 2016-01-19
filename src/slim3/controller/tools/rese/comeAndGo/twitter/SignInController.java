@@ -13,7 +13,12 @@ public class SignInController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {
+        
         String callbackURL = Const.TwCallbackEnum.Rese.getCallbackURL();
+        if (isCommerce(request)) {
+            callbackURL = Const.TwCallbackEnum.Rese_TEST.getCallbackURL();
+        }
+        
         log.info("callbackURL：" + callbackURL);
         twitterService.signIn(request, response, callbackURL, Const.TWAPI.Rese);
         
