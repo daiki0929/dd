@@ -48,6 +48,6 @@ public class MenuPageListController extends AbstractReseController {
         request.setAttribute("closedMenuPageList", closedMenuPageList);
         
         
-        return forward("menuPageList.jsp");
+        return forward("/tools/rese/dashboard/reserve/menuPageList.jsp");
     }
 }

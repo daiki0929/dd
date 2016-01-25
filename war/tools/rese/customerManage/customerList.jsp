@@ -61,7 +61,7 @@
 				</c:forEach>
 				
 			</div>
-			<div class="span3" style="height: 300px; margin-top: 20px;">
+			<div class="span3" style="height: 230px; margin-top: 20px;">
 				<p class="minTitle" style="background-color: #ecf0f1; padding: 5px 0"><img alt="" src="/img/search.png" class="minTitleIcon" style="margin-left: 10px;">顧客を検索する</p>
 				<p style="font-size: 0.9em;">携帯番号はハイフンを付けてご記入ください。</p>
 				<form action="/tools/rese/customerManage/customerList">
@@ -77,7 +77,7 @@
 					</c:forEach>
 				</select>
 			</div>
-			<div class="span3" style="background-color: #000; height: 180px; margin-top: 20px;"></div>
+			<%@ include file="/tools/rese/common/ad.jsp"%>
 		</div>
 		
 		<div class="span12">

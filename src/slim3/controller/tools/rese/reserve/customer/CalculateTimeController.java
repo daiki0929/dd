@@ -25,11 +25,12 @@ import util.StringUtil;
  * @author uedadaiki
  *
  */
-//TODO それぞれをメソッドにして、管理しやすいようにする。
+//TODO それぞれをメソッドにして、管理しやすいようにする。不要な部分を確認して削除。
 public class CalculateTimeController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
+        
         //選択された日程
         DateTime selectReserveDate = DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime(asString("reserveDate"));
         log.info("選択された日程" + selectReserveDate.toString());
@@ -91,6 +92,7 @@ public class CalculateTimeController extends AbstractReseController {
         List<DateTime> reservedMenuStartList = new ArrayList<DateTime>();
         List<DateTime> reservedMenuEndList = new ArrayList<DateTime>();
         //既に入ってる予約の開始・終了時間をリストへ追加していきます。
+        //TODO 全て取り出してるので、範囲を指定して取り出すようにする。
         for (Reserve reserve : reserveList) {
             Date startTime = reserve.getStartTime();
             Date endTime = reserve.getEndTime();
@@ -116,24 +118,28 @@ public class CalculateTimeController extends AbstractReseController {
         DateTime nowDateTime = new DateTime();
         
         //開店時間
-        String shopStartTimeStr = String.format("%s:%s", Integer.toString(shopStartTime.getHourOfDay()), Integer.toString(shopStartTime.getMinuteOfHour()));
-        if (shopStartTime.plusHours(-reserveDeadline/3600).isAfter(nowDateTime)){
-            String parseShopStartTime = StringUtil.parseRegex(shopStartTimeStr, ":[0-9]$", ":00");
+//        String shopStartTimeStr = String.format("%s:%s", Integer.toString(shopStartTime.getHourOfDay()), Integer.toString(shopStartTime.getMinuteOfHour()));
+//        String parseShopStartTime = null;
+//        if (shopStartTime.plusHours(-reserveDeadline/3600).isAfter(nowDateTime)){
+////            parseShopStartTime = StringUtil.parseRegex(shopStartTimeStr, ":[0-9]$", ":00");
+//            parseShopStartTime = shopStartTimeStr + "0";
 //            log.info("開店時間を追加します。");
-            intervalTimeList.add(parseShopStartTime);
-        }
+//            intervalTimeList.add(parseShopStartTime);
+//        }
+        
         DateTime intervalTime = new DateTime();
-        intervalTimeLoop: for (int i = 0; i < 97; i++) {
+//        int j = 0;
+        intervalTimeLoop: for (int i = -1; i < 97; i++) {
             //予約間隔を加算
             intervalTime = shopStartTime.plusMinutes(interval/60*(i+1));
 //            log.info("予約間隔：" + intervalTime);
-//            log.info("予約時間" + intervalTime.toString());
+            log.info("予約時間" + intervalTime.toString());
             //閉店を過ぎてたらストップ
             if (intervalTime.isAfter(shopEndTime)){
                 log.info("メニュー開始時刻が閉店を過ぎているので、ストップします。");
                 break;
             }
-            DateTime menuEndTime = intervalTime.plusMinutes(orderMenuTime/300);
+            DateTime menuEndTime = intervalTime.plusMinutes(orderMenuTime/60);
 //            log.info("メニュー終了時間" + menuEndTime.toString());
             if (menuEndTime.isAfter(shopEndTime)){
                 log.info("メニュー終了時刻が閉店を過ぎているので、ストップします。");
@@ -152,64 +158,150 @@ public class CalculateTimeController extends AbstractReseController {
             //他の予約と被ってたらスキップする。
             //既存予約と被ってるパターンの図
             //
-            //         |-------------------既存予約--------------------|
+            //         |-間隔--|--------------既存予約----------|--間隔-|
             // |-----パターン１-----| |------パターン２-----| |------パターン３-----|
+            // |---------------------------パターン４-------------------------|
+            //         |--５---|                               |--６--|
             //
             for (DateTime reservedMenuStart : reservedMenuStartList) {
-                //メニュー終了時刻 = メニュー開始時刻 + メニューの時間 + 予約間隔
-                DateTime reservedMenuEnd = reservedMenuStart.plusMinutes(orderMenuTime/300);
+//                log.info("j：" + Integer.toString(j));
+                //開店時間と被ってるかチェック
+//                if (reservedMenuStart.getDayOfMonth() == selectReserveDate.getDayOfMonth()) {
+//                    if (j < 1) {
+//                        log.info(reservedMenuStart.toString());
+//                        int hour = Integer.parseInt(StringUtil.parseRegex(parseShopStartTime, ":[0-9][0-9]$", ""));
+//                        int minute = Integer.parseInt(StringUtil.parseRegex(parseShopStartTime, "[0-9][0-9]*:", ""));
+//                        DateTime shopStartDateTime = new DateTime(reservedMenuStart).withTime(hour, minute, 0, 0);
+//                        if (reservedMenuStart.isEqual(shopStartDateTime)) {
+//                            log.info("開店時間を削除します。");
+//                            j++;
+//                            intervalTimeList.remove(0);
+//                        }
+//                    }
+//                }
                 
+                //メニュー終了時刻 = メニュー開始時刻 + メニューの時間 + 予約間隔
+                DateTime reservedMenuEnd = reservedMenuStart.plusMinutes(orderMenuTime/60);
                 //分かりづらいので、命名を変更します。
                 //予約間隔の開始時刻
                 DateTime interStart = intervalTime;
                 //予約間隔の終了時刻
-                DateTime interEnd = intervalTime.plusMinutes(orderMenuTime/300);
+                DateTime interEnd = intervalTime.plusMinutes(orderMenuTime/60);
                 //既存予約の開始時刻(受け付け間隔時間を減算)
                 DateTime rsvStart = reservedMenuStart.plusMinutes(-interval/60);
                 DateTime rsvEnd = reservedMenuEnd.plusMinutes(interval/60);
                 
-                //パターン１
+                //パターン１：メニューの終わりが被るパターン
                 if (interStart.isBefore(rsvStart)){
                     if (interEnd.isAfter(rsvStart)) {
-                        if (interEnd.isBefore(rsvEnd)) {
                             log.info("パターン１：他の予約と被ってるのでスキップします。" + rsvStart);
                             continue intervalTimeLoop;
-                        }
-                    }else if (interEnd.isEqual(rsvStart)) {
-                        log.info("パターン１：他の予約と被ってるのでスキップします。");
+                    }
+                }
+                //パターン２：メニューの始まりが被るパターン
+                if (interStart.isBefore(rsvEnd)){
+                    if (interEnd.isAfter(rsvEnd)) {
+                        log.info("パターン２：他の予約と被ってるのでスキップします。" + rsvStart);
                         continue intervalTimeLoop;
                     }
                 }
-                //パターン２
+                
+                //パターン３：メニューの始まり・終わりが被るパターン
                 if (interStart.isAfter(rsvStart)){
                     if (interEnd.isBefore(rsvEnd)) {
-                        log.info("パターン２：他の予約と被ってるのでスキップします。");
-                        continue intervalTimeLoop;
-                    }else if (interEnd.isEqual(rsvEnd)) {
-                        log.info("パターン２：他の予約と被ってるのでスキップします。");
+                        log.info("パターン３：他の予約と被ってるのでスキップします。" + rsvStart);
                         continue intervalTimeLoop;
                     }
-                }else if (interStart.isEqual(rsvStart)) {
-                    log.info("パターン２：他の予約と被ってるのでスキップします。");
-                    continue;
                 }
-                //パターン３
-                if (interStart.isAfter(rsvStart)){
+                //パターン４：メニューの途中が被るパターン
+                if (interStart.isBefore(rsvStart)){
                     if (interEnd.isAfter(rsvEnd)) {
-                        if (interStart.isBefore(rsvEnd)) {
-                            log.info("パターン３：他の予約と被ってるのでスキップします。" + rsvStart);
-                            continue intervalTimeLoop;
-                        }else if (interStart.isEqual(rsvEnd)) {
-                            log.info("パターン３：他の予約と被ってるのでスキップします。");
-                            continue intervalTimeLoop;
-                        }
+                        log.info("パターン４：他の予約と被ってるのでスキップします。" + rsvStart);
+                        continue intervalTimeLoop;
                     }
                 }
+                
+                //パターン５：メニューの始まりが同じパターン
+                if (interStart.isEqual(rsvStart)){
+                    log.info("パターン５：他の予約と被ってるのでスキップします。" + rsvStart);
+                    continue intervalTimeLoop;
+                    
+                }
+                //パターン６：メニューの終わりが同じパターン
+                if (interEnd.isEqual(rsvEnd)) {
+                    log.info("パターン６：他の予約と被ってるのでスキップします。" + rsvStart);
+                    continue intervalTimeLoop;
+                }
+                
+                
+//                //パターン１
+//                if (interStart.isBefore(rsvStart)){
+//                    if (interEnd.isAfter(rsvStart)) {
+//                        if (interEnd.isBefore(rsvEnd)) {
+//                            log.info("パターン１：他の予約と被ってるのでスキップします。" + rsvStart);
+//                            continue intervalTimeLoop;
+//                        }
+//                    }else if (interEnd.isEqual(rsvStart)) {
+//                        log.info("パターン１：他の予約と被ってるのでスキップします。");
+//                        continue intervalTimeLoop;
+//                    }
+//                }
+//                //パターン２
+//                if (interStart.isAfter(rsvStart)){
+//                    if (interEnd.isBefore(rsvEnd)) {
+//                        log.info("パターン２：他の予約と被ってるのでスキップします。");
+//                        continue intervalTimeLoop;
+//                    }else if (interEnd.isEqual(rsvEnd)) {
+//                        log.info("パターン２：他の予約と被ってるのでスキップします。");
+//                        continue intervalTimeLoop;
+//                    }
+//                }else if (interStart.isEqual(rsvStart)) {
+//                    log.info("パターン２：他の予約と被ってるのでスキップします。");
+//                    continue;
+//                }
+//                //パターン３
+//                if (interStart.isAfter(rsvStart)){
+//                    if (interEnd.isAfter(rsvEnd)) {
+//                        if (interStart.isBefore(rsvEnd)) {
+//                            log.info("パターン３：他の予約と被ってるのでスキップします。" + rsvStart);
+//                            continue intervalTimeLoop;
+//                        }else if (interStart.isEqual(rsvEnd)) {
+//                            log.info("パターン３：他の予約と被ってるのでスキップします。");
+//                            continue intervalTimeLoop;
+//                        }
+//                    }
+//                }
+//                
+//                //パターン４
+//                if (interStart.isEqual(rsvStart)){
+//                    if (interEnd.isBefore(rsvEnd)) {
+//                        log.info("パターン４：他の予約と被ってるのでスキップします。" + rsvStart);
+//                        continue intervalTimeLoop;
+//                    }else if (interEnd.isEqual(rsvEnd)) {
+//                        log.info("パターン４：他の予約と被ってるのでスキップします。" + rsvStart);
+//                        continue intervalTimeLoop;
+//                    }else if (interEnd.isAfter(rsvEnd)) {
+//                        log.info("パターン４：他の予約と被ってるのでスキップします。" + rsvStart);
+//                        continue intervalTimeLoop;
+//                    }
+//                }
+//                
+//                //パターン５
+//                if (interStart.isBefore(rsvStart)){
+//                    if (interEnd.isEqual(rsvEnd)) {
+//                        log.info("パターン５：他の予約と被ってるのでスキップします。" + rsvStart);
+//                        continue intervalTimeLoop;
+//                    }else if (interEnd.isAfter(rsvEnd)) {
+//                        log.info("パターン５：他の予約と被ってるのでスキップします。" + rsvStart);
+//                        continue intervalTimeLoop;
+//                    }
+//                }
+                
             }
 
             String intervalTimeStr = String.format("%s:%s", intervalTime.getHourOfDay(),intervalTime.getMinuteOfHour());
             String parseIntervalTime = StringUtil.parseRegex(intervalTimeStr, ":[0-9]$", ":00");
-//            log.info("予約間隔を追加します。 " + parseIntervalTime);
+            log.info("予約間隔を追加します。 " + parseIntervalTime);
             intervalTimeList.add(parseIntervalTime);
         }
         //-----------------------------------------

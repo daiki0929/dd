@@ -113,6 +113,11 @@ public class AuthService {
             }
 
             request.setAttribute("msUser", msUser);
+            request.setAttribute("userImgPath", msUser.getUserImgPath());
+            if (msUser.getUserImgPath() == null) {
+                request.setAttribute("userImgPath", "/tools/rese/dashboard/assets/img/defaultIcon.jpg");
+            }
+            request.setAttribute("userName", msUser.getName());
 
         } catch (Exception e) {
             StackTraceUtil.toString(e);

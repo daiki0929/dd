@@ -10,6 +10,7 @@ import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.MsUserMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import slim3.model.MsUser.Role;
 import util.CookieUtil;
 import util.StringUtil;
 
@@ -47,7 +48,7 @@ public class DoneEntryBySNSController extends AbstractReseController {
         //@より前だけにします。
         String userPath = StringUtil.parseRegex(mailaddress, USER_PATH, "");
         msUser.setUserPath(userPath);
-        
+        msUser.setRole(Role.FREE);
         Datastore.put(msUser);
         log.info("名前/メールアドレスを保存しました。");
         

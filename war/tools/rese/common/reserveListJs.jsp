@@ -62,7 +62,7 @@
 	 	
 	 	//予約日時のフォーマットを変更します。 
 	 	$(".reserveTime").each(function(index, element){
-		 	var m = moment($(element).val(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
+		 	var m = moment($(element).text(), "ddd MMM DD HH:mm:ss zzz yyyy", 'en');
 		 	var output = m.format('MM月DD日 HH:mm');
 		 	$(element).text(output);
 		 	$(element).attr("value", output);
@@ -115,7 +115,7 @@
 	};
 	
 	
-	function editReserve(reservKey){
+ 	function editReserve(reservKey){
 		var startTime = $('#' + reservKey +' form input[name=startTime]').val();
 		var endTime = $('#' + reservKey +' form input[name=endTime]').val();
 		

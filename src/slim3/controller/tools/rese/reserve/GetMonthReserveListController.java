@@ -26,7 +26,7 @@ public class GetMonthReserveListController extends AbstractReseController {
     public Navigation run() throws Exception {
         String startDate = asString("startDate");
         String endDate = asString("endDate");
-        
+
         //データベースからクッキー情報(userId)でデータを1つ取得。
         MsUser msUser = msUserService.getSingleByCookie(request);
         if (msUser == null) {
@@ -40,7 +40,7 @@ public class GetMonthReserveListController extends AbstractReseController {
                 .query(reserveMeta)
                 .filter(reserveMeta.msUserRef.equal(msUser.getKey()))
                 .asList();
-        
+
         DateTime startDateTime = DateTimeFormat
                 .forPattern("yyyy-MM-dd")
                 .withLocale(Locale.JAPAN)
@@ -51,14 +51,14 @@ public class GetMonthReserveListController extends AbstractReseController {
                 .withLocale(Locale.JAPAN)
                 .parseDateTime(endDate)
                 .withTime(23, 59, 00, 0);
-        
+
         log.info("開始日時" + startDateTime.toString());
         log.info("終了日時" + endDateTime.toString());
-        
-        
+
+
         //期間を絞り込った予約リスト
         ArrayList<HashMap<String, String>> eventList = reserveService.getReserveByRange(reserveList, startDateTime, endDateTime);
-        
+
         return returnResponse(createJsonDto(Const.JSON_STATUS_SUCSESS, null, eventList));
     }
 }

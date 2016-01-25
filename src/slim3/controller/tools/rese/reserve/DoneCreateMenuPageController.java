@@ -106,6 +106,7 @@ public class DoneCreateMenuPageController extends AbstractReseController {
         menuPage.setPagePath(pagePath);
         
         Datastore.put(menuPage);
+        Datastore.getOrNull(menuPage.getKey());
         return redirect("/tools/rese/reserve/menuPageList");
     }
 }

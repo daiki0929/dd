@@ -38,6 +38,6 @@ public class CreateReserveController extends AbstractReseController {
         request.setAttribute("menuPageList", menuPageList);
 //        request.setAttribute("menuList", menuList);
                 
-        return forward("/tools/rese/reserve/createReserve.jsp");
+        return forward("/tools/rese/dashboard/createReserve.jsp");
     }
 }

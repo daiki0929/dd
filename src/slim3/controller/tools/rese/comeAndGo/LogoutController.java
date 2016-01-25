@@ -16,6 +16,6 @@ public class LogoutController extends AbstractReseController {
     public Navigation run() throws Exception {
         CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
         
-        return forward("login.jsp");
+        return redirect("/tools/rese/comeAndGo/login");
     }
 }

@@ -16,11 +16,6 @@ public class SignInController extends AbstractReseController {
     
     @Override
     public Navigation run() throws Exception {
-//        //認証機能
-//        if (!authService.isMsAuth(request, msUserDto, errors)) {
-//            return super.showLoginPage();
-//        }
-//        
         //データベースからクッキー情報(userId)でデータを1つ取得。
         MsUser msUser = msUserService.getSingleByCookie(request);
         

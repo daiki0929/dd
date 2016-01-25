@@ -14,67 +14,79 @@
 <link rel="stylesheet" href="/css/pickadate/default.date.css">
 
 <%-- JSインポート --%>
-<%@ include file="/tools/rese/common/importJs.jsp"%>
 
-<script src="/js/pickadate/picker.js"></script>
-<script src="/js/pickadate/picker.date.js"></script>
-<script src="/js/pickadate/legacy.js"></script>
-<script src="/js/pickadate/ja_JP.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
 
-<script src="/js/jq/jquery.validationEngine.js"></script>
-<script src="/js/jq/jquery.validationEngine-ja.js"></script>
-<link rel="stylesheet" href="/css/jq/validationEngine.jquery.css">
+<style type="text/css">
+.datepickerdemoBasicUsage {
+	/** Demo styles for mdCalendar. */
+	
+}
 
-<script>
-$(function(){
-  jQuery("#form_1").validationEngine();
-});
-$(function() {
-    $('#calendar').pickadate({
-    	format: 'yyyy/mm/dd',
-    	/* disable: [
-    		1, 7
-    	] */
-    });
-});
+.datepickerdemoBasicUsage md-content {
+	padding-bottom: 200px;
+}
+
+.datepickerdemoBasicUsage .validation-messages {
+	font-size: 11px;
+	color: darkred;
+	margin: 10px 0 0 25px;
+}
+</style>
+<script type="text/javascript">
+angular.module('datepickerBasicUsage',
+	    ['ngMaterial', 'ngMessages']).controller('AppCtrl', function($scope) {
+	  $scope.myDate = new Date();
+	  $scope.minDate = new Date(
+	      $scope.myDate.getFullYear(),
+	      $scope.myDate.getMonth() - 2,
+	      $scope.myDate.getDate());
+	  $scope.maxDate = new Date(
+	      $scope.myDate.getFullYear(),
+	      $scope.myDate.getMonth() + 2,
+	      $scope.myDate.getDate());
+	  $scope.onlyWeekendsPredicate = function(date) {
+	    var day = date.getDay();
+	    return day === 0 || day === 6;
+	  }
+	});
 </script>
 </head>
 <body>
 	<%@ include file="/tools/rese/common/topBar.jsp"%>
-		<div class="container">
-		<div class="span12">
-			<h2>予約をすすめる</h2>
-			<form action="/tools/rese/reserve/customer/confirmReserve" name="selectMenu" id="form_1">
-				<div class="span7">
-					<h3>メニュー・予約日時を選択して下さい</h3>
-					<c:forEach var="menu" items="${menuList}">
-						<label class="radio"> <input type="radio" name="orderMenu" value="${f:h(menu.key)}" class="menuRadio">
-							${menu.title}(<span class="menuTime">${menu.time/60}</span>分)${menu.price}円
-						</label>
-					</c:forEach>
-					<h4>日程を決める</h4>
-					<fieldset class="fieldset">
-					  <input id="calendar"  type="text" placeholder="クリックしてください" onchange="calculate();" name="reserveDate" class="validate[required]">
-					</fieldset>
-					
-					<h4>時間を決める</h4>
-					<select id="reserveMoments" name="reserveMoments" class="validate[required]">
-					</select>
-					<h3>連絡先を記入して下さい</h3>
-					<h4>お名前</h4>
-					<p>(例)田中太郎</p>
-					<input type="text" name="customerName" class="validate[required]">
-					<h4>メールアドレス</h4>
-					<p>(例)sample@mail.com</p>
-					<input type="text" name="customerMailadress" class="validate[required[custom[email]]]">
-					<h4>電話番号</h4>
-					<p>(例)000-0000-0000 「-」の記入を忘れないようにして下さい。</p>
-					<input type="text" name="customerPhone" class="validate[custom[phoneHyphen]]">
-					<br />
-					<input type="submit" value="次へ">
-				</div>
-			</form>
-		</div>
+	
+	
+	<div ng-controller="AppCtrl" style='padding: 40px;' ng-cloak>
+		<md-content>
+		<h4>Standard date-picker</h4>
+		<md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+		<h4>Disabled date-picker</h4>
+		<md-datepicker ng-model="myDate" md-placeholder="Enter date" disabled></md-datepicker>
+		<h4>Date-picker with min date and max date</h4>
+		<md-datepicker ng-model="myDate" md-placeholder="Enter date"
+			md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+		<h4>Only weekends are selectable</h4>
+		<md-datepicker ng-model="myDate" md-placeholder="Enter date"
+			md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+		<h4>Only weekends within given range are selectable</h4>
+		<md-datepicker ng-model="myDate" md-placeholder="Enter date"
+			md-min-date="minDate" md-max-date="maxDate"
+			md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+		<h4>With ngMessages</h4>
+		<form name="myForm">
+			<md-datepicker name="dateField" ng-model="myDate"
+				md-placeholder="Enter date" required md-min-date="minDate"
+				md-max-date="maxDate" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+			<div class="validation-messages"
+				ng-messages="myForm.dateField.$error">
+				<div ng-message="valid">The entered value is not a date!</div>
+				<div ng-message="required">This date is required!</div>
+				<div ng-message="mindate">Date is too early!</div>
+				<div ng-message="maxdate">Date is too late!</div>
+				<div ng-message="filtered">Only weekends are allowed!</div>
+			</div>
+		</form>
+		</md-content>
 	</div>
 </body>
 </html>

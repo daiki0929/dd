@@ -47,6 +47,7 @@ public class DoneCreateMenuController extends AbstractController {
 //        log.info("menuPageKey：" + menuPageKey.toString());
         menu.getMenuPageRef().setKey(menuPageKey);
         Datastore.put(menu);
+        Datastore.getOrNull(menu.getKey());
         log.info("保存しました");
         
         HashMap<String, String> menuMap = new HashMap<String, String>();

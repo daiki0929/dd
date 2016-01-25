@@ -23,7 +23,6 @@
 <script src="/js/pickadate/legacy.js"></script>
 <script src="/js/pickadate/ja_JP.js"></script>
 
-
 <script src="/js/jq/jquery.validationEngine.js"></script>
 <script src="/js/jq/jquery.validationEngine-ja.js"></script>
 <link rel="stylesheet" href="/css/jq/validationEngine.jquery.css">

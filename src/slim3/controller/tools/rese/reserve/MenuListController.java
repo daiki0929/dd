@@ -49,7 +49,7 @@ public class MenuListController extends AbstractReseController {
                     List<Menu> closedMenuList = Datastore
                             .query(menuMeta)
                             .filter(menuMeta.menuPageRef.equal(menuPage.getKey()))
-                            .filter(menuMeta.status.equal(Status.PUBLIC.getStatus()))
+                            .filter(menuMeta.status.equal(Status.CLOSED.getStatus()))
                             .asList();
                     log.info("非公開のメニュー：" + closedMenuList.toString());
                     
@@ -68,6 +68,6 @@ public class MenuListController extends AbstractReseController {
             return forward("/tools/rese/common/errorPage.jsp");
         }
         
-        return forward("menuList.jsp");
+        return forward("/tools/rese/dashboard/reserve/menuList.jsp");
     }
 }

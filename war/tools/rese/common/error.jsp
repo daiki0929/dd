@@ -21,7 +21,7 @@
 							<div class="errorHonbun">
 								<c:forEach var="e" items="${errors}">
 									<p>
-										<span class="">${f:h(e.value)}</span>
+										<span class="" style="color:red;">${f:h(e.value)}</span>
 									</p>
 								</c:forEach>
 							</div>

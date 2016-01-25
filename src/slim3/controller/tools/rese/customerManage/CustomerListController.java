@@ -94,6 +94,6 @@ public class CustomerListController extends AbstractReseController {
                     .asList();
             request.setAttribute("customerList", customerList);
         }
-        return forward("customerList.jsp");
+        return forward("/tools/rese/dashboard/customerManage/customerList.jsp");
     }
 }

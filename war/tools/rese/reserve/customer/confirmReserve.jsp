@@ -14,28 +14,29 @@
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 </head>
-<body>
-	<div class="container">
-		<div class="span12">
-			<h2>予約内容</h2>
-			<h3>メニュー情報</h3>
+<body style="background-image: url('/img/back1.jpg'); background-repeat: no-repeat; background-size:cover;">
+<div class="container" style="background-color: #fff; border-radius:5px; margin-bottom: 50px;">
+	<div style="padding: 3%;">
+			<h2 class="reservePageTitle">予約内容</h2>
+			<hr />
+			<h4>メニュー情報</h4>
 			<p>メニュー：${menu.title}</p>
 			<p>予約日：${reserveTime} ~ ${menuEndTime}</p>
 			<p>料金：${menu.price}円</p>
-
-			<h3>お客様情報</h3>
+			<br/>
+			<h4>お客様情報</h4>
 			<p>お名前：${customerName}様</p>
 			<p>メールアドレス：${customerMailaddress}</p>
 			<p>携帯番号：${customerPhone}</p>
 			
-			<form action="/tools/rese/reserve/customer/doneReserve" method="post">
+			<form action="/doneConfirm" method="post">
 				<input type="hidden" name="menuKey" value="${f:h(menu.key)}">
 				<input type="hidden" name="reserveTime" value="${reserveTime}">
 				<input type="hidden" name="menuEndTime" value="${menuEndTime}">
 				<input type="hidden" name="customerName" value="${customerName}">
 				<input type="hidden" name="customerMailaddress" value="${customerMailaddress}">
 				<input type="hidden" name="customerPhone" value="${customerPhone}">
-				<input type="submit" value="予約を確定する">
+				<input type="submit" class="reserveBtn" value="予約を確定する">
 			</form>
 		</div>
 	</div>

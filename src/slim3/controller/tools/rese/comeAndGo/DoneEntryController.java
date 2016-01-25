@@ -14,6 +14,7 @@ import slim3.controller.tools.rese.AbstractReseController;
 import slim3.exception.MyException;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import slim3.model.MsUser.Role;
 import util.Base64Util;
 import util.CookieUtil;
 import util.DateUtil;
@@ -33,17 +34,17 @@ public class DoneEntryController extends AbstractReseController {
         validate(v, "name", 1, 20, true, null, null);
         validate(v, "mailaddress", 1, 100, true, RegexType.MAIL_ADDRESS, null);
         validate(v, "password", 8, 20, true, null, null);
-        validate(v, "passwordConfirm", 8, 20, true, null, null);
+//        validate(v, "passwordConfirm", 8, 20, true, null, null);
         
         if (errors.size() != 0) {
             log.info("記入エラー");
-            return forward("/tools/rese/comeAndGo/entry.jsp");
+            return forward("/tools/rese/dashboard/comeAndGo/entry.jsp");
         }
         
         String name = asString("name");
         String mailaddress = asString("mailaddress");
         String password = asString("password");
-        String passwordConfirm = asString("passwordConfirm");
+//        String passwordConfirm = asString("passwordConfirm");
         
         
         request.setAttribute("name", name);
@@ -51,15 +52,15 @@ public class DoneEntryController extends AbstractReseController {
         request.setAttribute("password", password);
         
         
-        if (!password.equals(passwordConfirm)) {
-            errors.put("misConfirm", "パスワードが異なります。");
-            return forward("/tools/rese/comeAndGo/entry.jsp");
-        }
+//        if (!password.equals(passwordConfirm)) {
+//            errors.put("misConfirm", "パスワードが異なります。");
+//            return forward("/tools/rese/dashboard/comeAndGo/entry.jsp");
+//        }
         
         boolean duplicate = msUserService.duplicateMailAddress(mailaddress, msUserDto);
         if (duplicate) {
             errors.put("duplicate", "すでに登録されているメールアドレスです。");
-            return forward("/tools/rese/comeAndGo/entry.jsp");
+            return forward("/tools/rese/dashboard/comeAndGo/entry.jsp");
         }
         
         MsUser msUser = new MsUser();
@@ -69,6 +70,7 @@ public class DoneEntryController extends AbstractReseController {
         //@より前だけにします。
         String userPath = StringUtil.parseRegex(mailaddress, USER_PATH, "");
         msUser.setUserPath(userPath);
+        msUser.setRole(Role.FREE);
         
         // クッキー値を作成
         String encrypt;
@@ -91,6 +93,8 @@ public class DoneEntryController extends AbstractReseController {
         //店舗情報のデフォルト値を保存
         MsShop shopDefaultHour = setShopDefault(msUser);
         Datastore.put(shopDefaultHour);
+        
+        Datastore.getOrNull(msUser.getKey());
         
         return redirect("/tools/rese/reserve/reserveList");
 //        log.info("会員登録完了しました");

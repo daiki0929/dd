@@ -1,29 +1,4 @@
-<!-- Indices written at Tue, 19 Jan 2016 22:13:18 JST -->
+<!-- Indices written at Tue, 26 Jan 2016 00:26:34 JST -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 144 times in query history -->
-    <datastore-index kind="Menu" ancestor="false" source="auto">
-        <property name="menuPageRef" direction="asc"/>
-        <property name="orderNumber" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 21 times in query history -->
-    <datastore-index kind="Customer" ancestor="false" source="auto">
-        <property name="MsUserRef" direction="asc"/>
-        <property name="totalPayment" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 21 times in query history -->
-    <datastore-index kind="Customer" ancestor="false" source="auto">
-        <property name="MsUserRef" direction="asc"/>
-        <property name="visitNumber" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Reserve" ancestor="false" source="auto">
-        <property name="msUserRef" direction="asc"/>
-        <property name="startTime" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

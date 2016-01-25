@@ -18,6 +18,7 @@ public class AppRouter extends RouterImpl {
         addRouting("/confirm", "/tools/rese/reserve/customer/confirmReserve");
         addRouting("/finish", "/tools/rese/reserve/customer/finish");
         addRouting("/reserve/cancel/{menuPageKey}/{reserveKey}", "tools/rese/reserve/customer/cancel?menuPageKey={menuPageKey}&reserveKey={reserveKey}");
+        addRouting("/doneConfirm", "/tools/rese/reserve/customer/doneReserve");
         
         
         

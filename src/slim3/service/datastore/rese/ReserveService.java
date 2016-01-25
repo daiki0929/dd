@@ -1,6 +1,7 @@
 package slim3.service.datastore.rese;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class ReserveService extends AbstractDatastoreService{
     public List<Reserve> getListByMsUserKey(Key msUserKey){
         return Datastore.query(RESERVE_META).filter(RESERVE_META.msUserRef.equal(msUserKey)).asList();
     }
+    
     
     
     /**

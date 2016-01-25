@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 
 import org.joda.time.DateTime;
 import org.slim3.controller.Navigation;
+import org.slim3.datastore.Datastore;
+import org.slim3.memcache.Memcache;
 import org.slim3.util.ArrayMap;
 
 import com.google.appengine.api.datastore.Key;
@@ -16,6 +18,7 @@ import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsShop;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
+import slim3.service.CacheService.ExpireKbn;
 /**
  * カスタマーに予約できる日時を表示します。
  * @author uedadaiki
@@ -26,6 +29,12 @@ public class TimescheduleController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
+        
+        //確認後に重複していた場合の処理
+        if (asString("customerID") != null) {
+            log.info("重複を確認しました。");
+            return forward("timeschedule.jsp");
+        }
         
         Key selectedMeuKey = asKey("menuId");
         Key userKey = asKey("userId");

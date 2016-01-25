@@ -65,28 +65,28 @@ $(document).ready(function() {
 			<div class="span8">
 			<h3>お客様情報</h3>
 			<p>お客様の連絡情報、来店履歴を確認することが出来ます。</p>
+			<a href="#myModal" role="button" data-toggle="modal"><img src="/img/pen.png" class="minTitleIcon"/>お客様情報を編集する</a>
 			</div>
 			<table class="company span8">
 			    <tbody>
 			        <tr>
 			            <th class="arrow_box">名前</th>
-			            <td><input type="text" name="name" value="${customer.name}" style="padding: 10px;"></td>
+			            <td>${customer.name}</td>
 			        </tr>
 			        <tr>
 			            <th class="arrow_box">Mail</th>
-			            <td><input type="text" name="mailaddress" value="${customer.mailaddress}" style="padding: 10px;"></td>
+			            <td>${customer.mailaddress}</td>
 			        </tr>
 			        <tr>
 			            <th class="arrow_box">Phone</th>
-			            <td><input type="text" name="phone" value="${customer.phone}" style="padding: 10px;"></td>
+			            <td>${customer.phone}</td>
 			        </tr>
 			    </tbody>
 			</table>
-			<div class="span3" style="background-color: #000; height: 200px;"></div>
 			<div class="span8" style="background-color: #f8f8f8; margin-bottom: 30px;">
     		   <div style="width: 100%; background-color: #295890; margin-bottom: 10px;">
     		   		<div style=" padding: 8px;">
-    		   			<h5 style="color:#fff; font-weight: lighter;">来店履歴</h5>
+    		   			<h5 style="color:#fff; font-weight: lighter;">予約情報</h5>
     		   		</div>
     		   </div>
 				<div style="padding: 10px;">
@@ -95,6 +95,34 @@ $(document).ready(function() {
 					</c:forEach>
 				</div>
 			</div>
+			
+			
+ 
+			<!-- 顧客情報の編集フォーム -->
+			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <h3 id="myModalLabel">Modal header</h3>
+			  </div>
+			  <div class="modal-body">
+			    <form action="/tools/rese/customerManage/doneEditCustomer">
+			    	<p>名前</p>
+				    <input type="text" name="name" value="${customer.name}">
+			    	<p>メールアドレス</p>
+				    <input type="text" name="mailaddress" value="${customer.mailaddress}">
+			    	<p>電話番号</p>
+				    <input type="text" name="phone" value="${customer.phone}">
+				    <input type="hidden" name="customerKey" value="${f:h(customer.key)}">
+				    <br/>
+				    <input type="submit" value="完了" style="width: 200px; background-color: #f39c12; border: none; padding: 10px; color:#fff; border-radius: 5px;">
+			    </form>
+			  </div>
+			  <div class="modal-footer">
+			    <a><p data-dismiss="modal" aria-hidden="true" class="closeButton" style="float: left; margin-top: 10px; cursor: pointer;">☓ 閉じる</p></a>
+			  </div>
+			</div>
+			<!-- //顧客情報の編集フォーム -->
+						
 		</div>
 	</div>
 	<%@ include file="/tools/rese/common/footer.jsp"%>

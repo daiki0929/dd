@@ -30,15 +30,6 @@
 <link rel="stylesheet" href="/css/jq/validationEngine.jquery.css">
 
 <script type="text/javascript" charset="UTF-8">
-var mondayShopStatus = "${statusByDays.monday.shopStatus}";
-var sundayShopStatus = "${statusByDays.sunday.shopStatus}";
-var tuesdayShopStatus = "${statusByDays.tuesday.shopStatus}";
-var wednesdayShopStatus = "${statusByDays.wednesday.shopStatus}";
-var thursdayShopStatus = "${statusByDays.thursday.shopStatus}";
-var fridayShopStatus = "${statusByDays.friday.shopStatus}";
-var saturdayShopStatus = "${statusByDays.saturday.shopStatus}";
-
-
 $(function(){
 	  jQuery("#form_1").validationEngine();
 });
@@ -51,6 +42,8 @@ $(function() {
     	disable: ${offDaysOfTheWeekNum}
     });
 });
+
+
 $(document).ready(function() {
 	var length = parseInt(document.getElementsByTagName("input").length);
 	/* 選択したメニューにチェックを入れる */
@@ -61,6 +54,12 @@ $(document).ready(function() {
 			break;
 		　　　}
 	}
+	
+	/* メニューの時間を分にして、切り捨てをする。 */
+	$(".menuTime").each(function(i, elem) {
+		$(".menuTime")[i].innerText = Math.floor($(elem).text());
+	});
+	
 });
 
 
@@ -105,27 +104,31 @@ $(document).ready(function() {
  function deleteCalculate(){
 	 $('#reserveMoments option').remove();
  }
-/**
- * メニューの時間を分にして、切り捨てをする。
- */
-$(document).ready(function() {
-	$(".menuTime").each(function(i, elem) {
-		$(".menuTime")[i].innerText = Math.floor($(elem).text());
-	});
-});
+ 
+ /**
+  * 日程と時間をリセットします。
+  */
+ function clearValue(){
+ 	$("[name=reserveDate]").val('');
+ 	$("[name=reserveMoments] option").remove();
+ }
+
+
 </script>
 </head>
-<body>
-<div class="container">
-	<div class="span12">
-		<h2>予約をすすめる</h2>
-<%-- 		<form action="/tools/rese/reserve/customer/confirmReserve" name="selectMenu" id="form_1"> --%>
+<body style="background-image: url('/img/back1.jpg'); background-repeat: no-repeat; background-size:cover;">
+<div class="container" style="background-color: #fff; border-radius:5px; margin-bottom: 50px;">
+	<div style="padding: 3%;">
+		<h2 class="reservePageTitle">メニュー・予約日時を選択して下さい</h2>
+		<hr />
+		<c:if test="${error != null}">
+			<p style="color:red;">ご予約が他のお客様と重複しました。再度、日時を選択して下さい。</p>
+		</c:if>
 		<form action="/confirm" name="selectMenu" id="form_1" method="post">
 			<div class="span7">
-				<h3>メニュー・予約日時を選択して下さい</h3>
 				<c:forEach var="menu" items="${menuList}">
-					<label class="radio"> <input type="radio" name="orderMenu" value="${f:h(menu.key)}" class="menuRadio">
-						${menu.title}(<span class="menuTime">${menu.time/60}</span>分)${menu.price}円
+					<label class="radio"> <input type="radio" name="orderMenu" value="${f:h(menu.key)}" class="menuRadio" onclick="clearValue();">
+						${menu.title} (<span class="menuTime">${menu.time/60}</span>分)${menu.price}円
 					</label>
 				</c:forEach>
 				<h4>日程を決める</h4>
@@ -134,26 +137,21 @@ $(document).ready(function() {
 				<p>日程を選択すると、予約可能な時間が表示されます。</p>
 				<select id="reserveMoments" name="reserveMoments" class="validate[required]">
 				</select>
-				<h3>連絡先を記入して下さい</h3>
+				<h3>ご連絡先をご記入ください。</h3>
 				<h4>お名前</h4>
 				<p>(例)田中太郎</p>
-				<input type="text" name="customerName" class="validate[required]">
+				<input type="text" name="customerName" class="validate[required]" value="${customerName}">
 				<h4>メールアドレス</h4>
 				<p>(例)sample@mail.com</p>
-				<input type="text" name="customerMailaddress" class="validate[required[custom[email]]]">
+				<input type="text" name="customerMailaddress" class="validate[required[custom[email]]]" value="${customerMailaddress}">
 				<h4>電話番号</h4>
 				<p>(例)000-0000-0000 「-」の記入を忘れないようにして下さい。</p>
-				<input type="text" name="customerPhone" class="validate[custom[phoneHyphen]]">
-				<!-- <h4>パスワード</h4>
-				<p>パスワードを登録すると、次回から記入が簡単になります。(4文字以上8文字以内)</p>
-				<input class="validate[required, minSize[4], maxSize[8]] text-input" type="password" id="passwd" name="customerPassword"/>
-				<br/>
-				<p>確認</p>
-				<input class="validate[required,equals[passwd]] text-input" type="password" id="re_passwd" name="customerPasswordConfirm"/> -->
+				<input type="text" name="customerPhone" class="validate[custom[phoneHyphen]]" value="${customerPhone}">
 				<br />
-				<input type="submit" value="次へ">
+				<input type="submit" class="reserveBtn" style="width:200px; border: none; margin: 20px 0 40px 0;" value="次へ">
 			</div>
 		</form>
+	</div>
 	</div>
 </div>
 	

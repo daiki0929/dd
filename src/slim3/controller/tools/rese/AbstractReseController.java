@@ -1,5 +1,6 @@
 package slim3.controller.tools.rese;
 
+import org.slim3.controller.Navigation;
 import org.slim3.util.ArrayMap;
 
 import slim3.Const;
@@ -15,6 +16,7 @@ import slim3.service.datastore.rese.MenuService;
 import slim3.service.datastore.rese.MsUserService;
 import slim3.service.datastore.rese.ReserveService;
 import slim3.service.datastore.rese.ShopService;
+import slim3.service.tools.rese.ReserveTimeService;
 import slim3.service.tools.rese.SetShopDefaultService;
 
 /**
@@ -37,6 +39,10 @@ public abstract class AbstractReseController extends AbstractController {
     protected ShopService shopService = new ShopService();
     protected ReserveService reserveService = new ReserveService();
     protected SetShopDefaultService setShopDefaultService = new SetShopDefaultService();
+    
+    /** 予約時間のサービス */
+    protected ReserveTimeService reserveTimeService = new ReserveTimeService();
+    
     
     // ================================================================
     // メニューページの公開・非公開
@@ -72,6 +78,7 @@ public abstract class AbstractReseController extends AbstractController {
         msShop.setStatusByDays(shopStatusByDays);
         return msShop;
     }
+    
     
         
 }

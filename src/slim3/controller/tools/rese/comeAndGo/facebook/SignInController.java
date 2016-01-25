@@ -14,9 +14,9 @@ public class SignInController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
-        String callbackURL = Const.FbCallbackEnum.Rese.getCallbackURL();
+        String callbackURL = Const.FbCallbackEnum.Rese_TEST.getCallbackURL();
         if (isCommerce(request)) {
-            callbackURL = Const.FbCallbackEnum.Rese_TEST.getCallbackURL();
+            callbackURL = Const.FbCallbackEnum.Rese.getCallbackURL();
         }
         log.info("callbackURL：" + callbackURL);
         facebookService.signIn(request, response, callbackURL, Const.FbAPI.Rese);

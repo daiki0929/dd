@@ -3,8 +3,6 @@ package slim3.model;
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
 
-import slim3.Const.Role;
-
 
 
 @Model(schemaVersion = 1)
@@ -19,6 +17,21 @@ public class MsUser extends AbstractModel {
     private String userId;
     //権限
     private Role role;
+    public enum Role{
+        FREE("free"),   
+        PRO("pro");
+        
+        private final String role;
+        
+        //コンストラクタ
+        private Role(String role) {
+            this.role = role;
+        }
+        
+        public String getRole(){
+            return role;
+        }
+    }
     //名前(個人名 or 店舗名)
     private String name;
     //住所
@@ -31,6 +44,9 @@ public class MsUser extends AbstractModel {
     private String password;
     //予約ページのユーザーパス
     private String userPath;
+    //ユーザー画像
+    private String userImgPath;
+    
     
     //TwitterAPI
     private String twAccessToken;
@@ -179,6 +195,14 @@ public class MsUser extends AbstractModel {
 
     public void setUserPath(String userPath) {
         this.userPath = userPath;
+    }
+
+    public String getUserImgPath() {
+        return userImgPath;
+    }
+
+    public void setUserImgPath(String userImgPath) {
+        this.userImgPath = userImgPath;
     }
 
 

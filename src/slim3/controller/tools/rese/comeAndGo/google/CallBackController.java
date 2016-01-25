@@ -43,14 +43,9 @@ public class CallBackController extends AbstractReseController {
             Userinfoplus userInfo = googleService.getUserInfo(credential);
             log.info("ユーザー情報：" + userInfo.toString());
             
+            
             //===========================================
             // 既に登録済み(ログイン)
-            //TODO 同じリフレッシュトークンを持つユーザーがいるか調べます。
-//            MsUserMeta msUserMeta = MsUserMeta.get();
-//            MsUser msUser = Datastore
-//                    .query(msUserMeta)
-//                    .filter(msUserMeta.gmailRefreshToken.equal(refreshToken))
-//                    .asSingle();
             MsUser sameMsUser = googleService.getSameMsUser(userInfo.getEmail());
 
             if(sameMsUser != null) {
@@ -60,12 +55,11 @@ public class CallBackController extends AbstractReseController {
                 
                 log.info("クッキーを保存します");
                 String msUserEncrypt = CookieUtil.createCookieStr(sameMsUser.getKey());
-                //３時間有効
+                //300時間有効
                 CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
-                CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 10800);
+                CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 108000);
                 sameMsUser.setUserId(msUserEncrypt);
                 Datastore.put(sameMsUser);
-                //TODO 保存後すぐに取得するとエラーになるので書いてます。
                 Datastore.getOrNull(sameMsUser.getKey());
                 
                 return redirect("/tools/rese/reserve/reserveList");
@@ -82,16 +76,17 @@ public class CallBackController extends AbstractReseController {
                 msUser.setGmailAddress(userInfo.getEmail());
                 msUser.setGmailAccessToken(credential.getAccessToken());
                 msUser.setGmailRefreshToken(credential.getRefreshToken());
+                String userImgPath = userInfo.getPicture();
+                msUser.setUserImgPath(userImgPath);
                 
                 log.info("クッキーを保存します");
                 String msUserEncrypt = CookieUtil.createCookieStr(msUser.getKey());
                 //３時間有効
                 CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
-                CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 10800);
+                CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 108000);
                 msUser.setUserId(msUserEncrypt);
                 
                 dsService.put(msUser);
-                //TODO 保存後すぐに取得するとエラーになるので書いてます。
                 Datastore.getOrNull(msUser.getKey());
                 log.info(String.format("Oauth success[%s][%s][%s][%s]", msUser.getName(), userInfo.getEmail(), credential.getAccessToken(), credential.getRefreshToken()));
                 return redirect("/tools/rese/editAcount");
@@ -107,23 +102,24 @@ public class CallBackController extends AbstractReseController {
             String userPath = StringUtil.parseRegex(userInfo.getEmail(), USER_PATH, "");
             newMsUser.setUserPath(userPath);
             newMsUser.setGmailAddress(userInfo.getEmail());
+            newMsUser.setName(userInfo.getName());
             newMsUser.setGmailAccessToken(credential.getAccessToken());
             newMsUser.setGmailRefreshToken(credential.getRefreshToken());
+            String userImgPath = userInfo.getPicture();
+            newMsUser.setUserImgPath(userImgPath);
             
             log.info("クッキーを保存します");
             String msUserEncrypt = CookieUtil.createCookieStr(newMsUser.getKey());
             //３時間有効
             CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
-            CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 10800);
+            CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, msUserEncrypt, 108000);
             newMsUser.setUserId(msUserEncrypt);
-            
             dsService.put(newMsUser);
             
             //店舗情報のデフォルト値を保存
             MsShop shopDefaultHour = setShopDefault(newMsUser);
             dsService.put(shopDefaultHour);
             
-            //TODO 保存後すぐに取得するとエラーになるので書いてます。
             Datastore.getOrNull(newMsUser.getKey());
             
         } catch (Exception e) {

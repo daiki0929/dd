@@ -14,9 +14,9 @@
 <%-- JSインポート --%>
 <%@ include file="/tools/rese/common/importJs.jsp"%>
 </head>
-<body>
-	<div class="container">
-		<div class="span12">
+<body style="background-image: url('/img/back1.jpg'); background-repeat: no-repeat; background-size:cover;">
+<div class="container" style="background-color: #fff; border-radius:5px; margin-bottom: 50px;">
+	<div style="padding: 3%;">
 		<h3>キャンセルページ</h3>
 			<c:if test="${reserve != null}">
 				<a href=""><p class="btn btn-warning">キャンセルする</p></a>

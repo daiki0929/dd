@@ -34,7 +34,7 @@ public class DoneLoginController extends AbstractReseController {
         
         if (errors.size() != 0) {
             log.info("エラー");
-            return forward("login.jsp");
+            return forward("/tools/rese/dashboard/comeAndGo/login.jsp");
         }
 
         String mailaddress = asString("mailaddress");
@@ -44,13 +44,18 @@ public class DoneLoginController extends AbstractReseController {
         if (msUser == null) {
             errors.put("null", "記入したメールアドレスは登録されていません。");
             request.setAttribute("mailaddress", mailaddress);
-            return forward("login.jsp");
+            return forward("/tools/rese/dashboard/comeAndGo/login.jsp");
+        }
+        if (msUser.getPassword() == null) {
+            errors.put("null", "記入したメールアドレス・パスワードは登録されていません。");
+            request.setAttribute("mailaddress", mailaddress);
+            return forward("/tools/rese/dashboard/comeAndGo/login.jsp");
         }
         String msPassword = msUser.getPassword();
         if (!msPassword.equals(password)) {
             errors.put("misPassword", "パスワードが間違っています。");
             request.setAttribute("password", password);
-            return forward("login.jsp");
+            return forward("/tools/rese/dashboard/comeAndGo/login.jsp");
         }
         
         // クッキーを保存します。
@@ -63,8 +68,8 @@ public class DoneLoginController extends AbstractReseController {
             writeErrorLog(e);
             throw new MyException(e);
         }
-        //３時間有効
-        CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, encrypt, 10800);
+        //300時間有効
+        CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, encrypt, 108000);
         msUser.setUserId(encrypt);
         Datastore.put(msUser);
         log.info("クッキーを保存しました：" + encrypt);
@@ -75,11 +80,11 @@ public class DoneLoginController extends AbstractReseController {
         
         //リクエストURL
         String requestURL = CookieUtil.getCookie(request, Const.MS_REQUEST_URL);
-        if (!requestURL.isEmpty()) {
+        if (requestURL != null) {
             return redirect(requestURL);
         }
         CookieUtil.deleteCookie(response, Const.MS_REQUEST_URL);
         
-        return redirect("/tools/rese/reserve/reserveList.jsp");
+        return redirect("/tools/rese/reserve/reserveList");
     }
 }

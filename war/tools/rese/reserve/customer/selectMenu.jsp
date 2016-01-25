@@ -17,14 +17,8 @@
 	padding: 10px;
 	margin-bottom: 20px;
 }
-.reserveBtn{
-	border-style: none;
-	color: #fff;
-	width: 50%;
-	height: auto;
-	padding: 10px;
-	margin: 0 auto;
-	background-color: #3498db;
+.dscription{
+	color:#2C3E50;
 }
 
 </style>
@@ -44,21 +38,20 @@
 	
 </script>
 </head>
-<body style="background-image: url('/img/rese/sky.jpg'); no-repeat">
-	<div class="container" style="background-color: #fff;">
+<body style="background-image: url('/img/back1.jpg'); background-repeat: no-repeat; background-size:cover;">
+	<div class="container" style="background-color: #fff; border-radius:5px;">
 		<div style="padding: 3%;">
-			<h2>${menuPage.pageTitle}</h2>
+			<h2 class="reservePageTitle">${menuPage.pageTitle}</h2>
 			<%-- <img src="${menuPage.topImgPath}" /> --%>
 			<div>
 				<p class="dscription">${menuPage.description}</p>
 			</div>
 			<hr />
-			<h3>メニュー</h3>
-			<p>メニューをお選び下さい。</p>
+			<p style="color: #2C3E50;">お好きなメニューを1つお選び下さい。</p>
 			<div>
 				<c:forEach var="menu" items="${menuList}">
 					<form action="/r/reserve/${msUser.userPath}/${menuPage.pagePath}" method="post">
-						<div class="span3 menuCard" style="background-color: #f2f2f2; border: 1px solid #dedede; padding: 10px;">
+						<div class="span3 menuCard" style="background-color: #f8f8f8; border: 1px solid #dedede; padding: 10px;">
 							<p style="font-size: 1.1em">${menu.title}</p>
 							<p>時間：<span class="menuTime">${menu.time/60}</span>分</p>
 							<p>料金：${menu.price}円</p>

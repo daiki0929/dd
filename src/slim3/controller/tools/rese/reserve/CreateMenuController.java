@@ -21,6 +21,6 @@ public class CreateMenuController extends AbstractController {
         
         request.setAttribute("menuPageKey", menuPageKey);
         
-        return forward("createMenu.jsp");
+        return forward("/tools/rese/dashboard/reserve/createMenuPage.jsp");
     }
 }

@@ -16,12 +16,17 @@ public class EditMenuPageController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
+        //認証機能
+        if (!authService.isMsAuth(request, msUserDto, errors)) {
+            return super.showLoginPage();
+        }
+        
         Key menuPageId = asKey("id");
         MenuPage menuPage = menuPageService.get(menuPageId);
         
         //新規追加するメニューにメニューページのidを入れるために活用
         request.setAttribute("menuPage", menuPage);
         
-        return forward("editMenuPage.jsp");
+        return forward("/tools/rese/dashboard/reserve/editMenuPage.jsp");
     }
 }

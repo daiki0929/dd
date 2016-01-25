@@ -8,7 +8,7 @@ import slim3.controller.tools.rese.AbstractReseController;
  * @author uedadaiki
  *
  */
-public class RegistCustomerController extends AbstractReseController {
+public class CreateCustomerController extends AbstractReseController {
 
     @Override
     public Navigation run() throws Exception {
@@ -16,6 +16,6 @@ public class RegistCustomerController extends AbstractReseController {
         if (!authService.isMsAuth(request, msUserDto, errors)) {
             return super.showLoginPage();
         }
-        return forward("registCustomer.jsp");
+        return forward("/tools/rese/dashboard/customerManage/createCustomer.jsp");
     }
 }

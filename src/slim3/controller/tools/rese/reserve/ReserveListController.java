@@ -65,7 +65,18 @@ public class ReserveListController extends AbstractReseController {
             request.setAttribute("timeList", timeList);
             request.setAttribute("menuPageList", menuPageList);
             request.setAttribute("allMenuList", allMenuList);
-            return forward("reserveList.jsp");
+            
+            //TODO 全てのページで必要
+            request.setAttribute("userImgPath", msUser.getUserImgPath());
+            request.setAttribute("userName", msUser.getName());
+            
+            //TODO なぜかこのコントローラだけ画像がセットされない。
+            request.setAttribute("userImgPath", msUser.getUserImgPath());
+            if (msUser.getUserImgPath() == null) {
+                request.setAttribute("userImgPath", "/tools/rese/dashboard/assets/img/defaultIcon.jpg");
+            }
+            
+            return forward("/tools/rese/dashboard/reserveList.jsp");
         }
         //キャッシュに無い場合
         log.info("データストアから取り出します。");
@@ -75,11 +86,21 @@ public class ReserveListController extends AbstractReseController {
         request.setAttribute("timeList", timeList);
         request.setAttribute("menuPageList", menuPageList);
         request.setAttribute("allMenuList", allMenuList);
+        
+        //TODO 全てのページで必要
+        request.setAttribute("userImgPath", msUser.getUserImgPath());
+        request.setAttribute("userName", msUser.getName());
+        
+        //TODO なぜかこのコントローラだけ画像がセットされない。
+        request.setAttribute("userImgPath", msUser.getUserImgPath());
+        if (msUser.getUserImgPath() == null) {
+            request.setAttribute("userImgPath", "/tools/rese/dashboard/assets/img/defaultIcon.jpg");
+        }
+        
         //キャッシュに予約リストを保存
         Memcache.put(msUser.getMailaddress(), reserveList);
         
-        return forward("reserveList.jsp");
-        
+        return forward("/tools/rese/dashboard/reserveList.jsp");
 
     }
     

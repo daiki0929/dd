@@ -23,11 +23,16 @@
 		<div class="span12">
 			<h2>管理者ページ</h2>
 			<p>
-				<a href="/tools/rese/editAcount">アカウントの設定</a>
+				<a href="/tools/rese/editOperationHours">・営業日時の設定</a>
 			</p>
 			<p>
-				<a href="/tools/rese/editOperationHours">営業日時の設定</a>
+				<a href="/tools/rese/editAcount">・アカウントの設定</a>
 			</p>
+			<div style="margin-top: 40px;">
+				<a href="/tools/rese/comeAndGo/logout">
+					<p class="buttonMin-blue">ログアウト</p>
+				</a>
+			</div>
 		</div>
 	</div>
 	<%@ include file="/tools/rese/common/footer.jsp"%>

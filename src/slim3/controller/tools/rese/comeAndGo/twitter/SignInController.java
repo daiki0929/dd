@@ -14,9 +14,9 @@ public class SignInController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
-        String callbackURL = Const.TwCallbackEnum.Rese.getCallbackURL();
+        String callbackURL = Const.TwCallbackEnum.Rese_TEST.getCallbackURL();
         if (isCommerce(request)) {
-            callbackURL = Const.TwCallbackEnum.Rese_TEST.getCallbackURL();
+            callbackURL = Const.TwCallbackEnum.Rese.getCallbackURL();
         }
         
         log.info("callbackURL：" + callbackURL);

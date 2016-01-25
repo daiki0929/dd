@@ -45,7 +45,7 @@ public class DoneCreateReserveController extends AbstractReseController {
         String customerPhone = asString("customerPhone");
         
         //登録済みの顧客を選択した場合
-        if (asKey("customerKey") != null) {
+        if (asString("customerKey") != null) {
             Key customerKey = asKey("customerKey");
             Customer customer = customerService.get(customerKey);
             customerName = customer.getName();
@@ -95,7 +95,7 @@ public class DoneCreateReserveController extends AbstractReseController {
         customer.setName(customerName);
         customer.setPhone(customerPhone);
         customer.setMailaddress(customerMailaddress);
-        customer.setVisitNumber(customer.getVisitNumber() + 1);
+        customer.setVisitNumber(1);
         customer.setTotalPayment(customer.getTotalPayment() + orderMenu.getPrice());
         
         //メニューからMsUserのkeyを取得します。
@@ -116,22 +116,28 @@ public class DoneCreateReserveController extends AbstractReseController {
         reserve.setCustomerPhone(customerPhone);
         
         
-        //リピーターの場合
-        CustomerMeta customerMeta = CustomerMeta.get();
-        List<Customer> CustomerList = Datastore
-                .query(customerMeta)
-                .filter(customerMeta.MsUserRef.equal(msUserKey))
-                .asList();
-        log.info("CustomerList"+CustomerList.toString());
         boolean repeater = false;
-        for (Customer savedCustomer : CustomerList) {
-            log.info("保存されてるメールアドレス：" + savedCustomer.getMailaddress());
-            Key savedCustomerKey = savedCustomer.getKey();
-            if (savedCustomerKey.equals(asKey("customerKey"))) {
-                log.info("リピーター客として保存します。");
-                reserve.getCustomerRef().setKey(savedCustomerKey);
-                repeater = true;
-                break;
+        //リピーターの場合
+        if (asString("customerKey") != null) {
+            CustomerMeta customerMeta = CustomerMeta.get();
+            List<Customer> CustomerList = Datastore
+                    .query(customerMeta)
+                    .filter(customerMeta.MsUserRef.equal(msUserKey))
+                    .asList();
+            log.info("CustomerList"+CustomerList.toString());
+            for (Customer savedCustomer : CustomerList) {
+                log.info("保存されてるメールアドレス：" + savedCustomer.getMailaddress());
+                Key savedCustomerKey = savedCustomer.getKey();
+                if (savedCustomerKey.equals(asKey("customerKey"))) {
+                    log.info("リピーター客として保存します。");
+                    reserve.getCustomerRef().setKey(savedCustomerKey);
+                    //合計金額・来店回数をプラスします。
+                    savedCustomer.setTotalPayment(savedCustomer.getTotalPayment() + orderMenu.getPrice());
+                    savedCustomer.setVisitNumber(savedCustomer.getVisitNumber() + 1);
+                    Datastore.put(savedCustomer);
+                    repeater = true;
+                    break;
+                }
             }
         }
         

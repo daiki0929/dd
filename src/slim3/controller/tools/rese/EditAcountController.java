@@ -15,6 +15,6 @@ public class EditAcountController extends AbstractReseController {
             return super.showLoginPage();
         }
 
-        return forward("account.jsp");
+        return forward("/tools/rese/dashboard/account.jsp");
     }
 }

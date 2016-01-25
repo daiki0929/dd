@@ -13,7 +13,7 @@ public class LoginController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
-        return forward("login.jsp");
+        return forward("/tools/rese/dashboard/comeAndGo/login.jsp");
     }
     
 }

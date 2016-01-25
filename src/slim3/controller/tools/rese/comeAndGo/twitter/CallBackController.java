@@ -45,9 +45,9 @@ public class CallBackController extends AbstractReseController {
         if (doneEntryUser != null) {
             log.info(doneEntryUser.getName() + "：連携済みのアカウントでした。ユーザー情報を取得します。");
             String doneUserEncrypt = CookieUtil.createCookieStr(doneEntryUser.getKey());
-            //３時間有効
+            //300時間有効
             CookieUtil.deleteCookie(response, Const.MS_AUTH_COOKIE_NAME);
-            CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, doneUserEncrypt, 10800);
+            CookieUtil.setCookie(response, Const.MS_AUTH_COOKIE_NAME, doneUserEncrypt, 108000);
             doneEntryUser.setUserId(doneUserEncrypt);
             Datastore.put(doneEntryUser);
             log.info("クッキーを保存しました：" + doneUserEncrypt);

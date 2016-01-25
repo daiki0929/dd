@@ -20,16 +20,16 @@
 			<li><a href="/tools/rese/report/chart" style="color:#fff;">レポート</a></li>
 			<li><a href="/tools/rese/setting" style="color:#fff;">管理者ページ</a></li>
         </ul>
-        <ul class="nav pull-right">
+        <%-- <ul class="nav pull-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              ユーザー名<span class="caret"></span>
+              ${mailaddress}<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li><a href="/tools/rese/comeAndGo/logout">ログアウト</a></li>
             </ul>
           </li>
-        </ul>
+        </ul> --%>
       </div>
     </div>
   </div>

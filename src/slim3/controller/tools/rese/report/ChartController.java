@@ -1,15 +1,9 @@
 package slim3.controller.tools.rese.report;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import org.joda.time.DateTime;
 import org.slim3.controller.Navigation;
@@ -17,14 +11,8 @@ import org.slim3.datastore.Datastore;
 import org.slim3.memcache.Memcache;
 import org.slim3.util.ArrayMap;
 
-import com.google.appengine.api.datastore.Key;
-
-import main.java.org.jsoup.Jsoup;
-import main.java.org.jsoup.nodes.Document;
 import slim3.Const;
-import slim3.controller.AbstractController;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.exception.MyException;
 import slim3.meta.customerManage.CustomerMeta;
 import slim3.meta.reserve.MenuMeta;
 import slim3.meta.reserve.ReserveMeta;
@@ -44,7 +32,7 @@ public class ChartController extends AbstractReseController {
     
     
     @Override
-    public Navigation run() throws Exception { 
+    public Navigation run() throws Exception {
         //認証機能
         if (!authService.isMsAuth(request, msUserDto, errors)) {
             return super.showLoginPage();
@@ -57,6 +45,7 @@ public class ChartController extends AbstractReseController {
             return forward("/tools/rese/comeAndGo/login");
         }
         
+        
         CustomerMeta customerMeta = CustomerMeta.get();
         
         int chartNumber = 0;
@@ -68,9 +57,10 @@ public class ChartController extends AbstractReseController {
         //TODO 全てキャッシュに残すようにする。
         switch (chartNumber) {
         case 0:
-            return forward("/tools/rese/report/chart.jsp");
+            return forward("/tools/rese/dashboard/report/index.jsp");
             
         case 1:
+            cacheService.delete("revenuList");
             //売上合計(月別)
             //キャッシュ
             if (cacheService.exist("revenuList")) {
@@ -105,10 +95,9 @@ public class ChartController extends AbstractReseController {
                 Date reserveDate = reserve.getStartTime();
                 
                 DateTime reserveDateTime = new DateTime(reserveDate);
-                //1月が0なので+1してます。
-                int monthOfYear = reserveDateTime.getMonthOfYear() + 1;
+                int monthOfYear = reserveDateTime.getMonthOfYear();
                 //その月の現在合計金額
-                int integer = revenuByMonthMap.get(monthOfYear);
+                int integer = revenuByMonthMap.get(monthOfYear + "月");
                 int totalRevenu = integer + reserve.getPrice();
                 
                 String monthOfYearStr = Integer.toString(monthOfYear);
@@ -127,7 +116,7 @@ public class ChartController extends AbstractReseController {
             
         case 2:
             //来店回数ランキング
-            
+            cacheService.delete("visitRanking");
             //キャッシュ
             if (cacheService.exist("visitRanking")) {
                 log.info("キャッシュにありました");
@@ -155,7 +144,7 @@ public class ChartController extends AbstractReseController {
             
         case 3:
             //合計金額ランキング
-            
+            cacheService.delete("payRanking");
             //キャッシュ
             if (cacheService.exist("payRanking")) {
                 log.info("キャッシュにありました");
@@ -169,7 +158,13 @@ public class ChartController extends AbstractReseController {
                     .sort(customerMeta.totalPayment.asc)
                     .asList();
             ArrayList<Customer> payRanking = new ArrayList<Customer>();
+            int i = 0;
             for (Customer customer : customerByPayList) {
+                i++;
+                if (i > 5) {
+                    break;
+                }
+                log.info("支払い："+Integer.toString(customer.getTotalPayment()));
                 payRanking.add(customer);
             }
             

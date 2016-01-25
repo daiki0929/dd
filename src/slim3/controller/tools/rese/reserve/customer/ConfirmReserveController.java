@@ -23,6 +23,7 @@ public class ConfirmReserveController extends AbstractReseController {
     public Navigation run() throws Exception {
         log.info(asString("reserveMoments"));
         
+        log.info("スタート");
         Validators v = new Validators(request);
         validate(v, "orderMenu", 1, 50, false, null, null);
         validate(v, "reserveDate", 1, 10, false, RegexType.YEAR_DATE, null);
@@ -75,4 +76,5 @@ public class ConfirmReserveController extends AbstractReseController {
         
         return forward("confirmReserve.jsp");
     }
+    
 }

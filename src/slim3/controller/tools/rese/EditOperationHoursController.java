@@ -43,6 +43,6 @@ public class EditOperationHoursController extends AbstractReseController {
         ArrayMap<String, ArrayMap<String, Object>> shopStatusByDays = msShop.getStatusByDays();
         request.setAttribute("statusByDays", shopStatusByDays);
         
-        return forward("editOperationHours.jsp");
+        return forward("/tools/rese/dashboard/editOperationHour.jsp");
     }
 }

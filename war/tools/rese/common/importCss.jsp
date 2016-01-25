@@ -155,6 +155,38 @@
 	.sideBar{
 		margin-top: 20px;
 	}
+	.reservePageTitle{
+		 color:#63A7E4;
+	}
+	 .reserveBtn{
+		border-style: none;
+		color: #fff;
+		width: 50%;
+		height: auto;
+		padding: 10px;
+		margin: 0 auto;
+		background-color: #3498db;
+	}
+	.reserveBtn::before,
+	.reserveBtn::after {
+		position: absolute;
+		z-index: -1;
+		display: block;
+		content: '';
+	}
+	.reserveBtn,
+	.reserveBtn::before,
+	.reserveBtn::after {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-transition: all .3s;
+		transition: all .3s;
+	}
+	
+	.reserveBtn:hover{
+		opacity:0.5;
+	}
 	</style>
 
 	<style type="text/css">

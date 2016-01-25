@@ -61,8 +61,6 @@ public class MenuPage extends AbstractModel {
         public String getStatus(){
             return value;
         }
-     
-        
     }
     //予約受け付け間隔
     private int interval;

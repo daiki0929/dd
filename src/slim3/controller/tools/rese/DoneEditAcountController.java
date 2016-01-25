@@ -27,7 +27,7 @@ public class DoneEditAcountController extends AbstractReseController {
         }
         
         Validators v = new Validators(request);
-        validate(v, "name", 1, 20, true, null, null);
+        validate(v, "name", 1, 20, false, null, null);
         validate(v, "phone", 1, 50, false, null, null);
         validate(v, "address", 1, 50, false, null, null);
 
@@ -47,8 +47,10 @@ public class DoneEditAcountController extends AbstractReseController {
         msUser.setAddress(address);
         
         Datastore.put(msUser);
+        
+        Datastore.getOrNull(msUser.getKey());
         log.info("アカウント情報を変更しました。");
 
-        return redirect("/tools/rese/doneEditAcount");
+        return redirect("/tools/rese/editAcount");
     }
 }
