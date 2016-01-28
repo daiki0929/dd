@@ -11,6 +11,7 @@ import org.slim3.controller.router.RouterImpl;
 public class AppRouter extends RouterImpl {
 
     public AppRouter() {
+        
         //==============================================
         //予約ページ
         addRouting("/r/{userPath}/{pagePath}", "/tools/rese/reserve/customer/selectMenu?userPath={userPath}&pagePath={pagePath}");

@@ -56,6 +56,13 @@
                      <span>アカウント情報</span>
                  </a>
              </li>
+             
+             <li class="sub-menu">
+                 <a href="/tools/rese/reserve/showHowTo">
+                     <i class="fa fa-cogs"></i>
+                     <span>使い方ガイド</span>
+                 </a>
+             </li>
          </ul>
          <!-- sidebar menu end-->
      </div>

@@ -70,6 +70,9 @@
           <section class="wrapper">
           	<h3><i class="fa fa-angle-right"></i> 予約一覧</h3>
 			<a href="/tools/rese/reserve/createReserve"><h3 class="btn btn-warning" style="width: 200px;">予約を記入する</h3></a>
+			<div style="margin-top: 20px;">
+				<p><a href="/tools/rese/reserve/showHowTo">使い方ガイド</a>はこちら</p>
+			</div>
 			<hr>
               <!-- page start-->
               <div class="row mt">
