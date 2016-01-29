@@ -81,6 +81,7 @@ public class Customer implements Serializable {
     private Date visitDate;
     private String orderMenu;
     private String sex;
+    //TODO 使う必要無し。
     private String customerPath;
     
     /**

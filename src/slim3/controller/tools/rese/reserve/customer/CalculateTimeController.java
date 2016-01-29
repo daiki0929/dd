@@ -133,7 +133,7 @@ public class CalculateTimeController extends AbstractReseController {
             //予約間隔を加算
             intervalTime = shopStartTime.plusMinutes(interval/60*(i+1));
 //            log.info("予約間隔：" + intervalTime);
-            log.info("予約時間" + intervalTime.toString());
+//            log.info("予約時間" + intervalTime.toString());
             //閉店を過ぎてたらストップ
             if (intervalTime.isAfter(shopEndTime)){
                 log.info("メニュー開始時刻が閉店を過ぎているので、ストップします。");
@@ -301,7 +301,7 @@ public class CalculateTimeController extends AbstractReseController {
 
             String intervalTimeStr = String.format("%s:%s", intervalTime.getHourOfDay(),intervalTime.getMinuteOfHour());
             String parseIntervalTime = StringUtil.parseRegex(intervalTimeStr, ":[0-9]$", ":00");
-            log.info("予約間隔を追加します。 " + parseIntervalTime);
+//            log.info("予約間隔を追加します。 " + parseIntervalTime);
             intervalTimeList.add(parseIntervalTime);
         }
         //-----------------------------------------

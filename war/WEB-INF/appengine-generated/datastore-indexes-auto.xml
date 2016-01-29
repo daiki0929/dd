@@ -1,4 +1,11 @@
-<!-- Indices written at Fri, 29 Jan 2016 02:09:36 JST -->
+<!-- Indices written at Fri, 29 Jan 2016 22:11:00 JST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Reserve" ancestor="false" source="auto">
+        <property name="msUserRef" direction="asc"/>
+        <property name="startTime" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

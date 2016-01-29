@@ -51,19 +51,13 @@ public class SelectMenuController extends AbstractReseController {
         
         
         //制限の確認
-        List<Reserve> reserveList = reserveService.getListByMsUserKey(msUser.getKey());
+        List<Reserve> reserveList = reserveService.getReserveThisMonth(msUser.getKey());
+        log.info("今月の予約管理数：" + Integer.toString(reserveList.size()));
         request.setAttribute("limitOver", false);
-        if (msUser.getRole() == Role.FREE) {
-            if (reserveList.size() > 50) {
-                request.setAttribute("limitOver", true);
-            }
+        if (roleService.checkReserveLimit(msUser, reserveList)) {
+            request.setAttribute("limitOver", true);
+            
         }
-        if (msUser.getRole() == Role.PRO) {
-            if (reserveList.size() > 200) {
-                request.setAttribute("limitOver", true);
-            }
-        }
-        
         return forward("selectMenu.jsp");
     }
 }

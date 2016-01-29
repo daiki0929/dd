@@ -77,6 +77,7 @@
 			<c:if test="${limitOver}">
        			<p class="well"><span style="color: red;">※</span>顧客管理の制限数に達しているため追加出来ない状態です。PROプランにアップグレードするには<a href="">こちら</a>から。</p>
        		</c:if>
+       		<p>現在の顧客数：${customerListSize}</p>
           	<a href="/tools/rese/customerManage/createCustomer" class="btn btn-round btn-primary" id="createBtnURL">追加する</a>
           	<hr>
 				<div class="row mt">

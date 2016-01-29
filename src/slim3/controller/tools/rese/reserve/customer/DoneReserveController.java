@@ -48,8 +48,9 @@ public class DoneReserveController extends AbstractReseController {
         MsUser msUser = msUserService.get(msUserKey);
         
         //制限を超えていたらエラーページに飛ばします。
-        List<Reserve> reserveList = reserveService.getListByMsUserKey(msUserKey);
-        if (roleService.checkReserveLimit(msUser, reserveList)) {
+        List<Reserve> reserveThisMonth = reserveService.getReserveThisMonth(msUserKey);
+        log.info("今月の予約管理数：" + Integer.toString(reserveThisMonth.size()));
+        if (roleService.checkReserveLimit(msUser, reserveThisMonth)) {
             return forward("/tools/rese/errorPage");
         }
         
@@ -163,6 +164,8 @@ public class DoneReserveController extends AbstractReseController {
             return forward(timeScheduleURL);
         }
         
+        
+        Key customerKey = null;
         //リピーターの場合
         CustomerMeta customerMeta = CustomerMeta.get();
         List<Customer> CustomerList = Datastore
@@ -179,8 +182,8 @@ public class DoneReserveController extends AbstractReseController {
                 savedCustomer.setTotalPayment(savedCustomer.getTotalPayment() + orderMenu.getPrice());
                 savedCustomer.setVisitNumber(savedCustomer.getVisitNumber() + 1);
                 Datastore.put(savedCustomer);
-                Key savedCustomerKey = savedCustomer.getKey();
-                reserve.getCustomerRef().setKey(savedCustomerKey);
+                customerKey = savedCustomer.getKey();
+                reserve.getCustomerRef().setKey(customerKey);
                 repeater = true;
                 break;
             }
@@ -198,7 +201,7 @@ public class DoneReserveController extends AbstractReseController {
             customer.setCustomerPath(pagePath);
             Datastore.put(customer);
             
-            Key customerKey = customer.getKey();
+            customerKey = customer.getKey();
             log.info("key：" + Datastore.keyToString(customerKey));
             reserve.getCustomerRef().setKey(customerKey);
         }
@@ -224,23 +227,30 @@ public class DoneReserveController extends AbstractReseController {
 //                .query(msUserMeta)
 //                .filter(msUserMeta.key.equal(menuPage.getMsUserRef().getKey()))
 //                .asSingle();
-        //顧客
-        String customerPath = customer.getCustomerPath();
         
-        //TODO テスト環境用にしてます。
+        String customerKeyStr = Datastore.keyToString(customerKey);
         String cancelURL = String.format("%s%s%s%s", "http://localhost:8888/tools/rese/reserve/customer/cancel?menuPageKey=", menuPageKeyStr, "&reserveKey=", reserveKeyStr);
+        String userContent = String.format("%s様\n\n予約が入りました。予約内容をご確認ください。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆予約者の情報\n%s様\n%s%s", msUser.getName(), orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, customerName, "http://localhost:8888/tools/rese/customerManage/customerDetail?id=", customerKeyStr);
+        if (isCommerce(request)) {
+            cancelURL = String.format("%s%s%s%s", "http://rese.space/tools/rese/reserve/customer/cancel?menuPageKey=", menuPageKeyStr, "&reserveKey=", reserveKeyStr);
+            userContent = String.format("%s様\n\n予約が入りました。予約内容をご確認ください。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆予約者の情報\n%s様\n%s%s", msUser.getName(), orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, customerName, "http://rese.space/tools/rese/customerManage/customerDetail?id=", customerKeyStr);
+        }
         String customerContent = String.format("%s様\n\n以下の通り、ご予約が確定しました。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆キャンセル\n予約をキャンセルする場合はこちらのリンクから\n%s", customerName, orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, cancelURL);
-        String userContent = String.format("%s様\n\n予約が入りました。予約内容をご確認ください。\n\n◆ご予約内容\n%s(%s分) %s円\n\n◆予約日時\n%s〜%s\n\n◆予約者の情報\n%s様\n%s/%s", msUser.getName(), orderMenu.getTitle(), menuTime, menuPrice, reserveTime, menuEndTime, customerName, "http://localhost:8888/c/customer", customerPath);
         
         
-        //admアカウントから送信します。
+        //admアカウントから送信します。※必ずreseinfomail@gmail.comで会員登録して下さい。
         MsUser adm = msUserService.getSingleByEmail("reseinfomail@gmail.com");
         
-        //TODO テスト環境用にしてます。
         //カスタマーへのメール
-        googleService.sendMessage(adm, "reseinfomail@gmail.com", null, "[Rese]予約が確定しました", customerContent);
+        googleService.sendMessage(adm, customerMailaddress, null, "[Rese]予約が確定しました", customerContent);
         //ユーザーへのメール
-        googleService.sendMessage(adm, "reseinfomail@gmail.com", null, "[Rese]予約が入りました", userContent);
+        googleService.sendMessage(adm, msUser.getMailaddress(), null, "[Rese]予約が入りました", userContent);
+        
+        //キャッシュを最新にするため削除します。
+        if (cacheService.exist(msUser.getMailaddress())) {
+            cacheService.delete(msUser.getMailaddress());
+        }
+        
         
         //重複予約しないようにリロードします。
         //TODO 重複の確認(jsでもあり)

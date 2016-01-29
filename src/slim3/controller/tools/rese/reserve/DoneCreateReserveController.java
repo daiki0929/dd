@@ -68,9 +68,10 @@ public class DoneCreateReserveController extends AbstractReseController {
         Key msUserKey = menuPage.getMsUserRef().getKey();
         
         //制限を超えていたらエラーページに飛ばします。
-        int menuPageListSize = menuPageService.getByMsUser(msUserKey, MenuPageStatus.PUBLIC).size();
+        List<Reserve> reserveThisMonth = reserveService.getReserveThisMonth(msUserKey);
+        log.info("今月の予約管理数：" + Integer.toString(reserveThisMonth.size()));
         MsUser msUser = msUserService.get(msUserKey);
-        if (roleService.checkMenuPageLimit(msUser, menuPageListSize)) {
+        if (roleService.checkReserveLimit(msUser, reserveThisMonth)) {
             return forward("/tools/rese/errorPage");
         }
         
@@ -174,6 +175,12 @@ public class DoneCreateReserveController extends AbstractReseController {
         
         dsService.put(reserve);
         log.info(String.format("%s%s", customerName, "様の予約を保存しました"));
+        
+        //キャッシュを最新にするため削除します。
+        if (cacheService.exist(msUser.getMailaddress())) {
+            log.info("キャッシュを最新にするため削除します。");
+            cacheService.delete(msUser.getMailaddress());
+        }
         
         return redirect("/tools/rese/reserve/reserveList");
     }

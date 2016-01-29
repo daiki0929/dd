@@ -29,6 +29,13 @@
 <script src="/js/jq/jquery.validationEngine-ja.js"></script>
 <link rel="stylesheet" href="/css/jq/validationEngine.jquery.css">
 
+<style type="text/css">
+.requiredMsg{
+	color: red;
+	font-size: 0.7em;
+}
+</style>
+
 <script type="text/javascript" charset="UTF-8">
 $(function(){
 	  jQuery("#form_1").validationEngine();
@@ -120,6 +127,7 @@ $(document).ready(function() {
 <div class="container" style="background-color: #fff; border-radius:5px; margin-bottom: 50px;">
 	<div style="padding: 3%;">
 		<h2 class="reservePageTitle">メニュー・予約日時を選択して下さい</h2>
+		<p><span class="requiredMsg">※</span>がある項目は必須項目です。</p>
 		<hr />
 		<c:if test="${error != null}">
 			<p style="color:red;">ご予約が他のお客様と重複しました。再度、日時を選択して下さい。</p>
@@ -131,17 +139,17 @@ $(document).ready(function() {
 						${menu.title} (<span class="menuTime">${menu.time/60}</span>分)${menu.price}円
 					</label>
 				</c:forEach>
-				<h4>日程を決める</h4>
+				<h4>日程を決める<span class="requiredMsg"> ※</span></h4>
 			 	<input style="cursor:pointer; background-color: #fff;" id="calendar" type="text" placeholder="クリックしてください" onchange="calculate();" name="reserveDate">
-				<h4>時間を決める</h4>
-				<p>日程を選択すると、予約可能な時間が表示されます。</p>
+				<h4>時間を決める<span class="requiredMsg"> ※</span></h4>
+				<p>日程を選択すると、予約可能な時間が表示されます。<br/>時間が表示されていない場合は日程を再度選択して下さい。</p>
 				<select id="reserveMoments" name="reserveMoments" class="validate[required]">
 				</select>
 				<h3>ご連絡先をご記入ください。</h3>
-				<h4>お名前</h4>
+				<h4>お名前<span class="requiredMsg"> ※</span></h4>
 				<p>(例)田中太郎</p>
 				<input type="text" name="customerName" class="validate[required]" value="${customerName}">
-				<h4>メールアドレス</h4>
+				<h4>メールアドレス<span class="requiredMsg"> ※</span></h4>
 				<p>(例)sample@mail.com</p>
 				<input type="text" name="customerMailaddress" class="validate[required[custom[email]]]" value="${customerMailaddress}">
 				<h4>電話番号</h4>

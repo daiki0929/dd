@@ -38,7 +38,6 @@
 	 			break;
 
 	 		default:
-	 			/* console.log(data.obj); */
 	 			var eventsThisMonth = {};
 	 			$.each(data.obj, function(index, val){
 		 			var event = {
@@ -115,12 +114,10 @@
 	//モーダルするのに必要な情報をセットします。
 	function setModalTarget(){
 		$('.fc-day-grid-event').attr("data-toggle", "modal");
-		var array = [$('.fc-day-grid-event')];
-		console.log(array);
-		$.each(array, function(index, val){
-			var key = array[index].attr("href");
+		$('.fc-day-grid-event').each(function(i, elem){
+			var key = $(elem).attr("href");
 			console.log(key);
-			array[index].attr("data-target", key);
+			$(elem).attr("data-target", key);
 		});
 	}
 	

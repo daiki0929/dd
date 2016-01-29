@@ -55,6 +55,8 @@ public class DoneEntryBySNSController extends AbstractReseController {
         //店舗情報のデフォルト値を保存
         MsShop shopDefaultHour = setShopDefault(msUser);
         dsService.put(shopDefaultHour);
+        //予約ページのサンプルを保存
+        createSampleMenuPage(msUser);
         
         return forward("/tools/rese/reserve/reserveList");
     }

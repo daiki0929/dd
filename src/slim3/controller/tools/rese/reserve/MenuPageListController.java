@@ -37,6 +37,7 @@ public class MenuPageListController extends AbstractReseController {
         request.setAttribute("closedMenuPageList", closedMenuPageList);
         
         int openListSize = openMenuPageList.size();
+        request.setAttribute("limitOver", false);
         //有料会員
         if (msUser.getRole() == MsUser.Role.PRO) {
             request.setAttribute("role", MsUser.Role.PRO);
@@ -50,6 +51,7 @@ public class MenuPageListController extends AbstractReseController {
                 request.setAttribute("limitOver", true);
             }
         }
+        request.setAttribute("openListSize", openListSize);
         return forward("/tools/rese/dashboard/reserve/menuPageList.jsp");
     }
 }

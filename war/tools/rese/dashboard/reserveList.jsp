@@ -43,6 +43,7 @@
     	color:#000;
     	font-size: 1.5em;
     }
+    
     </style>
     <script type="text/javascript">
     	//予約を削除します。
@@ -79,14 +80,15 @@
           <section class="wrapper">
           	<h3><i class="fa fa-angle-right"></i> 予約一覧</h3>
           	<c:if test="${role == 'FREE'}">
-          		<p class="alertMsg">最大50件/月まで予約管理可能です。最大に達すると予約ページが利用出来ないのでご注意ください。</p>
+          		<p class="alertMsg">最大50件/月まで予約管理可能です。「今月の予約管理数」が50に到達すると、翌月になるまで予約ページは利用出来ません。</p>
           	</c:if>
           	<c:if test="${role == 'PRO'}">
-          		<p class="alertMsg">最大200件/月まで予約管理可能です。最大に達すると予約ページが利用出来ないのでご注意ください。</p>
+          		<p class="alertMsg">最大200件/月まで予約管理可能です。「今月の予約管理数」が20に到達すると、翌月になるまで予約ページは利用出来ません。</p>
           	</c:if>
           	<c:if test="${limitOver}">
-          		<p class="well"><span style="color: red;">※</span>FREEプランの最大数に達しています。予約ページが利用出来ない状態です。PROプランにアップグレードするには<a href="">こちら</a>から。</p>
+          		<p class="well"><span style="color: red;">※</span>予約管理管理数が最大に達しています。予約ページが利用出来ない状態です。PROプランにアップグレードするには<a href="">こちら</a>から。</p>
           	</c:if>
+          	<p>今月の予約管理数：${reserveListSize}</p>
 			<a href="/tools/rese/reserve/createReserve" id="createBtnURL"><h3 class="btn btn-warning" style="width: 200px;">予約を記入する</h3></a>
 			<div style="margin-top: 20px;">
 				<p><a href="/tools/rese/reserve/showHowTo">使い方ガイド</a>はこちら</p>
@@ -103,9 +105,9 @@
                   </aside>
                   
                   <div class="col-lg-3 ds" style="margin-top: 25px;">
-                  	<div style="background-color: #2C3E50;">
+                  	<!-- <div style="background-color: #2C3E50;">
 	                  	<p style="padding: 15px; color:#fff; text-align: center;">PROプラン(2016年3月頃スタート)</p>
-                  	</div>
+                  	</div> -->
                   	<a href="http://px.a8.net/svt/ejp?a8mat=2C2H4W+85IQSA+2VOI+64RJ5" target="_blank">
 					<img border="0" width="240" height="auto" alt="" src="http://www22.a8.net/svt/bgt?aid=141203264493&wid=002&eno=01&mid=s00000013437001030000&mc=1"></a>
 					<img border="0" width="1" height="1" src="http://www16.a8.net/0.gif?a8mat=2C2H4W+85IQSA+2VOI+64RJ5" alt="">

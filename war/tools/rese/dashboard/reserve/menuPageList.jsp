@@ -89,15 +89,16 @@
           <section class="wrapper">
           	<h3><i class="fa fa-angle-right"></i> 予約ページ</h3>
           	<p>予約ページの一覧です。</p>
-          	<c:if test="${role == null}">
+          	<c:if test="${role == 'FREE'}">
           		<p class="alertMsg">最大５つまで作成可能です。</p>
           	</c:if>
-          	<c:if test="${role != null}">
+          	<c:if test="${role == 'PRO'}">
           		<p class="alertMsg">最大20個まで作成可能です。</p>
           	</c:if>
           	<c:if test="${limitOver}">
           		<p class="well"><span style="color: red;">※</span>最大作成可能数に達しています。新しく作成する場合は不必要な予約ページを非公開にしてください。</p>
           	</c:if>
+          	<p>現在の予約ページ数：${openListSize}</p>
           	<a href="/tools/rese/reserve/CreateMenuPage" id="createBtnURL"><p class="btn btn-warning">新規作成</p></a>
           	<hr>
               <!-- page start-->
@@ -115,12 +116,12 @@
 							  	<c:forEach var="menuPage" items="${openMenuPageList}">
 								  	<div style="width: 99%; border:1px solid #dedede; margin: 20px 0 20px 0;">
 										<p style="background-color: #f2f2f2; padding: 10px 0 10px 10px;">
-											<a href="http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}" class="menuPageTitle" target="_blank">${menuPage.pageTitle}</a>
+											<a href="http://rese.space/r/${msUser.userPath}/${menuPage.pagePath}" class="menuPageTitle" target="_blank">${menuPage.pageTitle}</a>
 										</p>
 										<!-- <img src="/img/link.png" style="float:left; padding: 0 5px 0 5px;" width="5%;"> -->
 										<div class="link">
-											<img alt="" src="/img/link2.png" width="28px;" style="cursor: pointer; margin-top: -2px;" onclick="accessMenuPage('http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}');">
-											<input type="text" value="http://localhost:8888/r/${msUser.userPath}/${menuPage.pagePath}" readonly="readonly" onclick="this.select()" style="padding: 15px 10px 15px 10px; margin-top:5px; cursor: default;"/>
+											<img alt="" src="/img/link2.png" width="28px;" style="cursor: pointer; margin-top: -2px;" onclick="accessMenuPage('http://rese.space/r/${msUser.userPath}/${menuPage.pagePath}');">
+											<input type="text" value="http://rese.space/r/${msUser.userPath}/${menuPage.pagePath}" readonly="readonly" onclick="this.select()" style="padding: 15px 10px 15px 10px; margin-top:5px; cursor: default;"/>
 										</div>
 										<div style="margin-left: 10px; display: inline-block;">
 											<p class="buttonMin-gray" style="display: inline-block; margin-right: 10px;">

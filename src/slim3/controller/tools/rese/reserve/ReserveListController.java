@@ -54,20 +54,21 @@ public class ReserveListController extends AbstractReseController {
             }
         }
         
+        //会員クラスによる機能制限
+        request.setAttribute("limitOver", false);
+        
         //キャッシュから予約情報を取り出す。無い場合はデータストアから取り出す。
         List<Reserve> reserveList = Memcache.get(msUser.getMailaddress());
         //キャッシュにある場合
         if (cacheService.exist(msUser.getMailaddress())) {
             log.info("キャッシュにありました。");
+            
             ArrayList<String> timeList = getReserveTime(reserveList);
             request.setAttribute("reserveList", reserveList);
             request.setAttribute("timeList", timeList);
             request.setAttribute("menuPageList", menuPageList);
             request.setAttribute("allMenuList", allMenuList);
             
-            //TODO 全てのページで必要
-            request.setAttribute("userImgPath", msUser.getUserImgPath());
-            request.setAttribute("userName", msUser.getName());
             
             //TODO なぜかこのコントローラだけ画像がセットされない。
             request.setAttribute("userImgPath", msUser.getUserImgPath());
@@ -76,24 +77,25 @@ public class ReserveListController extends AbstractReseController {
             }
             
             //制限の確認
-            if (roleService.checkReserveLimit(msUser, reserveList)) {
+            List<Reserve> reserveThisMonth = reserveService.getReserveThisMonth(msUser.getKey());
+            log.info("今月の予約管理数：" + Integer.toString(reserveThisMonth.size()));
+            if (roleService.checkReserveLimit(msUser, reserveThisMonth)) {
                 request.setAttribute("limitOver", true);
             }
+            int reserveListSize = reserveThisMonth.size();
+            request.setAttribute("reserveListSize", reserveListSize);
             
             return forward("/tools/rese/dashboard/reserveList.jsp");
         }
         //キャッシュに無い場合
         log.info("データストアから取り出します。");
+        //TODO 全て取り出してモーダルを作成してるので、削減する。
         reserveList = reserveService.getListByMsUserKey(msUser.getKey());
         ArrayList<String> timeList = getReserveTime(reserveList);
         request.setAttribute("reserveList", reserveList);
         request.setAttribute("timeList", timeList);
         request.setAttribute("menuPageList", menuPageList);
         request.setAttribute("allMenuList", allMenuList);
-        
-        //TODO 全てのページで必要
-        request.setAttribute("userImgPath", msUser.getUserImgPath());
-        request.setAttribute("userName", msUser.getName());
         
         //TODO なぜかこのコントローラだけ画像がセットされない。
         request.setAttribute("userImgPath", msUser.getUserImgPath());
@@ -105,10 +107,17 @@ public class ReserveListController extends AbstractReseController {
         Memcache.put(msUser.getMailaddress(), reserveList);
         
         //制限の確認
-        if (roleService.checkReserveLimit(msUser, reserveList)) {
+        List<Reserve> reserveThisMonth = reserveService.getReserveThisMonth(msUser.getKey());
+        for (Reserve reserve : reserveThisMonth) {
+            log.info(reserve.getStartTime().toString()+reserve.getCustomerName());
+        }
+        log.info("今月の予約管理数：" + Integer.toString(reserveThisMonth.size()));
+        if (roleService.checkReserveLimit(msUser, reserveThisMonth)) {
             request.setAttribute("limitOver", true);
         }
         
+        int reserveListSize = reserveThisMonth.size();
+        request.setAttribute("reserveListSize", reserveListSize);
         return forward("/tools/rese/dashboard/reserveList.jsp");
 
     }

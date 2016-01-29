@@ -54,6 +54,8 @@ public class CustomerListController extends AbstractReseController {
         if (roleService.checkCustomerLimit(msUser, customerList)) {
             request.setAttribute("limitOver", true);
         }
+        int customerListSize = customerList.size();
+        request.setAttribute("customerListSize", customerListSize);
         
         if (asKey("p") != null) {
             log.info("予約ページで絞り込みます。");

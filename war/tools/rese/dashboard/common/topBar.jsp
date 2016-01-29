@@ -9,10 +9,10 @@
  <!--header start-->
  <header class="header black-bg" style="background-color: #63A7E4; border-bottom: 1px solid #4c8fc9;">
          <div class="sidebar-toggle-box">
-             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+             <div class="fa fa-bars tooltips"></div>
          </div>
        <!--logo start-->
-       <a href="index.html" class="logo"><b>Rese</b></a>
+       <a href="/tools/rese/reserve/reserveList" class="logo"><b>Rese</b></a>
        <!--logo end-->
        <div class="top-menu">
        	<ul class="nav pull-right top-menu">

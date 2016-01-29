@@ -48,9 +48,6 @@
     	font-weight: bold;
     }
     </style>
-    <script type="text/javascript" charset="utf-8">
-		<%@ include file="/js/tools/rese/shopStatus.js"%>
-	</script>
   </head>
 
   <body>

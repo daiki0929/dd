@@ -1,4 +1,4 @@
-    package slim3.controller;
+package slim3.controller;
 
 import org.slim3.controller.router.RouterImpl;
 
@@ -11,6 +11,7 @@ import org.slim3.controller.router.RouterImpl;
 public class AppRouter extends RouterImpl {
 
     public AppRouter() {
+        addRouting("/", "/tools/rese/lp/index.html");
         
         //==============================================
         //予約ページ

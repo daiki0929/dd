@@ -122,6 +122,8 @@ public class CallBackController extends AbstractReseController {
             //店舗情報のデフォルト値を保存
             MsShop shopDefaultHour = setShopDefault(newMsUser);
             dsService.put(shopDefaultHour);
+            //予約ページのサンプルを保存
+            createSampleMenuPage(newMsUser);
             
             Datastore.getOrNull(newMsUser.getKey());
             

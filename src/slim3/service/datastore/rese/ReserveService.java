@@ -40,6 +40,54 @@ public class ReserveService extends AbstractDatastoreService{
         return Datastore.query(RESERVE_META).filter(RESERVE_META.msUserRef.equal(msUserKey)).asList();
     }
     
+    /**
+     * 今月の予約管理数を取得します。
+     * @param msUserKey
+     * @return
+     */
+    public List<Reserve> getReserveThisMonth(Key msUserKey){
+        DateTime now = new DateTime();
+        Date start = now
+                .withDate(now.getYear(), now.getMonthOfYear(), 1)
+                .withTime(0, 0, 0, 0)
+                .toDate();
+        Date end = now
+                .withDate(now.getYear(), now.getMonthOfYear(), now.dayOfMonth().getMaximumValue())
+                .withTime(23, 59, 59, 0)
+                .toDate();
+        //今月中に予約を開始したリスト
+        return Datastore
+                .query(RESERVE_META)
+                .filter(RESERVE_META.startTime.greaterThanOrEqual(start),RESERVE_META.startTime.lessThanOrEqual(end))
+                .filter(RESERVE_META.msUserRef.equal(msUserKey))
+                .asList();
+    }
+    
+//    /**
+//     * 今月の予約管理数を取得します。(前後14日まで)
+//     * ReserveListControllerで最初の読み込み時に使用します。
+//     * @param msUserKey
+//     * @return
+//     */
+//    public List<Reserve> getReserveRough(Key msUserKey){
+//        DateTime now = new DateTime();
+//        Date start = now
+//                .withDate(now.getYear(), now.getMonthOfYear(), 1)
+//                .plusDays(-14)
+//                .withTime(0, 0, 0, 0)
+//                .toDate();
+//        Date end = now
+//                .withDate(now.getYear(), now.getMonthOfYear(), now.dayOfMonth().getMaximumValue())
+//                .plusDays(14)
+//                .withTime(23, 59, 59, 0)
+//                .toDate();
+//        //今月中に予約を開始したリスト
+//        return Datastore
+//                .query(RESERVE_META)
+//                .filter(RESERVE_META.startTime.greaterThanOrEqual(start),RESERVE_META.startTime.lessThanOrEqual(end))
+//                .filter(RESERVE_META.msUserRef.equal(msUserKey))
+//                .asList();
+//    }
     
     
     /**

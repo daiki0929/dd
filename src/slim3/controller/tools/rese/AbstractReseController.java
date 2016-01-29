@@ -1,6 +1,8 @@
 package slim3.controller.tools.rese;
 
-import org.slim3.controller.Navigation;
+import java.util.Random;
+
+import org.slim3.datastore.Datastore;
 import org.slim3.util.ArrayMap;
 
 import slim3.Const;
@@ -10,6 +12,9 @@ import slim3.dto.ManageUserDto;
 import slim3.dto.MsUserDto;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import slim3.model.reserve.Menu;
+import slim3.model.reserve.Menu.Status;
+import slim3.model.reserve.MenuPage;
 import slim3.service.datastore.rese.CustomerService;
 import slim3.service.datastore.rese.MenuPageService;
 import slim3.service.datastore.rese.MenuService;
@@ -75,6 +80,12 @@ public abstract class AbstractReseController extends AbstractController {
     // 正規表現
     public final static String USER_PATH = "@.*";
     
+    // ================================================================
+    // モデル
+    MsShop msShop = new MsShop();
+    MenuPage menuPage = new MenuPage();
+    Menu menu = new Menu();
+    
     
     /**
      * 営業時間のデフォルト値をセットして返します。
@@ -83,7 +94,6 @@ public abstract class AbstractReseController extends AbstractController {
      */
     protected MsShop setShopDefault(MsUser msUser){
         
-        MsShop msShop = new MsShop();
         msShop.getMsUserRef().setKey(msUser.getKey());
         log.info("店舗情報のデフォルト値を登録します。");
         
@@ -99,6 +109,47 @@ public abstract class AbstractReseController extends AbstractController {
 //        log.info(shopStatusByDays.toString());
         msShop.setStatusByDays(shopStatusByDays);
         return msShop;
+    }
+    
+    /**
+     * サンプルの予約ページ・メニューを作成します。
+     * @param msUser
+     * @return
+     */
+    protected void createSampleMenuPage(MsUser msUser){
+        
+        menuPage.getMsUserRef().setKey(msUser.getKey());
+        menuPage.setPageTitle("予約ページのサンプル");
+        menuPage.setDescription("予約ページのサンプルです。必要無い場合は「メニューページ編集」から、非公開にして下さい。");
+        //TODO topImgPathはモデルから削除。reserveSystemは未実装。
+//        menuPage.setTopImgPath(asString("topImgPath"));
+//        menuPage.setReserveSystem(asString("reserveSystem"));
+        menuPage.setInterval(1800);
+        menuPage.setStatus(Status.PUBLIC.getStatus());
+        menuPage.setReserveStartTime(2592000);
+        menuPage.setReserveEndTime(3600);
+        menuPage.setCancelTime(86400);
+        //TODO 未実装
+//        ArrayList<Date> noReserveDateList = new ArrayList<Date>();
+//        menuPage.setNoReserveDate(noReserveDateList);
+      //メニューページのURLパス
+        Random rnd = new Random();
+        String pagePath = Integer.toString(rnd.nextInt(999999));
+        menuPage.setPagePath(pagePath);
+        Datastore.put(menuPage);
+        
+        
+        menu.setTitle("メニュー1");
+//        menu.setImgPath(asString("imgPath"));
+        menu.setPrice(4000);
+        menu.setContent("メニュー1です。");
+        menu.setTime("1800");
+        menu.setStatus(Status.PUBLIC.getStatus());
+        menu.getMenuPageRef().setKey(menuPage.getKey());
+        Datastore.put(menu);
+        
+        log.info("サンプルの予約ページ・メニューを作成しました。");
+        
     }
     
     

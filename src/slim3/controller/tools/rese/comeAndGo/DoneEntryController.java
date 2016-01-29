@@ -93,6 +93,8 @@ public class DoneEntryController extends AbstractReseController {
         //店舗情報のデフォルト値を保存
         MsShop shopDefaultHour = setShopDefault(msUser);
         Datastore.put(shopDefaultHour);
+        //サンプルの予約ページを保存
+        createSampleMenuPage(msUser);
         
         Datastore.getOrNull(msUser.getKey());
         

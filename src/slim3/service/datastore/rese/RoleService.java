@@ -43,12 +43,12 @@ public class RoleService extends AbstractDatastoreService{
      */
     public boolean checkMenuPageLimit(MsUser msUser, int menuPageListSize){
         if (msUser.getRole() == Role.FREE) {
-            if (menuPageListSize > 5) {
+            if (menuPageListSize >= 5) {
                 return true;
             }
         }
         if (msUser.getRole() == Role.PRO) {
-            if (menuPageListSize > 20) {
+            if (menuPageListSize >= 20) {
                 return true;
             }
         }
@@ -63,12 +63,12 @@ public class RoleService extends AbstractDatastoreService{
      */
     public boolean checkReserveLimit(MsUser msUser, List<Reserve> reserveList){
         if (msUser.getRole() == Role.FREE) {
-            if (reserveList.size() > 50) {
+            if (reserveList.size() >= 50) {
                 return true;
             }
         }
         if (msUser.getRole() == Role.PRO) {
-            if (reserveList.size() > 200) {
+            if (reserveList.size() >= 200) {
                 return true;
             }
         }
@@ -83,12 +83,12 @@ public class RoleService extends AbstractDatastoreService{
      */
     public boolean checkCustomerLimit(MsUser msUser, List<Customer> customerList){
         if (msUser.getRole() == Role.FREE) {
-            if (customerList.size() > 100) {
+            if (customerList.size() >= 100) {
                 return true;
             }
         }
         if (msUser.getRole() == Role.PRO) {
-            if (customerList.size() > 500) {
+            if (customerList.size() >= 500) {
                 return true;
             }
         }
