@@ -18,9 +18,7 @@ import org.slim3.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
-import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.MsUserMeta;
 import slim3.meta.customerManage.CustomerMeta;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
@@ -28,7 +26,6 @@ import slim3.model.customerManage.Customer;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
 import slim3.model.reserve.Reserve;
-import slim3.service.CacheService.ExpireKbn;
 
 /**
  * メニュー予約完了後のコントローラです。
@@ -41,15 +38,25 @@ public class DoneReserveController extends AbstractReseController {
     @Override
     public Navigation run() throws Exception {
         
+        
         Key menuKey = asKey("menuKey");
         Menu orderMenu = menuService.get(menuKey);
-        //注文回数
-        orderMenu.setOrderNumber(orderMenu.getOrderNumber() + 1);
-        Datastore.put(orderMenu);
         
         ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
         MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
         Key msUserKey = menuPage.getMsUserRef().getKey();
+        MsUser msUser = msUserService.get(msUserKey);
+        
+        //制限を超えていたらエラーページに飛ばします。
+        List<Reserve> reserveList = reserveService.getListByMsUserKey(msUserKey);
+        if (roleService.checkReserveLimit(msUser, reserveList)) {
+            return forward("/tools/rese/errorPage");
+        }
+        
+        //注文回数
+        orderMenu.setOrderNumber(orderMenu.getOrderNumber() + 1);
+        Datastore.put(orderMenu);
+        
         //バリデートはConfirmReserveで行っています。
         String reserveTime = asString("reserveTime");
         String menuEndTime = asString("menuEndTime");
@@ -93,7 +100,7 @@ public class DoneReserveController extends AbstractReseController {
         boolean b = reserveTimeService.checkDoubleBooking(msUserKey, menuPage, reserveDateTime, menuEndDateTime);
         if (!b) {
             log.info("予約前に既存予約と重複してました。");
-            MsUser msUser = msUserService.get(msUserKey);
+            
             List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
             
             Random rnd = new Random();
@@ -211,12 +218,12 @@ public class DoneReserveController extends AbstractReseController {
         //キャンセルのリンク
         String menuPageKeyStr = Datastore.keyToString(menuPage.getKey());
         String reserveKeyStr = Datastore.keyToString(reserve.getKey());
-        //ユーザー
-        MsUserMeta msUserMeta = MsUserMeta.get();
-        MsUser msUser = Datastore
-                .query(msUserMeta)
-                .filter(msUserMeta.key.equal(menuPage.getMsUserRef().getKey()))
-                .asSingle();
+//        //ユーザー
+//        MsUserMeta msUserMeta = MsUserMeta.get();
+//        MsUser msUser = Datastore
+//                .query(msUserMeta)
+//                .filter(msUserMeta.key.equal(menuPage.getMsUserRef().getKey()))
+//                .asSingle();
         //顧客
         String customerPath = customer.getCustomerPath();
         
@@ -231,9 +238,9 @@ public class DoneReserveController extends AbstractReseController {
         
         //TODO テスト環境用にしてます。
         //カスタマーへのメール
-//        googleService.sendMessage(adm, "0929dddd@gmail.com", null, "予約が確定しました", customerContent);
+        googleService.sendMessage(adm, "reseinfomail@gmail.com", null, "[Rese]予約が確定しました", customerContent);
         //ユーザーへのメール
-//        googleService.sendMessage(adm, "0929dddd@gmail.com", null, "[Rese]予約が入りました", userContent);
+        googleService.sendMessage(adm, "reseinfomail@gmail.com", null, "[Rese]予約が入りました", userContent);
         
         //重複予約しないようにリロードします。
         //TODO 重複の確認(jsでもあり)

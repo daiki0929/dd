@@ -51,6 +51,13 @@
 			  e.preventDefault();
 			  $(this).tab('show');
 			});
+		
+		if(${limitOver}){
+			$('#createBtnURL p').css("background-color", "#b2b2b2");	
+			$('#createBtnURL p').css("border", "1px solid #b2b2b2");	
+			$('#createBtnURL').attr("href", "");	
+			$('#createBtnURL p').css("cursor", "not-allowed");
+		}
 	});
 	
 	/**
@@ -60,6 +67,8 @@
 		
 		window.open(menuPageURL, '_blank');
 	}
+	
+	
 	
 	</script>
   </head>
@@ -80,7 +89,16 @@
           <section class="wrapper">
           	<h3><i class="fa fa-angle-right"></i> 予約ページ</h3>
           	<p>予約ページの一覧です。</p>
-          	<a href="/tools/rese/reserve/CreateMenuPage"><p class="btn btn-warning">新規作成</p></a>
+          	<c:if test="${role == null}">
+          		<p class="alertMsg">最大５つまで作成可能です。</p>
+          	</c:if>
+          	<c:if test="${role != null}">
+          		<p class="alertMsg">最大20個まで作成可能です。</p>
+          	</c:if>
+          	<c:if test="${limitOver}">
+          		<p class="well"><span style="color: red;">※</span>最大作成可能数に達しています。新しく作成する場合は不必要な予約ページを非公開にしてください。</p>
+          	</c:if>
+          	<a href="/tools/rese/reserve/CreateMenuPage" id="createBtnURL"><p class="btn btn-warning">新規作成</p></a>
           	<hr>
               <!-- page start-->
               <div class="row mt">

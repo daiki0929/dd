@@ -39,6 +39,16 @@
    		padding-left: 20px;
    	}
     </style>
+    <script type="text/javascript">
+    $(document).ready(function (){
+		if(${limitOver}){
+			$('#createBtnURL').css("background-color", "#b2b2b2");	
+			$('#createBtnURL').css("border", "1px solid #b2b2b2");	
+			$('#createBtnURL').attr("href", "");	
+			$('#createBtnURL').css("cursor", "not-allowed");
+		}
+	})
+    </script>
   </head>
 
   <body>
@@ -58,7 +68,16 @@
           <section class="wrapper site-min-height">
           	<h3><i class="fa fa-angle-right"></i> 顧客管理</h3>
           	<p>顧客一覧です。予約ページから予約したお客様の情報は自動で追加されます。</p>
-          	<a href="/tools/rese/customerManage/createCustomer" class="btn btn-round btn-primary">追加する</a>
+          	<c:if test="${role == 'FREE'}">
+         		<p class="alertMsg">最大100人まで管理可能です。最大に達すると自動・手動で追加出来ないのでご注意ください。</p>
+          	</c:if>
+          	<c:if test="${role == 'PRO'}">
+          		<p class="alertMsg">最大500人まで予約管理可能です。最大に達すると自動・手動で追加出来ないのでご注意ください。</p>
+          	</c:if>
+			<c:if test="${limitOver}">
+       			<p class="well"><span style="color: red;">※</span>顧客管理の制限数に達しているため追加出来ない状態です。PROプランにアップグレードするには<a href="">こちら</a>から。</p>
+       		</c:if>
+          	<a href="/tools/rese/customerManage/createCustomer" class="btn btn-round btn-primary" id="createBtnURL">追加する</a>
           	<hr>
 				<div class="row mt">
 					<c:forEach var="customer" items="${customerList}">

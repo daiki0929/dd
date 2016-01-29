@@ -16,6 +16,7 @@ import slim3.Const;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsShop;
 import slim3.model.MsUser;
+import slim3.model.MsUser.Role;
 import util.CookieUtil;
 import util.StringUtil;
 /**
@@ -107,6 +108,8 @@ public class CallBackController extends AbstractReseController {
             newMsUser.setGmailRefreshToken(credential.getRefreshToken());
             String userImgPath = userInfo.getPicture();
             newMsUser.setUserImgPath(userImgPath);
+            //TODO 全て無料会員にしてます。
+            newMsUser.setRole(Role.FREE);
             
             log.info("クッキーを保存します");
             String msUserEncrypt = CookieUtil.createCookieStr(newMsUser.getKey());
@@ -124,7 +127,6 @@ public class CallBackController extends AbstractReseController {
             
         } catch (Exception e) {
             writeErrorLog(e);
-            return null;
         }
         
         return redirect("/tools/rese/reserve/reserveList");

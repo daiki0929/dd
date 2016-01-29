@@ -54,6 +54,15 @@
     	     }else{
     	     }  		
     	}
+    	
+    	$(document).ready(function (){
+    		if(${limitOver}){
+    			$('#createBtnURL h3').css("background-color", "#b2b2b2");	
+    			$('#createBtnURL h3').css("border", "1px solid #b2b2b2");	
+    			$('#createBtnURL').attr("href", "");	
+    			$('#createBtnURL h3').css("cursor", "not-allowed");
+    		}
+    	})
     </script>
   </head>
 
@@ -69,7 +78,16 @@
       <section id="main-content">
           <section class="wrapper">
           	<h3><i class="fa fa-angle-right"></i> 予約一覧</h3>
-			<a href="/tools/rese/reserve/createReserve"><h3 class="btn btn-warning" style="width: 200px;">予約を記入する</h3></a>
+          	<c:if test="${role == 'FREE'}">
+          		<p class="alertMsg">最大50件/月まで予約管理可能です。最大に達すると予約ページが利用出来ないのでご注意ください。</p>
+          	</c:if>
+          	<c:if test="${role == 'PRO'}">
+          		<p class="alertMsg">最大200件/月まで予約管理可能です。最大に達すると予約ページが利用出来ないのでご注意ください。</p>
+          	</c:if>
+          	<c:if test="${limitOver}">
+          		<p class="well"><span style="color: red;">※</span>FREEプランの最大数に達しています。予約ページが利用出来ない状態です。PROプランにアップグレードするには<a href="">こちら</a>から。</p>
+          	</c:if>
+			<a href="/tools/rese/reserve/createReserve" id="createBtnURL"><h3 class="btn btn-warning" style="width: 200px;">予約を記入する</h3></a>
 			<div style="margin-top: 20px;">
 				<p><a href="/tools/rese/reserve/showHowTo">使い方ガイド</a>はこちら</p>
 			</div>

@@ -3,10 +3,8 @@ package slim3.controller.tools.rese.reserve;
 import java.util.List;
 
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.MenuPage;
 /**
@@ -32,22 +30,26 @@ public class MenuPageListController extends AbstractReseController {
         request.setAttribute("msUser", msUser);
         
         //ユーザーが所持するメニューページを取り出す
-        MenuPageMeta menuPageMeta = MenuPageMeta.get();
-        List<MenuPage> openMenuPageList = Datastore
-                .query(menuPageMeta)
-                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
-                .filter(menuPageMeta.status.equal(PUBLIC))
-                .asList();
+        List<MenuPage> openMenuPageList = menuPageService.getByMsUser(msUser.getKey(), MenuPageStatus.PUBLIC);
         request.setAttribute("openMenuPageList", openMenuPageList);
         
-        List<MenuPage> closedMenuPageList = Datastore
-                .query(menuPageMeta)
-                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
-                .filter(menuPageMeta.status.equal(CLOSED))
-                .asList();
+        List<MenuPage> closedMenuPageList = menuPageService.getByMsUser(msUser.getKey(), MenuPageStatus.CLOSED);
         request.setAttribute("closedMenuPageList", closedMenuPageList);
         
-        
+        int openListSize = openMenuPageList.size();
+        //有料会員
+        if (msUser.getRole() == MsUser.Role.PRO) {
+            request.setAttribute("role", MsUser.Role.PRO);
+            if (openListSize >= 20) {
+                request.setAttribute("limitOver", true);
+            }
+        }
+        //無料会員
+        if (msUser.getRole() == MsUser.Role.FREE) {
+            if (openListSize >= 5) {
+                request.setAttribute("limitOver", true);
+            }
+        }
         return forward("/tools/rese/dashboard/reserve/menuPageList.jsp");
     }
 }

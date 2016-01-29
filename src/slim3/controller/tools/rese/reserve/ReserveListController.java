@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 import org.slim3.controller.Navigation;
-import org.slim3.datastore.Datastore;
 import org.slim3.memcache.Memcache;
 
 import slim3.controller.tools.rese.AbstractReseController;
-import slim3.meta.reserve.MenuPageMeta;
 import slim3.model.MsUser;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.Menu.Status;
@@ -38,12 +36,13 @@ public class ReserveListController extends AbstractReseController {
         
         //作成したメニューを全て取り出す。
         ArrayList<Menu> allMenuList = new ArrayList<Menu>();
-        MenuPageMeta menuPageMeta = MenuPageMeta.get();
-        List<MenuPage> menuPageList = Datastore
-                .query(menuPageMeta)
-                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
-                .filter(menuPageMeta.status.equal(Status.PUBLIC.getStatus()))
-                .asList();
+//        MenuPageMeta menuPageMeta = MenuPageMeta.get();
+//        List<MenuPage> menuPageList = Datastore
+//                .query(menuPageMeta)
+//                .filter(menuPageMeta.msUserRef.equal(msUser.getKey()))
+//                .filter(menuPageMeta.status.equal(Status.PUBLIC.getStatus()))
+//                .asList();
+        List<MenuPage> menuPageList = menuPageService.getByMsUser(msUser.getKey(), MenuPageStatus.PUBLIC);
         
         for (MenuPage menuPage : menuPageList) {
             List<Menu> menuList = menuService.getListByMenuPageKey(menuPage.getKey());
@@ -76,6 +75,11 @@ public class ReserveListController extends AbstractReseController {
                 request.setAttribute("userImgPath", "/tools/rese/dashboard/assets/img/defaultIcon.jpg");
             }
             
+            //制限の確認
+            if (roleService.checkReserveLimit(msUser, reserveList)) {
+                request.setAttribute("limitOver", true);
+            }
+            
             return forward("/tools/rese/dashboard/reserveList.jsp");
         }
         //キャッシュに無い場合
@@ -99,6 +103,11 @@ public class ReserveListController extends AbstractReseController {
         
         //キャッシュに予約リストを保存
         Memcache.put(msUser.getMailaddress(), reserveList);
+        
+        //制限の確認
+        if (roleService.checkReserveLimit(msUser, reserveList)) {
+            request.setAttribute("limitOver", true);
+        }
         
         return forward("/tools/rese/dashboard/reserveList.jsp");
 

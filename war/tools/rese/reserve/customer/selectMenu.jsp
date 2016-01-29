@@ -34,6 +34,13 @@
 		$(".menuTime").each(function(i, elem) {
 			$(".menuTime")[i].innerText = Math.floor($(elem).text());
 		});
+		
+		//制限の確認
+		if(${limitOver}){
+			$('.reserveBtn').css("background-color", "#b2b2b2");	
+			$('form').attr("action", "");
+			$('.reserveBtn').css("cursor", "not-allowed");
+		}
 	});
 	
 </script>
@@ -41,6 +48,9 @@
 <body style="background-image: url('/img/back1.jpg'); background-repeat: no-repeat; background-size:cover;">
 	<div class="container" style="background-color: #fff; border-radius:5px;">
 		<div style="padding: 3%;">
+			<c:if test="${limitOver}">
+          		<p class="well"><span style="color: red;">※</span>この予約ページは予約可能制限数に達しているため、利用出来ません。オーナー様に直接ご連絡下さい。</p>
+          	</c:if>
 			<h2 class="reservePageTitle">${menuPage.pageTitle}</h2>
 			<%-- <img src="${menuPage.topImgPath}" /> --%>
 			<div>

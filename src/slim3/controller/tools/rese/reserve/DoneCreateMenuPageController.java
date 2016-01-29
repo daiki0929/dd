@@ -11,6 +11,7 @@ import org.slim3.datastore.Datastore;
 
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.model.MsUser;
+import slim3.model.MsUser.Role;
 import slim3.model.reserve.Menu.Status;
 import slim3.model.reserve.MenuPage;
 /**
@@ -104,6 +105,19 @@ public class DoneCreateMenuPageController extends AbstractReseController {
         Random rnd = new Random();
         String pagePath = Integer.toString(rnd.nextInt(999999));
         menuPage.setPagePath(pagePath);
+        
+        //制限を超えていたらエラーページに飛ばします。
+        int menuPageListSize = menuPageService.getByMsUser(msUser.getKey(), MenuPageStatus.PUBLIC).size();
+        if (msUser.getRole() == Role.FREE) {
+            if (menuPageListSize > 5) {
+                return forward("/tools/rese/errorPage");
+            }
+        }
+        if (msUser.getRole() == Role.PRO) {
+            if (menuPageListSize > 20) {
+                return forward("/tools/rese/errorPage");
+            }
+        }
         
         Datastore.put(menuPage);
         Datastore.getOrNull(menuPage.getKey());

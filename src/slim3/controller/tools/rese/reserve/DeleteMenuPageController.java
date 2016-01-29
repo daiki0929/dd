@@ -24,7 +24,7 @@ public class DeleteMenuPageController extends AbstractReseController {
         MenuPageMeta menuPageMeta = MenuPageMeta.get();
         List<Key> menuPageKeyList = Datastore
                 .query(menuPageMeta)
-                .filter(menuPageMeta.status.equal(CLOSED))
+                .filter(menuPageMeta.status.equal(MenuPageStatus.CLOSED.getMenuPageStatus()))
                 .asKeyList();
         Datastore.delete(menuPageKeyList);
         

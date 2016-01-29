@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.Key;
 import slim3.Const.RegexType;
 import slim3.controller.tools.rese.AbstractReseController;
 import slim3.meta.customerManage.CustomerMeta;
+import slim3.model.MsUser;
 import slim3.model.customerManage.Customer;
 import slim3.model.reserve.Menu;
 import slim3.model.reserve.MenuPage;
@@ -60,6 +61,19 @@ public class DoneCreateReserveController extends AbstractReseController {
         
         Key menuKey = asKey("menuKey");
         Menu orderMenu = menuService.get(menuKey);
+        
+        //メニューからMsUserのkeyを取得します。
+        ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
+        MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
+        Key msUserKey = menuPage.getMsUserRef().getKey();
+        
+        //制限を超えていたらエラーページに飛ばします。
+        int menuPageListSize = menuPageService.getByMsUser(msUserKey, MenuPageStatus.PUBLIC).size();
+        MsUser msUser = msUserService.get(msUserKey);
+        if (roleService.checkMenuPageLimit(msUser, menuPageListSize)) {
+            return forward("/tools/rese/errorPage");
+        }
+        
         //注文回数
         orderMenu.setOrderNumber(orderMenu.getOrderNumber() + 1);
         Datastore.put(orderMenu);
@@ -98,10 +112,6 @@ public class DoneCreateReserveController extends AbstractReseController {
         customer.setVisitNumber(1);
         customer.setTotalPayment(customer.getTotalPayment() + orderMenu.getPrice());
         
-        //メニューからMsUserのkeyを取得します。
-        ModelRef<MenuPage> menuPageRef = orderMenu.getMenuPageRef();
-        MenuPage menuPage = menuPageService.get(menuPageRef.getKey());
-        Key msUserKey = menuPage.getMsUserRef().getKey();
         
         //予約を保存します。
         Reserve reserve = new Reserve();

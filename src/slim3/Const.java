@@ -169,8 +169,8 @@ public class Const {
      *
      */
     public static enum FbCallbackEnum{
-        Rese_TEST("http://localhost:8888/tools/rese/comeAndGo/facebook/callBack"),
-        Rese("http://dd01-1142.appspot.com/tools/rese/comeAndGo/facebook/callBack");
+        Rese_TEST("http://rese.space/tools/rese/comeAndGo/facebook/callBack"),
+        Rese("http://rese.space/tools/rese/comeAndGo/facebook/callBack");
         
         private final String callbackURL;
         

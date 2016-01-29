@@ -15,6 +15,7 @@ import slim3.service.datastore.rese.MenuPageService;
 import slim3.service.datastore.rese.MenuService;
 import slim3.service.datastore.rese.MsUserService;
 import slim3.service.datastore.rese.ReserveService;
+import slim3.service.datastore.rese.RoleService;
 import slim3.service.datastore.rese.ShopService;
 import slim3.service.tools.rese.ReserveTimeService;
 import slim3.service.tools.rese.SetShopDefaultService;
@@ -44,10 +45,31 @@ public abstract class AbstractReseController extends AbstractController {
     protected ReserveTimeService reserveTimeService = new ReserveTimeService();
     
     
+    /** 会員クラスのサービス */
+    protected RoleService roleService = new RoleService();
+    
+    
+    
     // ================================================================
-    // メニューページの公開・非公開
-    public static final String PUBLIC = "public";
-    public static final String CLOSED = "closed";
+    /**
+     * メニューページの公開・非公開
+     * @author uedadaiki
+     *
+     */
+    public static enum MenuPageStatus{
+        PUBLIC("public"),
+        CLOSED("closed");
+        
+        private final String status;
+        
+        private MenuPageStatus(String status){
+            this.status = status;
+        }
+        
+        public String getMenuPageStatus() {
+            return status;
+        }
+    }
     
     // ================================================================
     // 正規表現

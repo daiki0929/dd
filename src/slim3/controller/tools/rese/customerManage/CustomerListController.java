@@ -36,30 +36,42 @@ public class CustomerListController extends AbstractReseController {
         
         //ユーザー情報
         request.setAttribute("msUser", msUser);
+        log.info(msUser.getRole().toString());
         
         List<MenuPage> menuPageList = menuPageService.getByMsUser(msUser.getKey());
-        
         request.setAttribute("menuPageList", menuPageList);
+        
         
         //ユーザーが所持する顧客情報を取り出す
         CustomerMeta customerMeta = CustomerMeta.get();
+        
+        List<Customer> customerList = Datastore
+                .query(customerMeta)
+                .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
+                .asList();
+        
+        //制限の確認
+        if (roleService.checkCustomerLimit(msUser, customerList)) {
+            request.setAttribute("limitOver", true);
+        }
+        
         if (asKey("p") != null) {
             log.info("予約ページで絞り込みます。");
             Key menuPageKey = asKey("p");
-            List<Customer> customerList = Datastore
+            List<Customer> customerListByMenuPage = Datastore
                     .query(customerMeta)
                     .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
                     .filter(customerMeta.MenuPageRef.equal(menuPageKey))
                     .asList();
             
-            request.setAttribute("customerList", customerList);
+            request.setAttribute("customerList", customerListByMenuPage);
             request.setAttribute("menuPageKey", menuPageKey);
             
             return forward("customerList.jsp");
         }else if (asString("s") != null) {
             log.info("名前・メールアドレス・電話番号で絞り込みます。");
             String searchKw = asString("s");
-            ArrayList<Customer> customerList = new ArrayList<Customer>();
+            ArrayList<Customer> customerListByDetail = new ArrayList<Customer>();
             
             ArrayList<List<Customer>> filterCustomerList = new ArrayList<List<Customer>>();
             //名前、メールアドレス、電話番号で検索
@@ -82,16 +94,13 @@ public class CustomerListController extends AbstractReseController {
             for (List<Customer> l : filterCustomerList) {
                 for (Customer customer : l) {
 //                    log.info("名前：" + customer.getName());
-                    customerList.add(customer);
+                    customerListByDetail.add(customer);
                 }
             }
-            request.setAttribute("customerList", customerList);
+            request.setAttribute("customerList", customerListByDetail);
             return forward("customerList.jsp");
         }else {
-            List<Customer> customerList = Datastore
-                    .query(customerMeta)
-                    .filter(customerMeta.MsUserRef.equal(msUser.getKey()))
-                    .asList();
+            
             request.setAttribute("customerList", customerList);
         }
         return forward("/tools/rese/dashboard/customerManage/customerList.jsp");

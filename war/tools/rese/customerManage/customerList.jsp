@@ -30,6 +30,13 @@
 				   return false;
 			   }
 		   })
+		   
+			 //制限の確認
+			if(${limitOver}){
+				$('.reserveBtn').css("background-color", "#b2b2b2");	
+				$('form').attr("action", "");
+				$('.reserveBtn').css("cursor", "not-allowed");
+			}
 	   });
 	   
 	   function filterCustomer(){
@@ -45,6 +52,15 @@
 			<div class="span8" style="border-right: 1px solid #dedede; margin-top: 20px;">
 				<h3>顧客リスト</h3>
 				<p>顧客のリストです。名前をクリックすると、詳細ページを開くことが出来ます。</p>
+				<c:if test="${role == 'free'}">
+          		<p class="alertMsg">最大100人まで管理可能です。最大に達すると自動・手動で追加出来ないのでご注意ください。</p>
+	          	</c:if>
+	          	<c:if test="${role == 'pro'}">
+	          		<p class="alertMsg">最大500人まで予約管理可能です。最大に達すると自動・手動で追加出来ないのでご注意ください。</p>
+	          	</c:if>
+				<c:if test="${limitOver}">
+          			<p class="well"><span style="color: red;">※</span>この予約ページは予約可能制限数に達しているため、利用出来ません。オーナー様に直接ご連絡下さい。</p>
+          		</c:if>
 				<div class="button" style="margin-bottom: 20px;"><a href="#myModal" data-toggle="modal">追加する</a></div>
 				<c:forEach var="customer" items="${customerList}">
 					<div class="span3" style="border:2px solid #dedede; padding: 10px; margin-bottom:20px; position: relative;">

@@ -21,7 +21,7 @@ public class SignInController extends AbstractReseController {
         
         String redirectUri = "http://localhost:8888/tools/rese/comeAndGo/google/callBack";
         if (isCommerce(request)) {
-            redirectUri = "http://dd01-1142.appspot.com/tools/rese/comeAndGo/google/callBack";
+            redirectUri = "http://rese.space/tools/rese/comeAndGo/google/callBack";
         }
         GoogleAuthorizationCodeFlow flow = googleService.newFlow();
 

@@ -5,12 +5,12 @@
         "client_id": "665174848314-r09h7bnanojfldqvtbjjvenj8s480ial.apps.googleusercontent.com", 
         "client_secret": "FhQe8BwEHmNEgUbooc1MP_rm", 
         "javascript_origins": [
-            "http://dd01-1142.appspot.com"
+            "http://rese.space"
         ], 
         "project_id": "dd01-1142", 
         "redirect_uris": [
             "http://localhost:8888/tools/rese/comeAndGo/google/callBack", 
-            "http://dd01-1142.appspot.com/tools/rese/comeAndGo/google/callBack"
+            "http://rese.space/tools/rese/comeAndGo/google/callBack"
         ], 
         "token_uri": "https://accounts.google.com/o/oauth2/token"
     }

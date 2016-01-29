@@ -1,9 +1,13 @@
 package slim3.controller.tools.rese.customerManage;
 
+import java.util.List;
+
 import org.slim3.controller.Navigation;
 import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
 import org.slim3.util.StringUtil;
+
+import com.google.appengine.api.datastore.Key;
 
 import slim3.Const;
 import slim3.Const.RegexType;
@@ -79,8 +83,15 @@ public class DoneRegistCustomerController extends AbstractReseController {
                 return forward("/tools/rese/comeAndGo/login");
             }
             
+            Key msUserKey = msUser.getKey();
             //顧客情報のモデルにユーザーIDをセットします。
-            customer.getMsUserRef().setKey(msUser.getKey());
+            customer.getMsUserRef().setKey(msUserKey);
+            
+            //制限を超えていたらエラーページに飛ばします。
+            List<Customer> customerList = customerService.getByMsUser(msUserKey);
+            if (roleService.checkCustomerLimit(msUser, customerList)) {
+                return forward("/tools/rese/errorPage");
+            }
             
             //保存
             Datastore.put(customer);
