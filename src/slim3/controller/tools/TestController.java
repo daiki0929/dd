@@ -1,50 +1,24 @@
 package slim3.controller.tools;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slim3.controller.Navigation;
 
+import com.google.api.client.util.ArrayMap;
+
+import main.java.org.jsoup.Connection;
 import main.java.org.jsoup.Jsoup;
 import main.java.org.jsoup.nodes.Document;
 import slim3.controller.AbstractController;
-import slim3.controller.tools.rese.AbstractReseController;
-import slim3.exception.MyException;
-import slim3.model.MsUser;
-public class TestController extends AbstractReseController {
+import slim3.service.tools.splitText.YahooKeyphraseService;
+
+public class TestController extends AbstractController {
+    
+    protected static final String DEFAULT_ENCODING = "UTF-8";
 
     @Override
     public Navigation run() throws Exception {
-        
-//        String contents = null;
-//        try {
-//            File file = new File("/tools/rese/reserve/customer/messageFile.txt");
-//            BufferedReader br = new BufferedReader(new FileReader(file));
-//            String str;
-//            while((str = br.readLine()) != null){
-//                contents += str;
-//            }
-//            br.close();
-//        } catch (Exception e) {
-//            throw new MyException(e);
-//        }
-        
-//        String customerContent = String.format("%s", contents);
-        Document document = Jsoup.parse(new File("/tools/rese/reserve/messageFile.html"), "UTF-8");
-
-        System.out.println(document.html());
-        
-//        System.out.println(contents);
-        //admアカウントから送信します。
-//        MsUser adm = msUserService.getSingleByEmail("reseinfomail@gmail.com");
-        //カスタマーへのメール
-//        googleService.sendMessage(adm, "0929dddd@gmail.com", null, "予約が確定しました", contents);
-        
         return null;
-//        return forward("/tools/rese/test.jsp");
     }
 }

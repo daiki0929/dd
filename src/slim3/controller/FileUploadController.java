@@ -73,7 +73,7 @@ public class FileUploadController extends AbstractReseController {
                 UploadOptions.Builder.withGoogleStorageBucketName(BUCKET)
                     .maxUploadSizeBytes(100 * MEGA_BYTE);
         final String url =
-                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/rese/reserve/createMenuPage",
+                BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/tools/test2",
                         options);
         System.out.println("URL : " + url);
         response.setCharacterEncoding("utf-8");

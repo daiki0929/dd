@@ -17,6 +17,8 @@ import org.slim3.util.ApplicationMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.appengine.api.utils.SystemProperty;
 
 import slim3.Const;
@@ -61,6 +63,9 @@ public abstract class AbstractController extends Controller {
     protected FacebookService facebookService = new FacebookService();
     //Google
     protected GoogleService googleService = new GoogleService();
+    
+    /** アクセス系サービス */
+    protected URLFetchService urlFetchSearvice = URLFetchServiceFactory.getURLFetchService();
 
     
     

@@ -1,5 +1,7 @@
 package slim3;
 
+import java.util.Locale;
+
 
 public class Const {    
     
@@ -339,7 +341,5 @@ public class Const {
             return uas[ran];
         }
     }
-
-    
-    
+       
 }
