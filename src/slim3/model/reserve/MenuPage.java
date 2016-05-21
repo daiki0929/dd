@@ -21,14 +21,14 @@ public class MenuPage extends AbstractModel {
     }
     
     public MsUser getMsUser() {
-        return msUser;
+        return MsUser;
     }
-    public void setMsUser(MsUser msUser) {
-        this.msUser = msUser;
+    public void setMsUser(MsUser MsUser) {
+        this.MsUser = MsUser;
     }
     
     @Attribute(persistent = false)
-    private MsUser msUser;    
+    private MsUser MsUser;    
     
     // ------------------------------------------------------
 

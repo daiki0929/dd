@@ -76,15 +76,15 @@ public class MsUserService extends AbstractDatastoreService{
         }
 
         try {
-            MsUser msUser = Datastore
+            MsUser MsUser = Datastore
                     .query(MS_USER_META)
                     .filter(MS_USER_META.userId.equal(cookie))
                     .asSingle();
-            if (msUser == null) {
+            if (MsUser == null) {
                 log.info("MsUserに存在しないuserIdです。");
                 return null;
             }
-            return msUser;
+            return MsUser;
         } catch (Exception e) {
             StackTraceUtil.toString(e);
             return null;

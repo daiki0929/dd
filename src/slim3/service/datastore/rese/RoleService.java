@@ -37,17 +37,17 @@ public class RoleService extends AbstractDatastoreService{
     
     /**
      * メニューページ制限数を超えていないかチェックします。
-     * @param msUser
+     * @param MsUser
      * @param menuPageListSize
      * @return
      */
-    public boolean checkMenuPageLimit(MsUser msUser, int menuPageListSize){
-        if (msUser.getRole() == Role.FREE) {
+    public boolean checkMenuPageLimit(MsUser MsUser, int menuPageListSize){
+        if (MsUser.getRole() == Role.FREE) {
             if (menuPageListSize >= 5) {
                 return true;
             }
         }
-        if (msUser.getRole() == Role.PRO) {
+        if (MsUser.getRole() == Role.PRO) {
             if (menuPageListSize >= 20) {
                 return true;
             }
@@ -58,16 +58,16 @@ public class RoleService extends AbstractDatastoreService{
     /**
      * 予約管理制限数を超えていないかチェックします。
      * 制限を超えていたらtrueを返します。
-     * @param msUser
+     * @param MsUser
      * @return
      */
-    public boolean checkReserveLimit(MsUser msUser, List<Reserve> reserveList){
-        if (msUser.getRole() == Role.FREE) {
+    public boolean checkReserveLimit(MsUser MsUser, List<Reserve> reserveList){
+        if (MsUser.getRole() == Role.FREE) {
             if (reserveList.size() >= 50) {
                 return true;
             }
         }
-        if (msUser.getRole() == Role.PRO) {
+        if (MsUser.getRole() == Role.PRO) {
             if (reserveList.size() >= 200) {
                 return true;
             }
@@ -78,16 +78,16 @@ public class RoleService extends AbstractDatastoreService{
     /**
      * 顧客管理制限数を超えていないかチェックします。
      * 制限を超えていたらtrueを返します。
-     * @param msUser
+     * @param MsUser
      * @return
      */
-    public boolean checkCustomerLimit(MsUser msUser, List<Customer> customerList){
-        if (msUser.getRole() == Role.FREE) {
+    public boolean checkCustomerLimit(MsUser MsUser, List<Customer> customerList){
+        if (MsUser.getRole() == Role.FREE) {
             if (customerList.size() >= 100) {
                 return true;
             }
         }
-        if (msUser.getRole() == Role.PRO) {
+        if (MsUser.getRole() == Role.PRO) {
             if (customerList.size() >= 500) {
                 return true;
             }
